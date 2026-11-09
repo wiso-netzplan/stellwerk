@@ -54,8 +54,16 @@
     }
   ],
   "pruefungen": [],
-  "stand": "2026-11-09T09:39:39.065Z",
-  "termine": [],
+  "stand": "2026-11-09T09:51:25.566Z",
+  "termine": [
+    {
+      "art": "Klausur",
+      "datum": "2026-12-16",
+      "halte": [],
+      "klasse": "IN24",
+      "titel": "Mikroökonomie"
+    }
+  ],
   "version": 1,
   "werk": "wiso-netzplan-stellwerk"
 }
