@@ -29,8 +29,18 @@
   "nachrichten": [
     {
       "datum": "2026-11-09",
-      "quelle": "",
-      "text": "Alphabetrieb läuft."
+      "quelle": "https://www.tagesschau.de/ausland/europa",
+      "text": "Todesschütze von Krakau ist tot."
+    },
+    {
+      "datum": "2026-11-09",
+      "quelle": "https://www.tagesschau.de/ausland/amerik",
+      "text": "Untersuchung gegen Nvidia-Chef Huang wegen Affäre mit mutmaßlicher chinesischer Spionin"
+    },
+    {
+      "datum": "2026-11-08",
+      "quelle": "https://www.tagesschau.de/inland/innenpo",
+      "text": "Merz will Aigner als Bundespräsidentin vorschlagen"
     }
   ],
   "neu": [
@@ -44,7 +54,7 @@
     }
   ],
   "pruefungen": [],
-  "stand": "2026-11-09T07:29:25.859Z",
+  "stand": "2026-11-09T09:39:12.331Z",
   "termine": [],
   "version": 1,
   "werk": "wiso-netzplan-stellwerk"
