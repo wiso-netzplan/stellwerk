@@ -1,0 +1,27 @@
+# Stellwerk-Automat: schreibt aktuell.json, wenn die Eingabeseite einen Auftrag schickt.
+# Im Verlauf steht damit github-actions, nicht das Konto der Lehrkraft.
+name: Stellwerk
+on:
+  repository_dispatch:
+    types: [stellwerk]
+permissions:
+  contents: write
+concurrency: stellwerk
+jobs:
+  schreiben:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: aktuell.json prüfen und schreiben
+        env:
+          DATEN: ${{ toJSON(github.event.client_payload.aktuell) }}
+        run: |
+          printf '%s' "$DATEN" > neu.json
+          jq -e '.werk == "wiso-netzplan-stellwerk" and (.termine|type=="array") and (.nachrichten|type=="array") and (.ferien|type=="array") and (.pruefungen|type=="array")' neu.json > /dev/null
+          jq . neu.json > aktuell.json
+          rm neu.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add aktuell.json
+          git diff --cached --quiet || git commit -m "Stellwerk: Stand $(jq -r .stand aktuell.json)"
+          git push
