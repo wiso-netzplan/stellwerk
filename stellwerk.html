@@ -165,8 +165,17 @@ function zeigeVorschau(){const k=$('#alsKlasse').value;
 // ---- Verbindung zu GitHub ----
 const status=(t,art)=>{const s=$('#status');s.textContent=t;s.className='status'+(art?' '+art:'')};
 $('#ablage').value=LS.get('ablage','wiso-netzplan/stellwerk');
-$('#schluessel').value=LS.get('schluessel','');
-$('#geraet').textContent=LS.get('schluessel','')?'Schlüssel auf diesem Gerät gespeichert':'';
+/* Sicherung (Prüfung 09.11.2026): Als lokale Datei teilen sich in Chrome und Edge alle lokal geöffneten HTML-Dateien
+   denselben Speicher. Dort merkt sich das Stellwerk den Schlüssel gar nicht (nur im Eingabefeld, solange die Seite offen ist)
+   und entfernt einen früher gespeicherten. Dauerhaft merken nur unter der eigenen Adresse (GitHub Pages). */
+const LOKAL=location.protocol==='file:';
+const SK={get:()=>{if(LOKAL)return '';try{return LS.get('schluessel','')||''}catch(e){return ''}},
+ set:v=>{if(!LOKAL)LS.set('schluessel',v)},
+ weg:()=>{try{sessionStorage.removeItem('stellwerk-schluessel')}catch(e){}LS.weg('schluessel')}};
+if(LOKAL)SK.weg();
+const merkText=()=>LOKAL?'Als lokale Datei merkt sich das Stellwerk den Schlüssel nicht, nach dem Neuladen fügst du ihn neu ein. Dauerhaft geht es unter https://wiso-netzplan.github.io/stellwerk/stellwerk.html':'Schlüssel auf diesem Gerät gespeichert';
+$('#schluessel').value=SK.get();
+$('#geraet').textContent=SK.get()||LOKAL?merkText():'';
 const ablage=()=>$('#ablage').value.trim().replace(/^https:\/\/github\.com\//,'').replace(/\/$/,'');
 const kopf=()=>{const h={'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};const s=$('#schluessel').value.trim();if(s)h.Authorization='Bearer '+s;return h};
 const b64=s=>{const b=atob(s.replace(/\n/g,''));return new TextDecoder().decode(Uint8Array.from(b,c=>c.charCodeAt(0)))};
@@ -175,14 +184,14 @@ async function holen(){const r=await fetch(`https://api.github.com/repos/${ablag
  if(r.status===401)throw new Error('Der Schlüssel wird nicht angenommen. Ist er abgelaufen oder falsch kopiert?');
  if(!r.ok)throw new Error('GitHub antwortet mit '+r.status+'.');
  const j=await r.json();sha=j.sha;return JSON.parse(b64(j.content))}
-$('#verbinden').onclick=async()=>{LS.set('ablage',ablage());if($('#schluessel').value.trim()){LS.set('schluessel',$('#schluessel').value.trim());$('#geraet').textContent='Schlüssel auf diesem Gerät gespeichert'}
+$('#verbinden').onclick=async()=>{LS.set('ablage',ablage());if($('#schluessel').value.trim()){SK.set($('#schluessel').value.trim());$('#geraet').textContent=merkText()}
  status('Verbinde …');try{const d=await holen();if(d.werk!=='wiso-netzplan-stellwerk')throw new Error('Die Datei aktuell.json hat ein anderes Format.');
   const hatteEntwurf=geladen===null&&JSON.stringify(sauber(D))!==JSON.stringify(sauber(leer()));
   geladen=Object.assign(leer(),d);
   if(hatteEntwurf&&JSON.stringify(sauber(D))!==JSON.stringify(sauber(geladen))){status('Verbunden. Auf diesem Gerät liegt ein Entwurf, der vom Stellwerk abweicht. Er bleibt stehen; „Ins Stellwerk schreiben“ übernimmt ihn. Zum Verwerfen hier tippen.','ok');$('#status').onclick=()=>{D=JSON.parse(JSON.stringify(geladen));zeichne();status('Stand aus dem Stellwerk geladen ('+(geladen.stand||'ohne Zeit')+').','ok');$('#status').onclick=null}}
   else{D=JSON.parse(JSON.stringify(geladen));status('Verbunden. Stand im Stellwerk: '+(geladen.stand?new Date(geladen.stand).toLocaleString('de-DE'):'noch nie geschrieben')+'.','ok')}
   zeichne()}catch(e){status(e.message||String(e),'err')}};
-$('#vergessen').onclick=()=>{LS.weg('schluessel');$('#schluessel').value='';$('#geraet').textContent='';status('Schlüssel von diesem Gerät entfernt.')};
+$('#vergessen').onclick=()=>{SK.weg();$('#schluessel').value='';$('#geraet').textContent='';status('Schlüssel von diesem Gerät entfernt.')};
 
 // Schreiben über den Automaten der Ablage (im Verlauf steht github-actions, nicht dein Konto)
 function pruefen(){const f=[];
