@@ -1,37 +1,38 @@
 {
-  "werk": "wiso-netzplan-stellwerk",
-  "version": 1,
-  "stand": "2026-11-09T02:00:00Z",
-  "termine": [],
-  "nachrichten": [],
   "ferien": [
     {
+      "bis": "2026-10-24",
       "name": "Herbstferien",
-      "von": "2026-10-12",
-      "bis": "2026-10-24"
+      "von": "2026-10-12"
     },
     {
+      "bis": "2027-01-09",
       "name": "Weihnachtsferien",
-      "von": "2026-12-23",
-      "bis": "2027-01-09"
+      "von": "2026-12-23"
     },
     {
+      "bis": "2027-02-02",
       "name": "Halbjahresferien",
-      "von": "2027-02-01",
-      "bis": "2027-02-02"
+      "von": "2027-02-01"
     },
     {
+      "bis": "2027-04-03",
       "name": "Osterferien",
-      "von": "2027-03-22",
-      "bis": "2027-04-03"
+      "von": "2027-03-22"
     },
     {
+      "bis": "2027-08-18",
       "name": "Sommerferien",
-      "von": "2027-07-08",
-      "bis": "2027-08-18"
+      "von": "2027-07-08"
     }
   ],
-  "pruefungen": [],
+  "nachrichten": [
+    {
+      "datum": "2026-11-09",
+      "quelle": "",
+      "text": "Alphabetrieb läuft."
+    }
+  ],
   "neu": [
     {
       "datum": "2026-11-09",
@@ -41,5 +42,10 @@
       "datum": "2026-11-05",
       "text": "Alle sieben Linien freigeschaltet"
     }
-  ]
+  ],
+  "pruefungen": [],
+  "stand": "2026-11-09T07:29:25.859Z",
+  "termine": [],
+  "version": 1,
+  "werk": "wiso-netzplan-stellwerk"
 }
