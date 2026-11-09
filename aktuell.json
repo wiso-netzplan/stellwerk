@@ -54,8 +54,22 @@
     }
   ],
   "pruefungen": [],
-  "stand": "2026-11-09T09:52:15.566Z",
+  "stand": "2026-11-09T09:56:50.140Z",
   "termine": [
+    {
+      "art": "Projekt",
+      "datum": "2026-11-12",
+      "halte": [],
+      "klasse": "BFSHK25",
+      "titel": "Kurator-Dossier"
+    },
+    {
+      "art": "Abgabe",
+      "datum": "2026-11-13",
+      "halte": [],
+      "klasse": "BFSH26",
+      "titel": "Praktikumsberichte"
+    },
     {
       "art": "Klausur",
       "datum": "2026-12-03",
