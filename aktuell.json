@@ -54,8 +54,15 @@
     }
   ],
   "pruefungen": [],
-  "stand": "2026-11-09T09:51:25.566Z",
+  "stand": "2026-11-09T09:52:15.566Z",
   "termine": [
+    {
+      "art": "Klausur",
+      "datum": "2026-12-03",
+      "halte": [],
+      "klasse": "MFA25.1",
+      "titel": "Europäische Union"
+    },
     {
       "art": "Klausur",
       "datum": "2026-12-16",
