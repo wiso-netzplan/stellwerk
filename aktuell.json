@@ -1,0 +1,45 @@
+{
+  "werk": "wiso-netzplan-stellwerk",
+  "version": 1,
+  "stand": "2026-11-09T02:00:00Z",
+  "termine": [],
+  "nachrichten": [],
+  "ferien": [
+    {
+      "name": "Herbstferien",
+      "von": "2026-10-12",
+      "bis": "2026-10-24"
+    },
+    {
+      "name": "Weihnachtsferien",
+      "von": "2026-12-23",
+      "bis": "2027-01-09"
+    },
+    {
+      "name": "Halbjahresferien",
+      "von": "2027-02-01",
+      "bis": "2027-02-02"
+    },
+    {
+      "name": "Osterferien",
+      "von": "2027-03-22",
+      "bis": "2027-04-03"
+    },
+    {
+      "name": "Sommerferien",
+      "von": "2027-07-08",
+      "bis": "2027-08-18"
+    }
+  ],
+  "pruefungen": [],
+  "neu": [
+    {
+      "datum": "2026-11-09",
+      "text": "Neue Startseite: der fahrende Wagen"
+    },
+    {
+      "datum": "2026-11-05",
+      "text": "Alle sieben Linien freigeschaltet"
+    }
+  ]
+}
