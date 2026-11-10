@@ -12,6 +12,8 @@ Aufrufe (nur Standardbibliothek, schreibt nur aktuell.json):
 Grundsätze (Eike, 10.11.2026): mehrmals täglich, ohne Freigabe, ohne KI, kein Filter nach Themen.
 Die Auswahl trifft die Redaktion: übernommen wird die Spitze des Startseiten-Feeds der tagesschau
 in ihrer Reihenfolge, nur Titel, Quelle und Link, nie Anreißer oder Bilder.
+Dazu kommt der eigene „Heute“-Kalender (werkzeug/kalender.json): höchstens ein Satz zum Tag und der
+Countdown zur nächsten Wahl, beide mit der Quelle „Kalender · WiSo-Netzplan“.
 """
 import datetime as dt
 import html
@@ -46,6 +48,10 @@ HOECHSTENS = 8      # mehr fasst die Laufschrift im Wagen nicht (das Paket schne
 BPB_TAGE = 7        # ein bpb-Beitrag bleibt höchstens so lange stehen
 PROTOKOLL = 60
 GESPERRT = 300
+KALENDER = 'werkzeug/kalender.json'
+KALENDER_QUELLE = 'Kalender · WiSo-Netzplan'
+MONATE = ('Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober',
+          'November', 'Dezember')
 
 
 def jetzt():
@@ -73,7 +79,11 @@ def text(s, n=160):
 
 
 def link(u):
-    """Nur https auf die feste Quellenliste; Anhänge zur Zählung (?at_medium=…) fallen weg."""
+    """Nur https auf die feste Quellenliste; Anhänge zur Zählung (?at_medium=…) fallen weg.
+    Kalendereinträge tragen statt eines Links eine Kennung (kalender:2027-01-19, wahl:2027-05-30),
+    damit die Notbremse auch sie entfernen kann."""
+    if re.fullmatch(r'(kalender|wahl):\d{4}-\d\d-\d\d', (u or '').strip()):
+        return u.strip()
     try:
         p = urllib.parse.urlsplit((u or '').strip())
     except ValueError:
@@ -119,6 +129,30 @@ def eintraege(urls, quelle):
     return [], fehler
 
 
+def kalender(heute=None):
+    """Die Kalendereinträge für heute: der Satz zum Tag und der Countdown zur nächsten Wahl."""
+    heute = heute or jetzt().date()
+    with open(KALENDER, encoding='utf-8') as f:
+        k = json.load(f)
+    aus = []
+    for t in k.get('tage', []):
+        if t['tag'] == heute.strftime('%m-%d'):
+            s = t['text'].replace('{n}', str(heute.year - t['jahr'])) if t.get('jahr') else t['text']
+            aus.append({'text': text(s), 'link': f'kalender:{heute.isoformat()}'})
+            break
+    for w in sorted(k.get('wahlen', []), key=lambda w: w['datum']):
+        tag = dt.date.fromisoformat(w['datum'])
+        n = (tag - heute).days
+        if 0 <= n <= w.get('vorlauf', 7):
+            vorn = ('Heute' if n == 0 else 'Morgen' if n == 1 else
+                    f'Noch {n} Tage: Am {tag.day}. {MONATE[tag.month - 1]}')
+            aus.append({'text': text(f"{vorn} {w['wer']}."), 'link': f"wahl:{w['datum']}"})
+            break
+    for m in aus:
+        m.update({'quelle': KALENDER_QUELLE, 'auto': True, 'datum': heute.isoformat(), 'zeit': None, 'art': 'kalender'})
+    return aus
+
+
 def automatik(d):
     a = d.get('automatik')
     if not isinstance(a, dict):
@@ -144,7 +178,8 @@ def zusammensetzen(d):
     if a['an']:
         frei = [m for m in a['meldungen'] if m['link'] not in a['gesperrt']]
         # Entfernt Eike eine Meldung, rückt die nächste der Startseite nach (der Automat hält einige in Reserve).
-        auto = [m for m in frei if m.get('art') == 'spitze'][:SPITZE] + [m for m in frei if m.get('art') != 'spitze']
+        auto = ([m for m in frei if m.get('art') == 'kalender'] + [m for m in frei if m.get('art') == 'spitze'][:SPITZE]
+                + [m for m in frei if m.get('art') == 'bpb'])
     d['nachrichten'] = [{k: v for k, v in m.items() if k != 'art'} for m in hand + auto][:HOECHSTENS]
 
 
@@ -181,10 +216,15 @@ def holen(immer=False):
         m['art'] = 'spitze'
     for m in bp:
         m['art'] = 'bpb'
-    meldungen = neu + bp
+    try:
+        kal = kalender()
+    except Exception as e:  # noqa: BLE001 – ein Fehler im Kalender darf die Nachrichten nicht aufhalten
+        kal = []
+        print('Kalender:', type(e).__name__, e)
+    meldungen = kal + neu + bp
     for m in meldungen:
         m.pop('_z', None)
-    sichtbar = {m['link'] for m in meldungen[:SPITZE]} | {m['link'] for m in bp}
+    sichtbar = {m['link'] for m in neu[:SPITZE]} | {m['link'] for m in bp + kal}
     hinzu = [m for m in meldungen if m['link'] not in vorher and m['link'] in sichtbar]
     if [m['link'] for m in meldungen] == vorher and [m['text'] for m in meldungen] == [m['text'] for m in a['meldungen']]:
         print('Unverändert.')
