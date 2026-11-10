@@ -49,6 +49,8 @@ BPB_TAGE = 7        # ein bpb-Beitrag bleibt höchstens so lange stehen
 PROTOKOLL = 60
 GESPERRT = 300
 KALENDER = 'werkzeug/kalender.json'
+HALTE = 'werkzeug/halte.json'
+HALT_FORM = re.compile(r'[A-Z]{2}-\d\d/[a-z0-9-]+')
 KALENDER_QUELLE = 'Kalender · WiSo-Netzplan'
 MONATE = ('Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober',
           'November', 'Dezember')
@@ -129,6 +131,19 @@ def eintraege(urls, quelle):
     return [], fehler
 
 
+_REGELN = None
+
+
+def halt_fuer(titel):
+    """„Mehr dazu im Netzplan“: erster Halt aus werkzeug/halte.json, dessen Wort in der Schlagzeile steht."""
+    global _REGELN
+    if _REGELN is None:
+        with open(HALTE, encoding='utf-8') as f:
+            _REGELN = [(h, re.compile(r'(?<![\w-])(?:' + '|'.join(ws) + r')(?![\w])', re.I))
+                       for h, ws in json.load(f)['regeln'] if HALT_FORM.fullmatch(h)]
+    return next((h for h, rx in _REGELN if rx.search(titel or '')), None)
+
+
 def kalender(heute=None):
     """Die Kalendereinträge für heute: der Satz zum Tag und der Countdown zur nächsten Wahl."""
     heute = heute or jetzt().date()
@@ -138,7 +153,7 @@ def kalender(heute=None):
     for t in k.get('tage', []):
         if t['tag'] == heute.strftime('%m-%d'):
             s = t['text'].replace('{n}', str(heute.year - t['jahr'])) if t.get('jahr') else t['text']
-            aus.append({'text': text(s), 'link': f'kalender:{heute.isoformat()}'})
+            aus.append({'text': text(s), 'link': f'kalender:{heute.isoformat()}', 'halt': t.get('halt')})
             break
     for w in sorted(k.get('wahlen', []), key=lambda w: w['datum']):
         tag = dt.date.fromisoformat(w['datum'])
@@ -146,9 +161,11 @@ def kalender(heute=None):
         if 0 <= n <= w.get('vorlauf', 7):
             vorn = ('Heute' if n == 0 else 'Morgen' if n == 1 else
                     f'Noch {n} Tage: Am {tag.day}. {MONATE[tag.month - 1]}')
-            aus.append({'text': text(f"{vorn} {w['wer']}."), 'link': f"wahl:{w['datum']}"})
+            aus.append({'text': text(f"{vorn} {w['wer']}."), 'link': f"wahl:{w['datum']}", 'halt': w.get('halt')})
             break
     for m in aus:
+        if not (m['halt'] and HALT_FORM.fullmatch(m['halt'])):
+            m.pop('halt')
         m.update({'quelle': KALENDER_QUELLE, 'auto': True, 'datum': heute.isoformat(), 'zeit': None, 'art': 'kalender'})
     return aus
 
@@ -224,9 +241,17 @@ def holen(immer=False):
     meldungen = kal + neu + bp
     for m in meldungen:
         m.pop('_z', None)
+    for m in neu + bp:
+        try:
+            h = halt_fuer(m['text'])
+        except Exception as e:  # noqa: BLE001 – ohne Haltkatalog gibt es eben keinen Verweis
+            h = None
+            print('Haltkatalog:', type(e).__name__, e)
+        if h:
+            m['halt'] = h
     sichtbar = {m['link'] for m in neu[:SPITZE]} | {m['link'] for m in bp + kal}
     hinzu = [m for m in meldungen if m['link'] not in vorher and m['link'] in sichtbar]
-    if [m['link'] for m in meldungen] == vorher and [m['text'] for m in meldungen] == [m['text'] for m in a['meldungen']]:
+    if [(m['link'], m['text'], m.get('halt')) for m in meldungen] == [(m['link'], m['text'], m.get('halt')) for m in a['meldungen']]:
         print('Unverändert.')
         return
     a['meldungen'] = meldungen
@@ -293,6 +318,7 @@ def pruef(d):
         assert isinstance(n.get('quelle', ''), str) and len(n.get('quelle') or '') <= 40
         if n.get('auto'):
             assert link(n.get('link')) == n['link']
+        assert n.get('halt') is None or HALT_FORM.fullmatch(n['halt'])
     a = d.get('automatik', {})
     for m in a.get('meldungen', []):
         assert link(m.get('link')) == m['link'] and 0 < len(m['text']) <= 160
