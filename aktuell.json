@@ -1,4 +1,125 @@
 {
+  "automatik": {
+    "an": true,
+    "gesperrt": [],
+    "meldungen": [
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-10",
+        "link": "https://www.tagesschau.de/wirtschaft/maschinenbaugipfel-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Maschinenbauer \"fassungslos\" über Bundesregierung",
+        "zeit": "16:43"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-10",
+        "link": "https://www.tagesschau.de/wirtschaft/technologie/maschinenbauer-boom-kuenstliche-intelligenz-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Maschinenbau will mit Künstlicher Intelligenz aus der Krise",
+        "zeit": "11:36"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-10",
+        "link": "https://www.tagesschau.de/ausland/europa/ukraine-gespraeche-abu-dhabi-104.html",
+        "quelle": "tagesschau.de",
+        "text": "Ukraine-Verhandlungen: \"Beide Seiten stehen unter enormem Zugzwang\"",
+        "zeit": "15:18"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-10",
+        "link": "https://www.tagesschau.de/inland/innenpolitik/deutschland-rolle-ukraine-gespraeche-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Warum sitzt Deutschland in Abu Dhabi nicht am Verhandlungstisch?",
+        "zeit": "15:15"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-10",
+        "link": "https://www.tagesschau.de/ausland/asien/ukraine-verhandlungen-abu-dhabi-104.html",
+        "quelle": "tagesschau.de",
+        "text": "Was von den Ukraine-Gesprächen in Abu Dhabi zu erwarten ist",
+        "zeit": "11:48"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-10",
+        "link": "https://www.tagesschau.de/ausland/europa/ukraine-russland-angriffe-206.html",
+        "quelle": "tagesschau.de",
+        "text": "Zwei Tote bei russischen Luftangriffen",
+        "zeit": "15:42"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-10",
+        "link": "https://www.tagesschau.de/faktenfinder/ukraine-angebliches-foltergefaengnis-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Proteste vor Haus bei Kiew: Keine Belege für ein ukrainisches Foltergefängnis",
+        "zeit": "15:22"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-10",
+        "link": "https://www.tagesschau.de/ausland/amerika/usa-hegseth-amtsenthebungsverfahren-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Pentagon-Chef Hegseth sieht in Amtsenthebungsantrag \"Schauprozess\"",
+        "zeit": "16:51"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-10",
+        "link": "https://www.tagesschau.de/ausland/amerika/usa-masern-102.html",
+        "quelle": "tagesschau.de",
+        "text": "Masernkrise in den USA: Mehr Verunsicherung, mehr Infektionen",
+        "zeit": "13:13"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-10",
+        "link": "https://www.tagesschau.de/ausland/wadephul-iran-102.html",
+        "quelle": "tagesschau.de",
+        "text": "Wadephul warnt Iran vor hybriden Angriffen",
+        "zeit": "17:51"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-10",
+        "link": "https://www.tagesschau.de/inland/regional/mecklenburgvorpommern/rot-rot-gruen-in-mv-setzt-auf-zusammenhalt-zuversicht-und-zukunft,mvlandtag-114.html",
+        "quelle": "tagesschau.de",
+        "text": "Mecklenburg-Vorpommern: Rot-Rot-Grün einigt sich auf Koalitionsvertrag",
+        "zeit": "17:38"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-10",
+        "link": "https://www.tagesschau.de/wirtschaft/verbraucher/e-autos-kaufpraemie-bundesregierung-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Bund will offenbar E-Auto-Prämie um 917 Millionen Euro aufstocken",
+        "zeit": "13:11"
+      }
+    ],
+    "protokoll": [
+      {
+        "text": "6 neu: Maschinenbauer \"fassungslos\" über Bundesregierung · Maschinenbau will mit Künstlicher Intelligenz aus der Krise · Ukraine-Verhandlungen: \"Beide Seiten stehen unter enormem Zugzwang\" · Warum sitzt Deutschland in Abu Dhabi nicht am Verhandlungstisch? · Was von den Ukraine-Gesprächen in Abu…",
+        "zeit": "2026-11-10 21:53"
+      }
+    ],
+    "stand": "2026-11-10T21:53:15+01:00"
+  },
   "ferien": [
     {
       "bis": "2026-10-24",
@@ -26,7 +147,56 @@
       "von": "2027-07-08"
     }
   ],
-  "nachrichten": [],
+  "nachrichten": [
+    {
+      "auto": true,
+      "datum": "2026-11-10",
+      "link": "https://www.tagesschau.de/wirtschaft/maschinenbaugipfel-100.html",
+      "quelle": "tagesschau.de",
+      "text": "Maschinenbauer \"fassungslos\" über Bundesregierung",
+      "zeit": "16:43"
+    },
+    {
+      "auto": true,
+      "datum": "2026-11-10",
+      "link": "https://www.tagesschau.de/wirtschaft/technologie/maschinenbauer-boom-kuenstliche-intelligenz-100.html",
+      "quelle": "tagesschau.de",
+      "text": "Maschinenbau will mit Künstlicher Intelligenz aus der Krise",
+      "zeit": "11:36"
+    },
+    {
+      "auto": true,
+      "datum": "2026-11-10",
+      "link": "https://www.tagesschau.de/ausland/europa/ukraine-gespraeche-abu-dhabi-104.html",
+      "quelle": "tagesschau.de",
+      "text": "Ukraine-Verhandlungen: \"Beide Seiten stehen unter enormem Zugzwang\"",
+      "zeit": "15:18"
+    },
+    {
+      "auto": true,
+      "datum": "2026-11-10",
+      "link": "https://www.tagesschau.de/inland/innenpolitik/deutschland-rolle-ukraine-gespraeche-100.html",
+      "quelle": "tagesschau.de",
+      "text": "Warum sitzt Deutschland in Abu Dhabi nicht am Verhandlungstisch?",
+      "zeit": "15:15"
+    },
+    {
+      "auto": true,
+      "datum": "2026-11-10",
+      "link": "https://www.tagesschau.de/ausland/asien/ukraine-verhandlungen-abu-dhabi-104.html",
+      "quelle": "tagesschau.de",
+      "text": "Was von den Ukraine-Gesprächen in Abu Dhabi zu erwarten ist",
+      "zeit": "11:48"
+    },
+    {
+      "auto": true,
+      "datum": "2026-11-10",
+      "link": "https://www.tagesschau.de/ausland/europa/ukraine-russland-angriffe-206.html",
+      "quelle": "tagesschau.de",
+      "text": "Zwei Tote bei russischen Luftangriffen",
+      "zeit": "15:42"
+    }
+  ],
   "neu": [
     {
       "datum": "2026-11-09",
