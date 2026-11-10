@@ -26,23 +26,7 @@
       "von": "2027-07-08"
     }
   ],
-  "nachrichten": [
-    {
-      "datum": "2026-11-09",
-      "quelle": "https://www.tagesschau.de/ausland/europa",
-      "text": "Todesschütze von Krakau ist tot."
-    },
-    {
-      "datum": "2026-11-09",
-      "quelle": "https://www.tagesschau.de/ausland/amerik",
-      "text": "Untersuchung gegen Nvidia-Chef Huang wegen Affäre mit mutmaßlicher chinesischer Spionin"
-    },
-    {
-      "datum": "2026-11-08",
-      "quelle": "https://www.tagesschau.de/inland/innenpo",
-      "text": "Merz will Aigner als Bundespräsidentin vorschlagen"
-    }
-  ],
+  "nachrichten": [],
   "neu": [
     {
       "datum": "2026-11-09",

@@ -1,27 +1,30 @@
 # Stellwerk-Automat: schreibt aktuell.json, wenn die Eingabeseite einen Auftrag schickt.
 # Im Verlauf steht damit github-actions, nicht das Konto der Lehrkraft.
+#   stellwerk  – Speichern aus der Eingabeseite (Termine, Prüfungen, Ferien, eigene Nachrichten …).
+#                Die automatischen Nachrichten und die Automatik-Einstellungen bleiben dabei erhalten.
+#   automatik  – Notbremse: Automatik aus/an, eine Meldung entfernen oder wieder zulassen. Wirkt sofort.
 name: Stellwerk
 on:
   repository_dispatch:
-    types: [stellwerk]
+    types: [stellwerk, automatik]
 permissions:
   contents: write
-concurrency: stellwerk
+concurrency:
+  # Zwei Speichern hintereinander: das neuere gewinnt. Notbremse-Aufträge laufen alle einzeln.
+  group: ${{ github.event.action == 'stellwerk' && 'stellwerk' || format('automatik-{0}', github.run_id) }}
 jobs:
   schreiben:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: aktuell.json prüfen und schreiben
+      - name: Auftrag übernehmen
         env:
-          DATEN: ${{ toJSON(github.event.client_payload.aktuell) }}
+          AUFTRAG: ${{ github.event.action == 'stellwerk' && toJSON(github.event.client_payload.aktuell) || toJSON(github.event.client_payload) }}
+          ART: ${{ github.event.action }}
         run: |
-          printf '%s' "$DATEN" > neu.json
-          jq -e '.werk == "wiso-netzplan-stellwerk" and (.termine|type=="array") and (.nachrichten|type=="array") and (.ferien|type=="array") and (.pruefungen|type=="array")' neu.json > /dev/null
-          jq . neu.json > aktuell.json
-          rm neu.json
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add aktuell.json
-          git diff --cached --quiet || git commit -m "Stellwerk: Stand $(jq -r .stand aktuell.json)"
-          git push
+          printf '%s' "$AUFTRAG" > "$RUNNER_TEMP/auftrag.json"
+          if [ "$ART" = stellwerk ]; then
+            werkzeug/schreiben.sh "Stellwerk: Stand $(jq -r .stand "$RUNNER_TEMP/auftrag.json")" stellwerk "$RUNNER_TEMP/auftrag.json"
+          else
+            werkzeug/schreiben.sh "Stellwerk: Automatik $(jq -r .aktion "$RUNNER_TEMP/auftrag.json")" aktion "$RUNNER_TEMP/auftrag.json"
+          fi
