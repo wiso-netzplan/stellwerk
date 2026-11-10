@@ -7,6 +7,7 @@ Eingabeseite und Datenablage für den Wagen im WiSo-Netzplan. Alles hier ist öf
 - `.github/workflows/stellwerk.yml` – schreibt Aufträge der Eingabeseite (Speichern, Notbremse)
 - `.github/workflows/nachrichten.yml` – Nachrichten-Automat, stündlich von 6 bis 22 Uhr
 - `werkzeug/nachrichten.py` – Logik beider Automaten (nur Python-Standardbibliothek)
+- `werkzeug/kalender.json` – Sätze des „Heute“-Kalenders und Wahltermine
 
 ## Nachrichten-Automat (seit 10.11.2026)
 
@@ -14,6 +15,11 @@ Eingabeseite und Datenablage für den Wagen im WiSo-Netzplan. Alles hier ist öf
 nur Titel, Quelle und Link. Sendungen, Videoausschnitte, Bildergalerien, Podcasts und Wetter aus dem Feed
 überspringt er; nach Themen filtert er nicht. Ersatz bei Ausfall: Deutschlandfunk-Nachrichten.
 Dazu der neueste Beitrag der bpb-Reihe „Hintergrund aktuell“ (höchstens sieben Tage alt, CC BY-NC-ND 4.0).
+
+„Heute“-Kalender (`werkzeug/kalender.json`): an 33 Tagen im Jahr ein Satz zu einem Ereignis („Heute vor 108 Jahren …“,
+die Jahre rechnet der Automat aus) und vor Wahlen ein Countdown („Noch 5 Tage: Am 25. April wählt …“, Landtag ab
+sieben, Bremen ab 21 Tagen vorher). Er steht vor den tagesschau-Meldungen, Quelle „Kalender · WiSo-Netzplan“.
+Neue Wahltermine trägt man in `wahlen` ein, sobald sie amtlich sind.
 
 Eigene Nachrichten aus dem Stellwerk stehen in der Laufschrift vorn, zusammen höchstens acht.
 Notbremse im Stellwerk: „Entfernen“ (die Meldung kommt nicht wieder, die nächste rückt nach) und „Automatik aus“.
