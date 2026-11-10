@@ -31,10 +31,17 @@ UA = {'User-Agent': 'wiso-netzplan-stellwerk/1.0 (+https://github.com/wiso-netzp
 # Feste Quellenliste. Links werden nur auf diese Hosts und nur mit https übernommen.
 TAGESSCHAU = ['https://www.tagesschau.de/index~rss2.xml', 'https://www.tagesschau.de/xml/rss2/']
 DLF = ['https://www.deutschlandfunk.de/nachrichten-100.rss']
-BPB = ['https://www.bpb.de/rss-feed/hintergrund-aktuell']
+BPB = ['https://www.bpb.de/rss-feed/230153.rss']  # „Hintergrund aktuell“, CC BY-NC-ND 4.0
 HOSTS = {'www.tagesschau.de': 'tagesschau.de', 'www.deutschlandfunk.de': 'deutschlandfunk.de', 'www.bpb.de': 'bpb.de'}
 
+# Der Startseiten-Feed enthält neben den Meldungen auch Sendungen, Videoausschnitte, Bildergalerien, Podcasts
+# und das Wetter. Diese Formate (kein Thema!) überspringt der Automat, die Meldungen selbst filtert er nicht.
+FORMATE = ('/tagesschau_20_uhr/', '/tagesthemen/', '/tagesschau_in_100_sekunden/', '/tagesschau/',
+           '/tagesschau_in_einfacher_sprache/', '/tagesschau_mit_gebaerdensprache/', '/multimedia/', '/wetter/',
+           '/video-', '/audio-', '/podcast')
+
 SPITZE = 6          # oberste Meldungen der Startseite
+RESERVE = 6         # rücken nach, wenn Eike eine Meldung entfernt
 HOECHSTENS = 8      # mehr fasst die Laufschrift im Wagen nicht (das Paket schneidet nach acht ab)
 BPB_TAGE = 7        # ein bpb-Beitrag bleibt höchstens so lange stehen
 PROTOKOLL = 60
@@ -96,7 +103,7 @@ def eintraege(urls, quelle):
         aus, gesehen = [], set()
         for it in root.iter('item'):
             t, l = text(it.findtext('title')), link(it.findtext('link'))
-            if not t or not l or l in gesehen:
+            if not t or not l or l in gesehen or any(f in urllib.parse.urlsplit(l).path for f in FORMATE):
                 continue
             gesehen.add(l)
             try:
@@ -133,8 +140,12 @@ def zusammensetzen(d):
     """Laufschrift = Eikes Hand-Einträge zuerst, dann die automatischen (ohne entfernte), höchstens acht."""
     a = automatik(d)
     hand = [n for n in d.get('nachrichten', []) if isinstance(n, dict) and not n.get('auto')]
-    auto = [m for m in a['meldungen'] if m['link'] not in a['gesperrt']] if a['an'] else []
-    d['nachrichten'] = (hand + auto)[:HOECHSTENS]
+    auto = []
+    if a['an']:
+        frei = [m for m in a['meldungen'] if m['link'] not in a['gesperrt']]
+        # Entfernt Eike eine Meldung, rückt die nächste der Startseite nach (der Automat hält einige in Reserve).
+        auto = [m for m in frei if m.get('art') == 'spitze'][:SPITZE] + [m for m in frei if m.get('art') != 'spitze']
+    d['nachrichten'] = [{k: v for k, v in m.items() if k != 'art'} for m in hand + auto][:HOECHSTENS]
 
 
 def holen(immer=False):
@@ -148,10 +159,10 @@ def holen(immer=False):
         return
     vorher = [m['link'] for m in a['meldungen']]
     ts, f1 = eintraege(TAGESSCHAU, 'tagesschau.de')
-    neu = ts[:SPITZE]
+    neu = ts[:SPITZE + RESERVE]
     if not neu:
         dl, f2 = eintraege(DLF, 'deutschlandfunk.de')
-        neu = dl[:SPITZE]
+        neu = dl[:SPITZE + RESERVE]
         if neu and not any('Ersatz' in p['text'] for p in a['protokoll'][:1]):
             notiz(a, 'tagesschau nicht erreichbar, Ersatz Deutschlandfunk (' + '; '.join(f1) + ')')
         if not neu:
@@ -163,13 +174,18 @@ def holen(immer=False):
             return
     bp, f3 = eintraege(BPB, 'bpb.de')
     grenze = jetzt() - dt.timedelta(days=BPB_TAGE)
-    bp = [m for m in bp if m['_z'] and m['_z'] >= grenze][:1]
+    bp = sorted((m for m in bp if m['_z'] and m['_z'] >= grenze), key=lambda m: m['_z'], reverse=True)[:1]
     if f3:
         print('bpb:', f3)
+    for m in neu:
+        m['art'] = 'spitze'
+    for m in bp:
+        m['art'] = 'bpb'
     meldungen = neu + bp
     for m in meldungen:
         m.pop('_z', None)
-    hinzu = [m for m in meldungen if m['link'] not in vorher]
+    sichtbar = {m['link'] for m in meldungen[:SPITZE]} | {m['link'] for m in bp}
+    hinzu = [m for m in meldungen if m['link'] not in vorher and m['link'] in sichtbar]
     if [m['link'] for m in meldungen] == vorher and [m['text'] for m in meldungen] == [m['text'] for m in a['meldungen']]:
         print('Unverändert.')
         return
@@ -188,8 +204,12 @@ def stellwerk(pfad):
     if not isinstance(neu, dict) or neu.get('werk') != 'wiso-netzplan-stellwerk':
         raise SystemExit('Auftrag hat das falsche Format.')
     alt = lies()
+    neu = {k: neu[k] for k in ('werk', 'version', 'stand', 'termine', 'nachrichten', 'ferien', 'pruefungen', 'neu') if k in neu}
     neu['automatik'] = automatik(alt)  # Einstellungen ändert nur die Notbremse, nie ein Speichern
-    hand = [n for n in neu.get('nachrichten', []) if isinstance(n, dict) and not n.get('auto')]
+    # Eine ältere, noch zwischengespeicherte Eingabeseite kennt das Feld auto nicht und schickt die automatischen
+    # Meldungen als eigene zurück. Was wörtlich einer automatischen Meldung gleicht, gilt deshalb nicht als eigene.
+    autotexte = {m['text'] for m in neu['automatik']['meldungen']}
+    hand = [n for n in neu.get('nachrichten', []) if isinstance(n, dict) and not n.get('auto') and text(n.get('text')) not in autotexte]
     neu['nachrichten'] = [{'text': text(n.get('text')), 'quelle': text(n.get('quelle'), 40),
                            'datum': n.get('datum') or None} for n in hand if text(n.get('text'))][:HOECHSTENS]
     zusammensetzen(neu)

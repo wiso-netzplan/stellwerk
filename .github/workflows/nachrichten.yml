@@ -1,0 +1,20 @@
+# Nachrichten-Automat: holt jede Stunde von 6 bis 22 Uhr (deutsche Zeit) die Spitze der tagesschau-Startseite,
+# ersatzweise die Deutschlandfunk-Nachrichten, dazu den neuesten Beitrag „Hintergrund aktuell“ der bpb.
+# Ohne Freigabe, ohne KI, ohne Filter nach Themen (Eike, 10.11.2026). Notbremse im Stellwerk.
+name: Nachrichten
+on:
+  schedule:
+    - cron: '7 4-21 * * *'   # UTC; das Skript prüft selbst auf 6 bis 22 Uhr in Berlin (Sommer- und Winterzeit)
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: nachrichten
+jobs:
+  holen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Nachrichten holen und schreiben
+        run: werkzeug/schreiben.sh "Nachrichten: $(TZ=Europe/Berlin date '+%d.%m. %H:%M')" holen ${{ github.event_name == 'workflow_dispatch' && '--immer' || '' }}

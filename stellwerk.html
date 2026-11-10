@@ -43,8 +43,13 @@ tr.vorbei td{opacity:.5}
 .leiste .grow{flex:1;min-width:0}
 .vorschau{font:600 14px/1.5 var(--f);background:#1b222d;color:#e9e4d8;border-radius:8px;padding:12px 14px;display:grid;gap:2px}
 .vorschau .k{color:#a9c9e2;font-weight:700}.vorschau .eig{color:#f2b33d}.vorschau .kl{font-size:11px;letter-spacing:.08em;color:#8ea4b6}
+.auto{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:12px}
+.auto h3{font-size:1rem;margin:0}.auto ol{margin:0;padding-left:1.4em;display:grid;gap:6px}.auto li .klein{margin-left:6px}
+.auto li button{margin-left:8px}.auto ul{margin:6px 0 0;padding-left:1.2em;display:grid;gap:4px}
+.an{color:var(--ok);font-weight:600}.aus{color:var(--err);font-weight:600}
 .lauf{font:600 13px var(--mono);color:#f2e8cc;background:#0f131b;padding:6px 10px;border-radius:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 details>summary{cursor:pointer;color:var(--mut)}
+.auto a{color:var(--acc)}#a-schalter[data-aktion=aus]{border-color:var(--err);color:var(--err)}
 </style>
 </head>
 <body>
@@ -74,8 +79,16 @@ details>summary{cursor:pointer;color:var(--mut)}
 </section>
 
 <section class="panel" aria-labelledby="h-nachr">
- <header><h2 id="h-nachr">Nachrichten</h2><span class="klein mut">Laufschrift über der Tafel, höchstens acht.</span><span class="grow"></span><button class="klein" type="button" data-neu="nachrichten">+ Nachricht</button></header>
- <div class="tabelle"><table><thead><tr><th>Text</th><th style="width:160px">Quelle</th><th style="width:150px">Datum</th><th></th></tr></thead><tbody id="t-nachrichten"></tbody></table></div>
+ <header><h2 id="h-nachr">Nachrichten</h2><span class="klein mut">Laufschrift über der Tafel: deine eigenen zuerst, dann die automatischen, zusammen höchstens acht.</span><span class="grow"></span><button class="klein" type="button" data-neu="nachrichten">+ Eigene Nachricht</button></header>
+ <div class="tabelle"><table><thead><tr><th>Eigene Nachricht</th><th style="width:160px">Quelle</th><th style="width:150px">Datum</th><th></th></tr></thead><tbody id="t-nachrichten"></tbody></table></div>
+ <div class="auto" aria-labelledby="h-auto">
+  <div class="zeile"><h3 id="h-auto">Automatisch</h3><span class="klein" id="a-zustand"></span><span class="grow"></span><button class="klein" type="button" id="a-schalter" hidden></button></div>
+  <p class="klein mut" style="margin:0">Jede Stunde von 6 bis 22 Uhr: die obersten Meldungen der tagesschau-Startseite in ihrer Reihenfolge, nur Titel und Link, dazu der neueste Beitrag „Hintergrund aktuell“ der bpb. Fällt die tagesschau aus, springt der Deutschlandfunk ein. „Entfernen“ und „Automatik aus“ wirken sofort, ohne „Ins Stellwerk schreiben“.</p>
+  <ol id="a-liste"></ol>
+  <div class="status" id="a-status" role="status" aria-live="polite"></div>
+  <details id="a-gesperrt-box"><summary id="a-gesperrt-titel">Entfernte Meldungen</summary><ul id="a-gesperrt"></ul></details>
+  <details><summary>Protokoll</summary><ul id="a-protokoll" class="klein"></ul></details>
+ </div>
 </section>
 
 <section class="panel" aria-labelledby="h-ferien">
@@ -120,8 +133,11 @@ const FELDER={termine:{datum:'',klasse:'',art:'Klausur',titel:'',halte:[]},pruef
 // ---- Entwurf: nichts geht verloren, auch ohne Verbindung ----
 function entwurfSichern(){LS.set('entwurf',JSON.stringify(D));const g=geladen&&JSON.stringify(sauber(geladen))===JSON.stringify(sauber(D));
  $('#entwurf').textContent=g?'Alles wie im Stellwerk.':'Entwurf auf diesem Gerät gesichert, noch nicht im Stellwerk.';zeigeVorschau()}
-function sauber(d){const x=JSON.parse(JSON.stringify(d));delete x.stand;return x}
-{try{const e=JSON.parse(LS.get('entwurf','null'));if(e&&e.werk==='wiso-netzplan-stellwerk')D=Object.assign(leer(),e)}catch(e){}}
+function sauber(d){const x=JSON.parse(JSON.stringify(d));delete x.stand;delete x.automatik;x.nachrichten=(x.nachrichten||[]).filter(n=>!n.auto);return x}
+const handN=()=>D.nachrichten.map((n,i)=>[n,i]).filter(([n])=>!n.auto);
+// Automatische Meldungen und Automatik-Einstellungen kommen immer frisch aus dem Stellwerk, nie aus dem Entwurf.
+function autoUebernehmen(x){D.automatik=x.automatik||null;D.nachrichten=D.nachrichten.filter(n=>!n.auto).concat((x.nachrichten||[]).filter(n=>n.auto))}
+{try{const e=JSON.parse(LS.get('entwurf','null'));if(e&&e.werk==='wiso-netzplan-stellwerk'){D=Object.assign(leer(),e);D.automatik=null;D.nachrichten=D.nachrichten.filter(n=>!n.auto)}}catch(e){}}
 
 // ---- Tabellen ----
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -137,7 +153,8 @@ function zeichne(){
   <td class="lernstoff"><div class="chips">${(t.halte||[]).map((k,j)=>`<span class="chip"><b>${esc(k.slice(0,2))}</b>${esc(HK[k]?HK[k][3]:k)}<button type="button" data-halt-weg="${i}:${j}" aria-label="Halt entfernen">×</button></span>`).join('')}
    <input type="search" list="halteliste" data-halt-neu="${i}" placeholder="Halt suchen …" aria-label="Halt hinzufügen"></div></td>${loesch('termine',i)}</tr>`).join('')||'<tr><td colspan="6" class="mut">Noch keine Termine.</td></tr>';
  $('#t-pruefungen').innerHTML=D.pruefungen.map((p,i)=>`<tr data-art="pruefungen" data-i="${i}"><td><input type="date" data-f="datum" value="${esc(p.datum)}" aria-label="Datum"></td><td><select data-f="klasse" aria-label="Klasse">${opt(KLASSEN,p.klasse,'Klasse …')}</select></td><td><input type="text" data-f="art" value="${esc(p.art)}" maxlength="60" aria-label="Bezeichnung"></td>${loesch('pruefungen',i)}</tr>`).join('')||'<tr><td colspan="4" class="mut">Noch keine Prüfungen.</td></tr>';
- $('#t-nachrichten').innerHTML=D.nachrichten.map((n,i)=>`<tr data-art="nachrichten" data-i="${i}"><td><input type="text" data-f="text" value="${esc(n.text)}" maxlength="160" aria-label="Text"></td><td><input type="text" data-f="quelle" value="${esc(n.quelle)}" maxlength="40" aria-label="Quelle" placeholder="z. B. tagesschau.de"></td><td><input type="date" data-f="datum" value="${esc(n.datum)}" aria-label="Datum"></td>${loesch('nachrichten',i)}</tr>`).join('')||'<tr><td colspan="4" class="mut">Noch keine Nachrichten.</td></tr>';
+ $('#t-nachrichten').innerHTML=handN().map(([n,i])=>`<tr data-art="nachrichten" data-i="${i}"><td><input type="text" data-f="text" value="${esc(n.text)}" maxlength="160" aria-label="Text"></td><td><input type="text" data-f="quelle" value="${esc(n.quelle)}" maxlength="40" aria-label="Quelle" placeholder="z. B. tagesschau.de"></td><td><input type="date" data-f="datum" value="${esc(n.datum)}" aria-label="Datum"></td>${loesch('nachrichten',i)}</tr>`).join('')||'<tr><td colspan="4" class="mut">Keine eigenen Nachrichten.</td></tr>';
+ zeichneAuto();
  $('#t-ferien').innerHTML=D.ferien.map((f,i)=>`<tr data-art="ferien" data-i="${i}"><td><input type="text" data-f="name" value="${esc(f.name)}" maxlength="30" aria-label="Name"></td><td><input type="date" data-f="von" value="${esc(f.von)}" aria-label="von"></td><td><input type="date" data-f="bis" value="${esc(f.bis)}" aria-label="bis"></td>${loesch('ferien',i)}</tr>`).join('')||'<tr><td colspan="4" class="mut">Noch keine Ferien.</td></tr>';
  $('#t-neu').innerHTML=D.neu.map((n,i)=>`<tr data-art="neu" data-i="${i}"><td><input type="date" data-f="datum" value="${esc(n.datum)}" aria-label="Datum"></td><td><input type="text" data-f="text" value="${esc(n.text)}" maxlength="120" aria-label="Text"></td>${loesch('neu',i)}</tr>`).join('')||'<tr><td colspan="3" class="mut">Noch nichts.</td></tr>';
  entwurfSichern()}
@@ -157,7 +174,8 @@ $('#alsKlasse').addEventListener('change',e=>{LS.set('klasse',e.target.value);ze
 function zeigeVorschau(){const k=$('#alsKlasse').value;
  const tl=D.termine.filter(t=>t.datum&&t.klasse&&t.titel&&tage(t.datum)>=0).sort((a,b)=>(b.klasse===k)-(a.klasse===k)||a.datum.localeCompare(b.datum));
  $('#v-tafel').innerHTML='<span class="kl">NÄCHSTE TERMINE · ALLE KLASSEN</span>'+(tl.slice(0,4).map(t=>`<span>${kurz(t.datum)}  <span class="k ${t.klasse===k?'eig':''}">${esc(t.klasse)}</span>  ${esc(t.art)} · ${esc(t.titel)}</span>`).join('')||'<span>Gerade stehen keine Termine an.</span>');
- $('#v-lauf').textContent='+++ '+(D.nachrichten.filter(n=>n.text).map(n=>n.text).join(' +++ ')||'Gute Fahrt')+' +++';
+ const lauf=handN().map(([n])=>n).concat(D.nachrichten.filter(n=>n.auto)).filter(n=>n.text).slice(0,8);
+ $('#v-lauf').textContent='+++ '+(lauf.map(n=>n.text).join(' +++ ')||'Gute Fahrt')+' +++';
  const f=D.ferien.filter(x=>x.von&&tage(x.bis||x.von)>=0).sort((a,b)=>a.von.localeCompare(b.von)).slice(0,3).map(x=>x.name+' in '+Math.max(0,tage(x.von))+' Tagen');
  const p=D.pruefungen.filter(x=>x.klasse===k&&x.datum&&tage(x.datum)>=0).sort((a,b)=>a.datum.localeCompare(b.datum))[0];
  $('#v-band').textContent='Linienband für '+k+': Heute · '+(f.join(' · ')||'keine Ferien eingetragen')+(p?' · Prüfung in '+tage(p.datum)+' Tagen':'')}
@@ -187,7 +205,7 @@ async function holen(){const r=await fetch(`https://api.github.com/repos/${ablag
 $('#verbinden').onclick=async()=>{LS.set('ablage',ablage());if($('#schluessel').value.trim()){SK.set($('#schluessel').value.trim());$('#geraet').textContent=merkText()}
  status('Verbinde …');try{const d=await holen();if(d.werk!=='wiso-netzplan-stellwerk')throw new Error('Die Datei aktuell.json hat ein anderes Format.');
   const hatteEntwurf=geladen===null&&JSON.stringify(sauber(D))!==JSON.stringify(sauber(leer()));
-  geladen=Object.assign(leer(),d);
+  geladen=Object.assign(leer(),d);autoUebernehmen(geladen);
   if(hatteEntwurf&&JSON.stringify(sauber(D))!==JSON.stringify(sauber(geladen))){status('Verbunden. Auf diesem Gerät liegt ein Entwurf, der vom Stellwerk abweicht. Er bleibt stehen; „Ins Stellwerk schreiben“ übernimmt ihn. Zum Verwerfen hier tippen.','ok');$('#status').onclick=()=>{D=JSON.parse(JSON.stringify(geladen));zeichne();status('Stand aus dem Stellwerk geladen ('+(geladen.stand||'ohne Zeit')+').','ok');$('#status').onclick=null}}
   else{D=JSON.parse(JSON.stringify(geladen));status('Verbunden. Stand im Stellwerk: '+(geladen.stand?new Date(geladen.stand).toLocaleString('de-DE'):'noch nie geschrieben')+'.','ok')}
   zeichne()}catch(e){status(e.message||String(e),'err')}};
@@ -198,12 +216,12 @@ function pruefen(){const f=[];
  D.termine.forEach((t,i)=>{if(!t.datum||!t.klasse||!t.titel.trim())f.push('Termin '+(i+1)+': Datum, Klasse und Titel ausfüllen.')});
  D.pruefungen.forEach((p,i)=>{if(!p.datum||!p.klasse)f.push('Prüfung '+(i+1)+': Datum und Klasse ausfüllen.')});
  D.ferien.forEach((x,i)=>{if(!x.name.trim()||!x.von)f.push('Ferien '+(i+1)+': Name und Beginn ausfüllen.');else if(x.bis&&x.bis<x.von)f.push('Ferien '+(i+1)+': Ende liegt vor dem Beginn.')});
- if(D.nachrichten.filter(n=>n.text.trim()).length>8)f.push('Höchstens acht Nachrichten.');return f}
+ if(handN().filter(([n])=>n.text.trim()).length>8)f.push('Höchstens acht eigene Nachrichten.');return f}
 $('#senden').onclick=async()=>{const f=pruefen();if(f.length){status(f.join(' '),'err');return}
  if(!$('#schluessel').value.trim()){status('Zum Schreiben braucht dieses Gerät einmal den Schlüssel (oben unter Verbindung).','err');$('#schluessel').focus();return}
  const d=JSON.parse(JSON.stringify(D));d.werk='wiso-netzplan-stellwerk';d.version=1;d.stand=new Date().toISOString();
  d.termine=d.termine.map(t=>({datum:t.datum,klasse:t.klasse,art:t.art||'Termin',titel:t.titel.trim(),halte:t.halte||[]})).sort((a,b)=>a.datum.localeCompare(b.datum));
- d.nachrichten=d.nachrichten.filter(n=>n.text.trim()).map(n=>({text:n.text.trim(),quelle:n.quelle.trim(),datum:n.datum||null}));
+ delete d.automatik;d.nachrichten=d.nachrichten.filter(n=>!n.auto&&n.text.trim()).map(n=>({text:n.text.trim(),quelle:n.quelle.trim(),datum:n.datum||null}));
  d.ferien=d.ferien.map(x=>({name:x.name.trim(),von:x.von,bis:x.bis||x.von})).sort((a,b)=>a.von.localeCompare(b.von));
  d.pruefungen=d.pruefungen.map(p=>({klasse:p.klasse,datum:p.datum,art:(p.art||'Abschlussprüfung').trim()}));
  d.neu=d.neu.filter(n=>n.text.trim()).map(n=>({datum:n.datum||null,text:n.text.trim()}));
@@ -217,6 +235,34 @@ $('#senden').onclick=async()=>{const f=pruefen();if(f.length){status(f.join(' ')
    status('Geschrieben ('+new Date(d.stand).toLocaleTimeString('de-DE')+'). Im Wagen erscheint es nach spätestens etwa fünf Minuten, sobald GitHub die öffentliche Datei erneuert hat.','ok');return}}catch(e){}}
   status('Der Auftrag ist angekommen, aber nach zwei Minuten steht noch der alte Stand in der Ablage. Schau unter „Actions“ in der Ablage nach, ob der Automat einen Fehler meldet.','err')}
  catch(e){status(e.message||String(e),'err')}finally{$('#senden').disabled=false}};
+
+// ---- Automatik: Anzeige und Notbremse ----
+const aStatus=(t,art)=>{const s=$('#a-status');s.textContent=t;s.className='status'+(art?' '+art:'')};
+function zeichneAuto(){const a=D.automatik,auto=D.nachrichten.filter(n=>n.auto);
+ const sch=$('#a-schalter');
+ if(!a){$('#a-zustand').textContent=geladen?'Noch nicht gelaufen.':'Nach „Verbinden und laden“ siehst du hier den Stand.';$('#a-zustand').className='klein mut';sch.hidden=true;$('#a-liste').innerHTML='';$('#a-gesperrt-box').hidden=true;$('#a-protokoll').innerHTML='';return}
+ $('#a-zustand').innerHTML=a.an?'<span class="an">läuft</span>'+(a.stand?' · zuletzt neue Meldungen '+esc(new Date(a.stand).toLocaleString('de-DE',{dateStyle:'short',timeStyle:'short'})):''):'<span class="aus">aus</span> · in der Laufschrift stehen nur deine eigenen Nachrichten';
+ $('#a-zustand').className='klein';sch.hidden=false;sch.textContent=a.an?'Automatik aus':'Automatik wieder an';sch.dataset.aktion=a.an?'aus':'an';
+ $('#a-liste').innerHTML=a.an?(auto.map(n=>`<li>${esc(n.text)}<span class="klein mut">${esc(n.quelle)}${n.zeit?' · '+esc(n.zeit):''}</span>${/^https:\/\//.test(n.link||'')?` <a class="klein" href="${esc(n.link)}" target="_blank" rel="noopener noreferrer">öffnen</a>`:''}<button class="klein" type="button" data-auto-weg="${esc(n.link)}">Entfernen</button></li>`).join('')||'<li class="mut">Gerade keine.</li>'):'';
+ const g=a.gesperrt||[];$('#a-gesperrt-box').hidden=!g.length;$('#a-gesperrt-titel').textContent='Entfernte Meldungen ('+g.length+')';
+ $('#a-gesperrt').innerHTML=g.map(l=>`<li><a href="${esc(l)}" target="_blank" rel="noopener noreferrer">${esc(l.replace(/^https:\/\/www\./,''))}</a> <button class="klein" type="button" data-auto-zulassen="${esc(l)}">wieder zulassen</button></li>`).join('');
+ $('#a-protokoll').innerHTML=(a.protokoll||[]).slice(0,30).map(p=>`<li>${esc(p.zeit)} · ${esc(p.text)}</li>`).join('')||'<li>Noch leer.</li>'}
+async function notbremse(aktion,link){
+ if(!$('#schluessel').value.trim()){aStatus('Dafür braucht dieses Gerät einmal den Schlüssel (oben unter Verbindung).','err');$('#schluessel').focus();return}
+ const vorher=JSON.stringify(D.automatik);aStatus('Auftrag wird geschickt …');
+ document.querySelectorAll('.auto button').forEach(b=>b.disabled=true);
+ try{const r=await fetch(`https://api.github.com/repos/${ablage()}/dispatches`,{method:'POST',headers:Object.assign(kopf(),{'Content-Type':'application/json'}),body:JSON.stringify({event_type:'automatik',client_payload:link?{aktion,link}:{aktion}})});
+  if(r.status===401||r.status===403)throw new Error('Der Schlüssel darf hier nicht schreiben.');
+  if(!r.ok&&r.status!==204)throw new Error('GitHub antwortet mit '+r.status+'.');
+  aStatus('Angenommen. Der Automat trägt es ein, das dauert meist unter einer Minute …');
+  for(let n=0;n<24;n++){await new Promise(z=>setTimeout(z,5000));try{const x=await holen();if(JSON.stringify(x.automatik)!==vorher){geladen=Object.assign(leer(),x);autoUebernehmen(geladen);zeichne();
+   aStatus(aktion==='aus'?'Automatik ist aus. Im Wagen verschwinden die automatischen Meldungen nach spätestens etwa fünf Minuten.':aktion==='an'?'Automatik läuft wieder. Die Meldungen stehen sofort wieder in der Laufschrift.':aktion==='entfernen'?'Entfernt. Die Meldung kommt nicht wieder; die nächste der Startseite rückt nach. Im Wagen nach spätestens etwa fünf Minuten.':'Wieder zugelassen.','ok');return}}catch(e){}}
+  aStatus('Der Auftrag ist angekommen, aber nach zwei Minuten hat sich noch nichts geändert. Schau unter „Actions“ in der Ablage nach.','err')}
+ catch(e){aStatus(e.message||String(e),'err')}finally{document.querySelectorAll('.auto button').forEach(b=>b.disabled=false)}}
+$('#a-schalter').onclick=e=>notbremse(e.currentTarget.dataset.aktion);
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.autoWeg)notbremse('entfernen',b.dataset.autoWeg);
+ if(b.dataset.autoZulassen)notbremse('zulassen',b.dataset.autoZulassen)});
 
 // ---- Datei ----
 $('#sichern').onclick=()=>{const d=JSON.parse(JSON.stringify(D));d.stand=d.stand||new Date().toISOString();const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}));a.download='aktuell.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
