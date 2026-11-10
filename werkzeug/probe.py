@@ -1,45 +1,25 @@
-# Einmalige Netzprobe (wird nach dem Bau wieder entfernt): welche Feeds antworten, wie sehen sie aus,
-# und lässt sich ein tagesschau-Artikel in ein Fenster einbetten?
+# Einmalige Netzprobe (wird nach dem Bau wieder entfernt). Runde 2.
 import re, urllib.request, xml.etree.ElementTree as ET
 UA = {'User-Agent': 'wiso-netzplan-stellwerk/1.0 (+https://github.com/wiso-netzplan/stellwerk)'}
-def get(u):
-    r = urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=20)
-    return r.status, dict(r.headers), r.read()
-def feed(u, n=10):
+def get(u, extra=None):
+    r = urllib.request.urlopen(urllib.request.Request(u, headers=dict(UA, **(extra or {}))), timeout=20)
+    return r.status, {k.lower(): v for k, v in r.headers.items()}, r.read()
+s, h, b = get('https://www.tagesschau.de/index~rss2.xml')
+for i, it in enumerate(ET.fromstring(b).iter('item')):
+    print(f'{i:2}', it.findtext('pubDate')[5:22], '|', (it.findtext('title') or '')[:90], '|', (it.findtext('link') or '')[24:110], '| D:', (it.findtext('description') or '')[:60].replace('\n',' '))
+for u in ['https://www.bpb.de/rss-feed/230153.rss']:
+    s, h, b = get(u); r = ET.fromstring(b)
+    print('BPB', u, r.findtext('.//channel/title'))
+    for it in list(r.iter('item'))[:8]: print('   ', it.findtext('pubDate'), '|', it.findtext('title'), '|', it.findtext('link'))
+for u in ['https://www.tagesschau.de/index~rss2.xml', 'https://www.tagesschau.de/api2u/homepage/']:
     try:
-        s, h, b = get(u)
-        root = ET.fromstring(b)
-        items = root.findall('.//item')
-        print(f'OK {s} {u} items={len(items)} type={h.get("Content-Type")}')
-        for it in items[:n]:
-            t = (it.findtext('title') or '').strip(); l = (it.findtext('link') or '').strip(); d = it.findtext('pubDate')
-            print('   ', d, '|', t[:110], '|', l[:140])
-    except Exception as e:
-        print('FEHLER', u, repr(e)[:200])
-for u in ['https://www.tagesschau.de/index~rss2.xml', 'https://www.tagesschau.de/xml/rss2/',
-          'https://www.tagesschau.de/infoservices/alle-meldungen-100~rss2.xml',
-          'https://www.deutschlandfunk.de/nachrichten-100.rss', 'https://www.deutschlandfunk.de/die-nachrichten.353.de.rss']:
-    feed(u)
-for page in ['https://www.tagesschau.de/', 'https://www.bpb.de/kurz-knapp/hintergrund-aktuell/', 'https://www.bpb.de/die-bpb/ueber-uns/service/rss/']:
+        s, h, b = get(u, {'Origin': 'https://example.org'})
+        print('CORS', u, s, h.get('access-control-allow-origin'), h.get('cache-control'))
+    except Exception as e: print('CORS FEHLER', u, e)
+s, h, b = get('https://www.tagesschau.de/api2u/homepage/')
+import json; j = json.loads(b)
+print('API Startseite news:', [ (n.get('title') or '')[:70] for n in j.get('news', [])[:12] ])
+for u in ['https://www.deutschlandfunk.de/bund-will-e-auto-kaufpraemie-fuer-2027-offenbar-verdoppeln-100.html', 'https://www.bpb.de/kurz-knapp/hintergrund-aktuell/', 'https://www.nachrichtenleicht.de/']:
     try:
-        s, h, b = get(page); t = b.decode('utf-8', 'replace')
-        print('SEITE', s, page)
-        for m in re.findall(r'<link[^>]+(?:rss|atom)[^>]*>', t, re.I)[:10]: print('   ALT', m[:200])
-        for m in sorted(set(re.findall(r'href="([^"]*(?:rss|feed)[^"]*)"', t, re.I)))[:30]: print('   HREF', m[:160])
-    except Exception as e:
-        print('FEHLER', page, repr(e)[:200])
-# Einbettbarkeit eines Artikels: Kopfzeilen X-Frame-Options / Content-Security-Policy frame-ancestors
-try:
-    s, h, b = get('https://www.tagesschau.de/index~rss2.xml'); root = ET.fromstring(b)
-    art = root.find('.//item/link').text.strip()
-    s, h, b = get(art)
-    print('ARTIKEL', s, art)
-    for k, v in h.items():
-        if k.lower() in ('x-frame-options', 'content-security-policy', 'content-security-policy-report-only', 'set-cookie'):
-            print('   ', k, ':', v[:400])
-    t = b.decode('utf-8', 'replace')
-    hosts = sorted(set(re.findall(r'<script[^>]+src="(?:https?:)?//([^/"]+)', t)))
-    print('   SKRIPT-HOSTS', hosts)
-    print('   INLINE-SKRIPTE', len(re.findall(r'<script(?![^>]*src)', t)), 'Treffer Messung:', sorted(set(re.findall(r'(ati-host|xiti|agf|ioam|infonline|matomo|piano|google|facebook|etracker|chartbeat|webtrekk)', t, re.I))))
-except Exception as e:
-    print('FEHLER Artikel', repr(e)[:200])
+        s, h, b = get(u); print('FRAME', u[:70], s, 'XFO=', h.get('x-frame-options'), 'CSP-fa=', re.findall(r'frame-ancestors[^;]*', h.get('content-security-policy', '')))
+    except Exception as e: print('FRAME FEHLER', u, e)
