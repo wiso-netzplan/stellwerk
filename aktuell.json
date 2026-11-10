@@ -7,19 +7,19 @@
         "art": "spitze",
         "auto": true,
         "datum": "2026-11-10",
-        "link": "https://www.tagesschau.de/wirtschaft/maschinenbaugipfel-100.html",
+        "link": "https://www.tagesschau.de/ausland/europa/trauermesse-spanien-100.html",
         "quelle": "tagesschau.de",
-        "text": "Maschinenbauer \"fassungslos\" über Bundesregierung",
-        "zeit": "16:43"
+        "text": "Trauermesse nach Zugunglück mit 69 Toten in Spanien",
+        "zeit": "22:04"
       },
       {
         "art": "spitze",
         "auto": true,
         "datum": "2026-11-10",
-        "link": "https://www.tagesschau.de/wirtschaft/technologie/maschinenbauer-boom-kuenstliche-intelligenz-100.html",
+        "link": "https://www.tagesschau.de/ausland/asien/ukraine-russland-krieg-gespraeche-abu-dhabi-100.html",
         "quelle": "tagesschau.de",
-        "text": "Maschinenbau will mit Künstlicher Intelligenz aus der Krise",
-        "zeit": "11:36"
+        "text": "Erster Tag der Ukraine-Gespräche: Keine Ergebnisse, aber Hoffnung für Gefangene",
+        "zeit": "22:08"
       },
       {
         "art": "spitze",
@@ -43,15 +43,6 @@
         "art": "spitze",
         "auto": true,
         "datum": "2026-11-10",
-        "link": "https://www.tagesschau.de/ausland/asien/ukraine-verhandlungen-abu-dhabi-104.html",
-        "quelle": "tagesschau.de",
-        "text": "Was von den Ukraine-Gesprächen in Abu Dhabi zu erwarten ist",
-        "zeit": "11:48"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-10",
         "link": "https://www.tagesschau.de/ausland/europa/ukraine-russland-angriffe-206.html",
         "quelle": "tagesschau.de",
         "text": "Zwei Tote bei russischen Luftangriffen",
@@ -70,28 +61,19 @@
         "art": "spitze",
         "auto": true,
         "datum": "2026-11-10",
-        "link": "https://www.tagesschau.de/ausland/amerika/usa-hegseth-amtsenthebungsverfahren-100.html",
+        "link": "https://www.tagesschau.de/wirtschaft/maschinenbaugipfel-100.html",
         "quelle": "tagesschau.de",
-        "text": "Pentagon-Chef Hegseth sieht in Amtsenthebungsantrag \"Schauprozess\"",
-        "zeit": "16:51"
+        "text": "Maschinenbauer \"fassungslos\" über Bundesregierung",
+        "zeit": "16:43"
       },
       {
         "art": "spitze",
         "auto": true,
         "datum": "2026-11-10",
-        "link": "https://www.tagesschau.de/ausland/amerika/usa-masern-102.html",
+        "link": "https://www.tagesschau.de/wirtschaft/technologie/maschinenbauer-boom-kuenstliche-intelligenz-100.html",
         "quelle": "tagesschau.de",
-        "text": "Masernkrise in den USA: Mehr Verunsicherung, mehr Infektionen",
-        "zeit": "13:13"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-10",
-        "link": "https://www.tagesschau.de/ausland/wadephul-iran-102.html",
-        "quelle": "tagesschau.de",
-        "text": "Wadephul warnt Iran vor hybriden Angriffen",
-        "zeit": "17:51"
+        "text": "Maschinenbau will mit Künstlicher Intelligenz aus der Krise",
+        "zeit": "11:36"
       },
       {
         "art": "spitze",
@@ -106,19 +88,41 @@
         "art": "spitze",
         "auto": true,
         "datum": "2026-11-10",
-        "link": "https://www.tagesschau.de/wirtschaft/verbraucher/e-autos-kaufpraemie-bundesregierung-100.html",
+        "link": "https://www.tagesschau.de/ausland/wadephul-iran-102.html",
         "quelle": "tagesschau.de",
-        "text": "Bund will offenbar E-Auto-Prämie um 917 Millionen Euro aufstocken",
-        "zeit": "13:11"
+        "text": "Wadephul warnt Iran vor hybriden Angriffen",
+        "zeit": "17:51"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-10",
+        "link": "https://www.tagesschau.de/ausland/amerika/usa-hegseth-amtsenthebungsverfahren-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Pentagon-Chef Hegseth sieht in Amtsenthebungsantrag \"Schauprozess\"",
+        "zeit": "16:51"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-10",
+        "link": "https://www.tagesschau.de/ausland/amerika/usa-masern-102.html",
+        "quelle": "tagesschau.de",
+        "text": "Masernkrise in den USA: Mehr Verunsicherung, mehr Infektionen",
+        "zeit": "13:13"
       }
     ],
     "protokoll": [
+      {
+        "text": "2 neu: Trauermesse nach Zugunglück mit 69 Toten in Spanien · Erster Tag der Ukraine-Gespräche: Keine Ergebnisse, aber Hoffnung für Gefangene",
+        "zeit": "2026-11-10 22:51"
+      },
       {
         "text": "6 neu: Maschinenbauer \"fassungslos\" über Bundesregierung · Maschinenbau will mit Künstlicher Intelligenz aus der Krise · Ukraine-Verhandlungen: \"Beide Seiten stehen unter enormem Zugzwang\" · Warum sitzt Deutschland in Abu Dhabi nicht am Verhandlungstisch? · Was von den Ukraine-Gesprächen in Abu…",
         "zeit": "2026-11-10 21:53"
       }
     ],
-    "stand": "2026-11-10T21:53:15+01:00"
+    "stand": "2026-11-10T22:51:18+01:00"
   },
   "ferien": [
     {
@@ -151,18 +155,18 @@
     {
       "auto": true,
       "datum": "2026-11-10",
-      "link": "https://www.tagesschau.de/wirtschaft/maschinenbaugipfel-100.html",
+      "link": "https://www.tagesschau.de/ausland/europa/trauermesse-spanien-100.html",
       "quelle": "tagesschau.de",
-      "text": "Maschinenbauer \"fassungslos\" über Bundesregierung",
-      "zeit": "16:43"
+      "text": "Trauermesse nach Zugunglück mit 69 Toten in Spanien",
+      "zeit": "22:04"
     },
     {
       "auto": true,
       "datum": "2026-11-10",
-      "link": "https://www.tagesschau.de/wirtschaft/technologie/maschinenbauer-boom-kuenstliche-intelligenz-100.html",
+      "link": "https://www.tagesschau.de/ausland/asien/ukraine-russland-krieg-gespraeche-abu-dhabi-100.html",
       "quelle": "tagesschau.de",
-      "text": "Maschinenbau will mit Künstlicher Intelligenz aus der Krise",
-      "zeit": "11:36"
+      "text": "Erster Tag der Ukraine-Gespräche: Keine Ergebnisse, aber Hoffnung für Gefangene",
+      "zeit": "22:08"
     },
     {
       "auto": true,
@@ -183,18 +187,18 @@
     {
       "auto": true,
       "datum": "2026-11-10",
-      "link": "https://www.tagesschau.de/ausland/asien/ukraine-verhandlungen-abu-dhabi-104.html",
-      "quelle": "tagesschau.de",
-      "text": "Was von den Ukraine-Gesprächen in Abu Dhabi zu erwarten ist",
-      "zeit": "11:48"
-    },
-    {
-      "auto": true,
-      "datum": "2026-11-10",
       "link": "https://www.tagesschau.de/ausland/europa/ukraine-russland-angriffe-206.html",
       "quelle": "tagesschau.de",
       "text": "Zwei Tote bei russischen Luftangriffen",
       "zeit": "15:42"
+    },
+    {
+      "auto": true,
+      "datum": "2026-11-10",
+      "link": "https://www.tagesschau.de/faktenfinder/ukraine-angebliches-foltergefaengnis-100.html",
+      "quelle": "tagesschau.de",
+      "text": "Proteste vor Haus bei Kiew: Keine Belege für ein ukrainisches Foltergefängnis",
+      "zeit": "15:22"
     }
   ],
   "neu": [
