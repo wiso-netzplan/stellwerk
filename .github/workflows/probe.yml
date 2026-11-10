@@ -1,0 +1,13 @@
+# Einmalige Netzprobe auf dem Arbeitszweig, schreibt nichts. Wird vor dem Zusammenführen entfernt.
+name: Probe
+on:
+  push:
+    branches: [claude/project-thread-ehmxzr]
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 werkzeug/probe.py
