@@ -8,6 +8,7 @@ Eingabeseite und Datenablage für den Wagen im WiSo-Netzplan. Alles hier ist öf
 - `.github/workflows/nachrichten.yml` – Nachrichten-Automat, stündlich von 6 bis 22 Uhr
 - `werkzeug/nachrichten.py` – Logik beider Automaten (nur Python-Standardbibliothek)
 - `werkzeug/kalender.json` – Sätze des „Heute“-Kalenders und Wahltermine
+- `werkzeug/halte.json` – Wörter, über die eine Meldung zu einem Halt im Netzplan führt
 
 ## Nachrichten-Automat (seit 10.11.2026)
 
@@ -20,6 +21,10 @@ Dazu der neueste Beitrag der bpb-Reihe „Hintergrund aktuell“ (höchstens sie
 die Jahre rechnet der Automat aus) und vor Wahlen ein Countdown („Noch 5 Tage: Am 25. April wählt …“, Landtag ab
 sieben, Bremen ab 21 Tagen vorher). Er steht vor den tagesschau-Meldungen, Quelle „Kalender · WiSo-Netzplan“.
 Neue Wahltermine trägt man in `wahlen` ein, sobald sie amtlich sind.
+
+„Mehr dazu im Netzplan“ (`werkzeug/halte.json`): Steht ein Wort aus der Liste in der Schlagzeile, hängt der Automat
+den passenden Halt an (Feld `halt`, zum Beispiel `AW-08/streik`). Das Paket zeigt ihn im Lesefenster als Sprung in
+den Netzplan. Der erste Treffer zählt; ohne Treffer gibt es keinen Verweis. Kalendersätze tragen ihren Halt selbst.
 
 Eigene Nachrichten aus dem Stellwerk stehen in der Laufschrift vorn, zusammen höchstens acht.
 Notbremse im Stellwerk: „Entfernen“ (die Meldung kommt nicht wieder, die nächste rückt nach) und „Automatik aus“.
