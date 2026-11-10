@@ -17,4 +17,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Nachrichten holen und schreiben
-        run: werkzeug/schreiben.sh "Nachrichten: $(TZ=Europe/Berlin date '+%d.%m. %H:%M')" holen ${{ github.event_name == 'workflow_dispatch' && '--immer' || '' }}
+        run: |
+          werkzeug/schreiben.sh "Nachrichten: $(TZ=Europe/Berlin date '+%d.%m. %H:%M')" holen ${{ github.event_name == 'workflow_dispatch' && '--immer' || '' }}
