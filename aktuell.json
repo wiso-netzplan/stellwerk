@@ -7,28 +7,28 @@
         "art": "spitze",
         "auto": true,
         "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/inland/innenpolitik/linke-uebergewinne-ruestungskonzerne-steuer-100.html",
+        "link": "https://www.tagesschau.de/investigativ/ndr-wdr/bundeswehr-sexuelle-belaestigung-100.html",
         "quelle": "tagesschau.de",
-        "text": "Profite von Rüstungskonzernen - Linke will Übergewinne besteuern",
-        "zeit": "09:24"
+        "text": "Dunkelfeldstudie bei der Bundeswehr - Viele Fälle von sexualisiertem Fehlverhalten",
+        "zeit": "11:13"
       },
       {
         "art": "spitze",
         "auto": true,
         "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/ausland/amerika/hegseth-amtsenthebungsverfahren-gestoppt-100.html",
+        "link": "https://www.tagesschau.de/inland/innenpolitik/bundeswehr-dunkelfeldstudie-102.html",
         "quelle": "tagesschau.de",
-        "text": "US-Repräsentantenhaus lehnt Amtsenthebungsverfahren gegen Hegseth ab",
-        "zeit": "01:19"
+        "text": "Pistorius pocht auf \"null Toleranz\" gegenüber sexualisiertem Fehlverhalten in Bundeswehr",
+        "zeit": "12:30"
       },
       {
         "art": "spitze",
         "auto": true,
-        "datum": "2026-11-10",
-        "link": "https://www.tagesschau.de/ausland/asien/ukraine-russland-krieg-gespraeche-abu-dhabi-100.html",
+        "datum": "2026-11-11",
+        "link": "https://www.tagesschau.de/ausland/asien/ukraine-russland-abu-dhabi-eu-100.html",
         "quelle": "tagesschau.de",
-        "text": "Erster Tag der Ukraine-Gespräche: Keine Ergebnisse, aber Hoffnung für Gefangene",
-        "zeit": "22:08"
+        "text": "Ukraine-Verhandlungen: Russland plant kein Treffen mit Europäern",
+        "zeit": "12:27"
       },
       {
         "art": "spitze",
@@ -38,6 +38,15 @@
         "quelle": "tagesschau.de",
         "text": "Proteste vor Haus bei Kiew: Keine Belege für ein ukrainisches Foltergefängnis",
         "zeit": "15:22"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-11",
+        "link": "https://www.tagesschau.de/ausland/amerika/hegseth-amtsenthebungsverfahren-gestoppt-100.html",
+        "quelle": "tagesschau.de",
+        "text": "US-Repräsentantenhaus lehnt Amtsenthebungsverfahren gegen Hegseth ab",
+        "zeit": "01:19"
       },
       {
         "art": "spitze",
@@ -71,29 +80,10 @@
         "art": "spitze",
         "auto": true,
         "datum": "2026-11-11",
-        "halt": "DS-04/woche",
-        "link": "https://www.tagesschau.de/inland/innenpolitik/aigner-fraktionen-100.html",
+        "link": "https://www.tagesschau.de/inland/innenpolitik/linke-uebergewinne-ruestungskonzerne-steuer-100.html",
         "quelle": "tagesschau.de",
-        "text": "Ilse Aigner stellt sich den Bundestagsfraktionen vor",
-        "zeit": "02:17"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/inland/innenpolitik/aigner-bundespraesidentin-kein-besuch-bei-afd-linke-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Kommentar: Aigner hätte auch zu AfD und Linken gehen müssen",
-        "zeit": "02:20"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/wirtschaft/arbeitsmarkt/krankenstand-aeltere-beschaeftigte-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Medienbericht: Ältere Beschäftigte doppelt so häufig krankgeschrieben",
-        "zeit": "07:51"
+        "text": "Profite von Rüstungskonzernen - Linke will Übergewinne besteuern",
+        "zeit": "09:24"
       },
       {
         "art": "spitze",
@@ -108,13 +98,27 @@
         "art": "spitze",
         "auto": true,
         "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/wirtschaft/verbraucher/digital-fairness-act-100.html",
+        "halt": "EF-07/versicherung",
+        "link": "https://www.tagesschau.de/wirtschaft/arbeitslosigkeit-akademiker-rekord-100.html",
         "quelle": "tagesschau.de",
-        "text": "\"Digital Fairness Act\": Neue EU-Regeln für Influencer und Onlineshops?",
-        "zeit": "06:28"
+        "text": "Zahl der arbeitslosen Akademiker auf Höchststand",
+        "zeit": "11:07"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-11",
+        "link": "https://www.tagesschau.de/wirtschaft/arbeitsmarkt/krankenstand-aeltere-beschaeftigte-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Medienbericht: Ältere Beschäftigte doppelt so häufig krankgeschrieben",
+        "zeit": "07:51"
       }
     ],
     "protokoll": [
+      {
+        "text": "3 neu: Dunkelfeldstudie bei der Bundeswehr - Viele Fälle von sexualisiertem Fehlverhalten · Pistorius pocht auf \"null Toleranz\" gegenüber sexualisiertem Fehlverhalten in Bundeswehr · Ukraine-Verhandlungen: Russland plant kein Treffen mit Europäern",
+        "zeit": "2026-11-11 12:48"
+      },
       {
         "text": "4 neu: Profite von Rüstungskonzernen - Linke will Übergewinne besteuern · US-Repräsentantenhaus lehnt Amtsenthebungsverfahren gegen Hegseth ab · Papst Leo in Argentinien: Klartext gegen Mileis Kettensägen-Politik · US-Justizministerium: Drei Männer wegen Terrorunterstützung angeklagt",
         "zeit": "2026-11-11 11:15"
@@ -128,7 +132,7 @@
         "zeit": "2026-11-10 21:53"
       }
     ],
-    "stand": "2026-11-11T11:15:21+01:00"
+    "stand": "2026-11-11T12:48:04+01:00"
   },
   "ferien": [
     {
@@ -161,26 +165,26 @@
     {
       "auto": true,
       "datum": "2026-11-11",
-      "link": "https://www.tagesschau.de/inland/innenpolitik/linke-uebergewinne-ruestungskonzerne-steuer-100.html",
+      "link": "https://www.tagesschau.de/investigativ/ndr-wdr/bundeswehr-sexuelle-belaestigung-100.html",
       "quelle": "tagesschau.de",
-      "text": "Profite von Rüstungskonzernen - Linke will Übergewinne besteuern",
-      "zeit": "09:24"
+      "text": "Dunkelfeldstudie bei der Bundeswehr - Viele Fälle von sexualisiertem Fehlverhalten",
+      "zeit": "11:13"
     },
     {
       "auto": true,
       "datum": "2026-11-11",
-      "link": "https://www.tagesschau.de/ausland/amerika/hegseth-amtsenthebungsverfahren-gestoppt-100.html",
+      "link": "https://www.tagesschau.de/inland/innenpolitik/bundeswehr-dunkelfeldstudie-102.html",
       "quelle": "tagesschau.de",
-      "text": "US-Repräsentantenhaus lehnt Amtsenthebungsverfahren gegen Hegseth ab",
-      "zeit": "01:19"
+      "text": "Pistorius pocht auf \"null Toleranz\" gegenüber sexualisiertem Fehlverhalten in Bundeswehr",
+      "zeit": "12:30"
     },
     {
       "auto": true,
-      "datum": "2026-11-10",
-      "link": "https://www.tagesschau.de/ausland/asien/ukraine-russland-krieg-gespraeche-abu-dhabi-100.html",
+      "datum": "2026-11-11",
+      "link": "https://www.tagesschau.de/ausland/asien/ukraine-russland-abu-dhabi-eu-100.html",
       "quelle": "tagesschau.de",
-      "text": "Erster Tag der Ukraine-Gespräche: Keine Ergebnisse, aber Hoffnung für Gefangene",
-      "zeit": "22:08"
+      "text": "Ukraine-Verhandlungen: Russland plant kein Treffen mit Europäern",
+      "zeit": "12:27"
     },
     {
       "auto": true,
@@ -193,18 +197,18 @@
     {
       "auto": true,
       "datum": "2026-11-11",
-      "link": "https://www.tagesschau.de/ausland/amerika/papst-argentinien-milei-100.html",
+      "link": "https://www.tagesschau.de/ausland/amerika/hegseth-amtsenthebungsverfahren-gestoppt-100.html",
       "quelle": "tagesschau.de",
-      "text": "Papst Leo in Argentinien: Klartext gegen Mileis Kettensägen-Politik",
-      "zeit": "06:54"
+      "text": "US-Repräsentantenhaus lehnt Amtsenthebungsverfahren gegen Hegseth ab",
+      "zeit": "01:19"
     },
     {
       "auto": true,
       "datum": "2026-11-11",
-      "link": "https://www.tagesschau.de/ausland/amerika/usa-anklage-unterstuetzung-terroranschlaege-100.html",
+      "link": "https://www.tagesschau.de/ausland/amerika/papst-argentinien-milei-100.html",
       "quelle": "tagesschau.de",
-      "text": "US-Justizministerium: Drei Männer wegen Terrorunterstützung angeklagt",
-      "zeit": "09:09"
+      "text": "Papst Leo in Argentinien: Klartext gegen Mileis Kettensägen-Politik",
+      "zeit": "06:54"
     }
   ],
   "neu": [
