@@ -1,0 +1,92 @@
+# Vermittler-Automat: prüft den Vermittler für Live-Stunden und spielt ihn bei Cloudflare ein.
+# Läuft, wenn sich etwas unter vermittler/ ändert, oder von Hand („Run workflow“), etwa nachdem die
+# Zugangsdaten hinterlegt sind. Ohne Zugangsdaten prüft er nur und spielt nichts ein.
+#
+# Geheimnisse im Repo (Settings → Secrets and variables → Actions), nur von der Lehrkraft einzutragen:
+#   CLOUDFLARE_API_TOKEN   Cloudflare-Token mit der Vorlage „Edit Cloudflare Workers“
+#   CLOUDFLARE_ACCOUNT_ID  Konto-Kennung aus dem Cloudflare-Dashboard
+#   PULT_SCHLUESSEL        selbst ausgedachter Satz, mindestens 16 Zeichen; öffnet am Pult einen Raum
+#
+# Nach dem Einspielen prüft der Automat den echten Vermittler (Probe im EU-Bereich, mit Schlüssel eine kleine
+# Stunde) und trägt dessen Adresse in live.json ein. Das Feld „an“ dort ändert er nie.
+name: Vermittler
+on:
+  push:
+    branches: [main]
+    paths: ['vermittler/**', '.github/workflows/vermittler.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: vermittler
+jobs:
+  pruefen-und-einspielen:
+    runs-on: ubuntu-latest
+    env:
+      HAT_ZUGANG: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
+      WRANGLER: wrangler@4.152.0
+      WRANGLER_SEND_METRICS: 'false'
+    defaults:
+      run:
+        working-directory: vermittler
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Regeln prüfen
+        run: node --test test/*.test.js
+      - name: Kein Probelauf-Schalter in der Einstellung
+        run: |
+          if grep -q LOKAL_OHNE_EU wrangler.toml; then
+            echo "::error::LOKAL_OHNE_EU gehört nie in wrangler.toml (Räume liefen sonst außerhalb der EU)."; exit 1
+          fi
+      - name: Ohne Zugang nichts einspielen
+        if: env.HAT_ZUGANG != 'true'
+        run: echo "::notice::Noch kein Cloudflare-Zugang hinterlegt. Geprüft, aber nichts eingespielt."
+      - name: Bei Cloudflare einspielen
+        if: env.HAT_ZUGANG == 'true'
+        id: einspielen
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PULT_SCHLUESSEL: ${{ secrets.PULT_SCHLUESSEL }}
+        run: |
+          npx --yes "$WRANGLER" deploy 2>&1 | tee "$RUNNER_TEMP/einspielen.log"
+          if [ -n "$PULT_SCHLUESSEL" ]; then
+            printf '%s' "$PULT_SCHLUESSEL" | npx --yes "$WRANGLER" secret put PULT_SCHLUESSEL
+          else
+            echo "::notice::Kein PULT_SCHLUESSEL hinterlegt: Die Probe geht, Räume öffnen noch nicht."
+          fi
+          adresse=$(grep -oE 'https://[a-z0-9.-]+\.workers\.dev' "$RUNNER_TEMP/einspielen.log" | head -1)
+          if [ -z "$adresse" ]; then
+            echo "::error::Keine workers.dev-Adresse gefunden. Ist im Cloudflare-Dashboard unter Workers eine Subdomain gewählt?"; exit 1
+          fi
+          echo "adresse=$adresse" >> "$GITHUB_OUTPUT"
+      - name: Echten Vermittler prüfen
+        if: env.HAT_ZUGANG == 'true'
+        env:
+          PULT_SCHLUESSEL: ${{ secrets.PULT_SCHLUESSEL }}
+        run: |
+          sleep 10
+          node werkzeug/ende-zu-ende.mjs "${{ steps.einspielen.outputs.adresse }}"
+      - name: Adresse in live.json eintragen
+        if: env.HAT_ZUGANG == 'true'
+        working-directory: .
+        env:
+          ADRESSE: ${{ steps.einspielen.outputs.adresse }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for versuch in 1 2 3 4 5; do
+            git fetch -q origin main
+            git reset -q --hard origin/main
+            python3 vermittler/werkzeug/live_json.py "$ADRESSE"
+            git add live.json
+            if git diff --cached --quiet; then echo "live.json unverändert."; exit 0; fi
+            git commit -q -m "Vermittler: Adresse in live.json"
+            if git push -q origin HEAD:main; then echo "live.json geschrieben."; exit 0; fi
+            sleep $((versuch * 3))
+          done
+          echo "Hochschieben fünfmal abgewiesen." >&2
+          exit 1

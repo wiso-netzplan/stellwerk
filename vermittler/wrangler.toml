@@ -1,0 +1,32 @@
+# Vermittler für Live-Stunden im WiSo-Netzplan (Cloudflare Workers, Gratistarif).
+# Eingespielt wird er vom Automaten .github/workflows/vermittler.yml, nicht von Hand.
+name = "wiso-netzplan-vermittler"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+preview_urls = false
+
+# Keine Protokolle, keine Auswertung beim Anbieter.
+[observability]
+enabled = false
+
+[vars]
+# Notbremse auf der Seite des Vermittlers: "nein" nimmt Live sofort vom Netz (Räume öffnen und Zusteigen).
+LIVE_AN = "ja"
+
+[[durable_objects.bindings]]
+name = "RAUM"
+class_name = "Raum"
+
+[[durable_objects.bindings]]
+name = "PFORTE"
+class_name = "Pforte"
+
+[[durable_objects.bindings]]
+name = "PROBE"
+class_name = "Probe"
+
+# Im Gratistarif gibt es nur Durable Objects mit SQLite-Speicher.
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Raum", "Pforte", "Probe"]

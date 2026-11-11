@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live-Probe</title>
+<style>
+/* Live-Probe für den WiSo-Netzplan: Kommt von diesem Gerät aus eine Live-Verbindung zum Vermittler zustande?
+   Läuft im Testpaket (SCORM, eingebettet und im eigenen Tab) und über GitHub Pages. Keine fremden Schriften,
+   Skripte oder Zähler. Gesendet werden nur Prüfnachrichten mit Zahlen; über das Gerät oder die Person nichts. */
+:root{--bg:#f4f1ea;--panel:#fffdf8;--ink:#1d1f24;--mut:#5f6470;--line:#d9d3c6;--acc:#b77a0e;--ok:#256c45;--okbg:#e3f1e8;--err:#a8261c;--errbg:#f8e3e0;--warte:#8a6a12;--chip:#e9eef4;
+--f:system-ui,-apple-system,"Segoe UI",sans-serif;--mono:ui-monospace,Menlo,Consolas,monospace;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#10131a;--panel:#161b25;--ink:#ece7da;--mut:#9aa1ae;--line:#2b3446;--acc:#e7b23c;--ok:#7cc4a4;--okbg:#17302a;--err:#f08f7f;--errbg:#3a1d1a;--warte:#e7c56a;--chip:#232a38;color-scheme:dark}}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--f);padding:20px max(16px,env(safe-area-inset-left)) 48px max(16px,env(safe-area-inset-right))}
+main{max-width:720px;margin:0 auto;display:grid;gap:16px}
+h1{font-size:1.5rem;margin:0}h2{font-size:1.05rem;margin:0}
+p{margin:0}.mut{color:var(--mut)}.klein{font-size:.88rem}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:12px;min-width:0}
+button{font:inherit;color:inherit;background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 16px;cursor:pointer;min-height:44px}
+button:hover{border-color:var(--acc)}button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+button.haupt{background:var(--acc);border-color:var(--acc);color:#1b1404;font-weight:700}
+button[aria-pressed=true]{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc);font-weight:600}
+.orte{display:flex;flex-wrap:wrap;gap:8px}
+ol.schritte{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+ol.schritte li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:4px 10px;align-items:start;padding:10px 12px;border-radius:10px;background:var(--chip)}
+.zeichen{font:700 1.05rem/1.4 var(--mono);text-align:center}
+ol.schritte li[data-s=ok]{background:var(--okbg)}li[data-s=ok] .zeichen{color:var(--ok)}
+ol.schritte li[data-s=rot]{background:var(--errbg)}li[data-s=rot] .zeichen{color:var(--err)}
+li[data-s=laeuft] .zeichen{color:var(--warte)}
+.was{font-weight:600}.wie{grid-column:2;font-size:.9rem;color:var(--mut);overflow-wrap:anywhere}
+.ergebnis{font-size:1.15rem;font-weight:700;padding:12px 14px;border-radius:10px;background:var(--chip)}
+.ergebnis.ok{background:var(--okbg);color:var(--ok)}.ergebnis.rot{background:var(--errbg);color:var(--err)}.ergebnis:empty{display:none}
+.code{font:600 1rem var(--mono);letter-spacing:.02em;background:var(--chip);border-radius:8px;padding:8px 10px;overflow-wrap:anywhere}
+.code:empty{display:none}
+@media (prefers-reduced-motion:no-preference){li[data-s=laeuft] .zeichen{animation:puls 1s ease-in-out infinite}@keyframes puls{50%{opacity:.35}}}
+</style>
+</head>
+<body>
+<main>
+  <header class="panel">
+    <h1>Live-Probe</h1>
+    <p>Prüft, ob dieses Gerät an diesem Ort eine Live-Verbindung zum Vermittler des WiSo-Netzplans bekommt. Die Probe dauert etwa zehn Sekunden.</p>
+    <p class="mut klein">Gesendet werden nur Prüfnachrichten mit Zahlen. Über dich oder dein Gerät verlässt nichts das Gerät, außer der Internetadresse, die jede Verbindung technisch braucht.</p>
+  </header>
+
+  <section class="panel" aria-labelledby="h-ort">
+    <h2 id="h-ort">1. Wo probierst du gerade?</h2>
+    <div class="orte" role="group" aria-labelledby="h-ort">
+      <button type="button" data-ort="ZU" aria-pressed="false">Zu Hause</button>
+      <button type="button" data-ort="SW" aria-pressed="false">Schul-WLAN</button>
+      <button type="button" data-ort="SI" aria-pressed="false">Schul-iPad</button>
+      <button type="button" data-ort="AN" aria-pressed="false">Anderswo</button>
+    </div>
+    <p class="mut klein">Die Wahl steht nur im Prüfcode unten, damit du die Ergebnisse auseinanderhalten kannst.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="h-probe">
+    <h2 id="h-probe">2. Probe</h2>
+    <div><button type="button" class="haupt" id="start">Probe starten</button></div>
+    <ol class="schritte" id="schritte" aria-live="polite"></ol>
+    <p class="ergebnis" id="ergebnis" role="status"></p>
+    <p class="code" id="code"></p>
+    <p class="mut klein" id="codehinweis" hidden>Mach ein Bildschirmfoto oder notiere den Prüfcode. Er enthält nur Ort, Ergebnis und Messwerte.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="h-tab" id="tabteil" hidden>
+    <h2 id="h-tab">3. Noch einmal im eigenen Tab</h2>
+    <p>Der Netzplan läuft bei Schülern in einem eigenen Tab. Probier es dort auch, denn eingebettet und im Tab können sich unterscheiden.</p>
+    <div><button type="button" id="tab">Im eigenen Tab öffnen</button></div>
+    <p class="mut klein" id="tabmeldung"></p>
+  </section>
+</main>
+<script>
+(function () {
+  'use strict';
+  var LIVE_JSON = 'https://raw.githubusercontent.com/wiso-netzplan/stellwerk/main/live.json';
+  var FORM = /^https:\/\/[a-z0-9.-]+\.[a-z]{2,}$/;
+  var $ = function (s) { return document.querySelector(s); };
+  var tab = /[?&]tab=1/.test(location.search);
+  var eingebettet = (function () { try { return window.self !== window.top; } catch (e) { return true; } })();
+  var ort = null;
+  try { ort = sessionStorage.getItem('live-probe-ort'); } catch (e) {}
+
+  /* SCORM: Das Testpaket meldet sich an und als erledigt ab, damit itslearning es als besucht führt.
+     Im eigenen Tab gibt es keine zweite Sitzung. Es wird nichts gespeichert. */
+  var api = null;
+  if (!tab) {
+    for (var w = window, i = 0; w && i < 12; i++) {
+      try { if (w.API_1484_11) { api = w.API_1484_11; break; } } catch (e) { break; }
+      if (w.parent === w) break;
+      w = w.parent;
+    }
+    if (api) {
+      try { api.Initialize(''); } catch (e) { api = null; }
+      window.addEventListener('pagehide', function () {
+        try { api.SetValue('cmi.completion_status', 'completed'); api.SetValue('cmi.exit', 'normal'); api.Commit(''); api.Terminate(''); } catch (e) {}
+      });
+    }
+  }
+
+  document.querySelectorAll('[data-ort]').forEach(function (b) {
+    if (b.dataset.ort === ort) b.setAttribute('aria-pressed', 'true');
+    b.addEventListener('click', function () {
+      ort = b.dataset.ort;
+      try { sessionStorage.setItem('live-probe-ort', ort); } catch (e) {}
+      document.querySelectorAll('[data-ort]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+    });
+  });
+
+  var SCHRITTE = [
+    ['adresse', 'Adresse des Vermittlers holen'],
+    ['http', 'Vermittler erreichbar'],
+    ['ws', 'Live-Leitung öffnen'],
+    ['eu', 'Gegenüber läuft im EU-Bereich'],
+    ['echo', 'Nachrichten hin und zurück']
+  ];
+  function setze(id, stand, wie) {
+    var li = document.getElementById('s-' + id);
+    li.dataset.s = stand;
+    li.querySelector('.zeichen').textContent = {ok: '✓', rot: '✗', laeuft: '…', offen: '○'}[stand];
+    li.querySelector('.wie').textContent = wie || '';
+  }
+  function zeichneSchritte() {
+    var ol = $('#schritte');
+    ol.replaceChildren();
+    SCHRITTE.forEach(function (s) {
+      var li = document.createElement('li'); li.id = 's-' + s[0];
+      var z = document.createElement('span'); z.className = 'zeichen'; z.setAttribute('aria-hidden', 'true');
+      var was = document.createElement('span'); was.className = 'was'; was.textContent = s[1];
+      var wie = document.createElement('span'); wie.className = 'wie';
+      li.append(z, was, wie); ol.append(li);
+      setze(s[0], 'offen', '');
+    });
+  }
+  function mitFrist(p, ms, grund) {
+    return Promise.race([p, new Promise(function (_, f) { setTimeout(function () { f(new Error(grund)); }, ms); })]);
+  }
+  function geraet() {
+    var u = navigator.userAgent;
+    if (/iPad/.test(u) || (/Macintosh/.test(u) && navigator.maxTouchPoints > 1)) return 'IPAD';
+    if (/iPhone|Android/.test(u)) return 'HANDY';
+    if (/Windows/.test(u)) return 'WIN';
+    if (/Macintosh/.test(u)) return 'MAC';
+    return 'ANDERES';
+  }
+
+  async function adresseHolen() {
+    var p = new URLSearchParams(location.search).get('adresse');
+    if (p && FORM.test(p)) return p;
+    var r = await mitFrist(fetch(LIVE_JSON + '?t=' + Date.now(), {cache: 'no-store'}), 8000, 'GitHub antwortet nicht');
+    if (!r.ok) throw new Error('live.json nicht lesbar (' + r.status + ')');
+    var d = await r.json();
+    if (!d.adresse) throw new Error('Der Vermittler ist noch nicht eingespielt (live.json ohne Adresse).');
+    if (!FORM.test(d.adresse)) throw new Error('Adresse in live.json sieht falsch aus.');
+    return d.adresse;
+  }
+
+  async function probe() {
+    var start = $('#start');
+    start.disabled = true;
+    zeichneSchritte();
+    $('#ergebnis').className = 'ergebnis'; $('#ergebnis').textContent = '';
+    $('#code').textContent = ''; $('#codehinweis').hidden = true;
+    var m = {http: null, ws: null, eu: null, echo: null, ort: null, wsOrt: null};
+    var rot = null;
+    try {
+      setze('adresse', 'laeuft');
+      var adresse = await adresseHolen();
+      setze('adresse', 'ok', adresse.replace('https://', ''));
+
+      setze('http', 'laeuft');
+      var t0 = performance.now();
+      var r = await mitFrist(fetch(adresse + '/probe', {cache: 'no-store'}), 8000, 'keine Antwort in 8 Sekunden');
+      var a = await r.json();
+      m.http = Math.round(performance.now() - t0);
+      m.ort = a.ort || '?';
+      if (!a.ok) throw new Error('Vermittler meldet einen Fehler');
+      setze('http', 'ok', m.http + ' ms, Rechenzentrum ' + m.ort + (a.pforte ? '' : ' · Pforte gestört: ' + (a.grund || '?')));
+
+      setze('ws', 'laeuft');
+      t0 = performance.now();
+      var ws = new WebSocket(adresse.replace(/^https/, 'wss') + '/probe/ws');
+      var post = [], warten = [];
+      ws.onmessage = function (e) {
+        var n; try { n = JSON.parse(e.data); } catch (x) { return; }
+        var k = warten.findIndex(function (w) { return w.p(n); });
+        if (k >= 0) warten.splice(k, 1)[0].f(n); else post.push(n);
+      };
+      function hole(pruef, ms, grund) {
+        var k = post.findIndex(pruef);
+        if (k >= 0) return Promise.resolve(post.splice(k, 1)[0]);
+        return mitFrist(new Promise(function (f) { warten.push({p: pruef, f: f}); }), ms, grund);
+      }
+      await mitFrist(new Promise(function (ok, fehl) {
+        ws.onopen = ok;
+        ws.onerror = function () { fehl(new Error('Leitung abgelehnt; vermutlich sperrt ein Filter WebSockets')); };
+      }), 8000, 'Leitung kommt nicht zustande (8 Sekunden)');
+      m.ws = Math.round(performance.now() - t0);
+      setze('ws', 'ok', m.ws + ' ms');
+
+      setze('eu', 'laeuft');
+      var info = await hole(function (n) { return n.t === 'probe'; }, 8000, 'keine Auskunft vom Gegenüber');
+      m.eu = info.bereich === 'eu';
+      m.wsOrt = info.ort || '?';
+      if (!m.eu) throw Object.assign(new Error('Gegenüber meldet keinen EU-Bereich (' + (info.bereich || 'keiner') + ')'), {schritt: 'eu'});
+      setze('eu', 'ok', 'Bereich EU, Rechenzentrum ' + m.wsOrt);
+
+      setze('echo', 'laeuft');
+      var zeiten = [];
+      for (var n = 1; n <= 10; n++) {
+        var t = performance.now();
+        ws.send(JSON.stringify({t: 'echo', n: n}));
+        await hole((function (k) { return function (x) { return x.t === 'echo' && x.n === k; }; })(n), 5000, 'Nachricht ' + n + ' kam nicht zurück');
+        zeiten.push(performance.now() - t);
+        setze('echo', 'laeuft', n + ' von 10');
+      }
+      ws.close();
+      zeiten.sort(function (x, y) { return x - y; });
+      m.echo = Math.round(zeiten[5]);
+      setze('echo', 'ok', '10 von 10 zurück, typisch ' + m.echo + ' ms, langsamste ' + Math.round(zeiten[9]) + ' ms');
+    } catch (e) {
+      rot = e;
+      var offen = SCHRITTE.map(function (s) { return s[0]; }).find(function (id) { return document.getElementById('s-' + id).dataset.s !== 'ok'; });
+      setze(e.schritt || offen, 'rot', e.message || String(e));
+    }
+    var ergebnis = $('#ergebnis');
+    if (rot) { ergebnis.className = 'ergebnis rot'; ergebnis.textContent = 'Rot: Live geht von hier aus noch nicht.'; }
+    else { ergebnis.className = 'ergebnis ok'; ergebnis.textContent = 'Grün: Live geht von hier aus.'; }
+    var teile = ['LP1', ort || 'OHNE-ORT', tab ? 'TAB' : (eingebettet ? 'EINGEBETTET' : 'SEITE'), geraet(), rot ? 'ROT' : 'GRUEN'];
+    if (m.http != null) teile.push('H' + m.http + '-' + m.ort);
+    if (m.ws != null) teile.push('W' + m.ws);
+    if (m.eu != null) teile.push(m.eu ? 'EU-' + m.wsOrt : 'NICHT-EU');
+    if (m.echo != null) teile.push('E' + m.echo);
+    if (rot) teile.push('AN-' + (document.querySelector('li[data-s=rot]') || {id: 's-?'}).id.slice(2).toUpperCase());
+    $('#code').textContent = teile.join(' · ');
+    $('#codehinweis').hidden = false;
+    if (eingebettet && !tab) $('#tabteil').hidden = false;
+    start.disabled = false;
+    start.textContent = 'Probe wiederholen';
+  }
+
+  $('#start').addEventListener('click', probe);
+  $('#tab').addEventListener('click', function () {
+    var u = new URL(location.href); u.searchParams.set('tab', '1');
+    var w = null;
+    try { w = window.open(u.href, 'wiso-live-probe'); } catch (e) {}
+    $('#tabmeldung').textContent = w ? 'Der Tab ist offen. Starte die Probe dort noch einmal.' : 'Der Tab wurde blockiert. Erlaube Pop-ups für itslearning und tippe noch einmal.';
+  });
+  zeichneSchritte();
+})();
+</script>
+</body>
+</html>
