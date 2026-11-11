@@ -206,6 +206,24 @@
       "von": "2028-07-20"
     }
   ],
+  "ferientage": [
+    {
+      "datum": "2027-05-07",
+      "name": "Tag nach Himmelfahrt"
+    },
+    {
+      "datum": "2027-05-18",
+      "name": "Tag nach Pfingsten"
+    },
+    {
+      "datum": "2028-05-26",
+      "name": "Tag nach Himmelfahrt"
+    },
+    {
+      "datum": "2028-06-06",
+      "name": "Tag nach Pfingsten"
+    }
+  ],
   "nachrichten": [
     {
       "auto": true,

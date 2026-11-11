@@ -3,7 +3,7 @@
 Eingabeseite und Datenablage für den Wagen im WiSo-Netzplan. Alles hier ist öffentlich: nur Klassen und Themen, nie Namen.
 
 - `stellwerk.html` – Eingabeseite (https://wiso-netzplan.github.io/stellwerk/stellwerk.html)
-- `aktuell.json` – die Datei, die das Paket liest (Termine, Prüfungen, Ferien, Wahlen, Nachrichten, Neu im Paket)
+- `aktuell.json` – die Datei, die das Paket liest (Termine, Prüfungen, Ferien, Ferientage, Wahlen, Nachrichten, Neu im Paket)
 - `.github/workflows/stellwerk.yml` – schreibt Aufträge der Eingabeseite (Speichern, Notbremse)
 - `.github/workflows/nachrichten.yml` – Nachrichten-Automat, stündlich von 6 bis 22 Uhr
 - `werkzeug/nachrichten.py` – Logik beider Automaten (nur Python-Standardbibliothek)
@@ -25,6 +25,11 @@ Wahlen (seit 12.11.2026 eine Liste im Stellwerk, Feld `wahlen` in `aktuell.json`
 Kalender im Wagen, Satz und „Tage vorher“ für den Countdown in der Laufschrift, dazu wahlweise ein Halt. Neue Wahlen
 trägt man auf der Eingabeseite im Abschnitt „Wahlen“ ein, sobald ihr Tag amtlich ist. Schickt eine ältere,
 zwischengespeicherte Eingabeseite keine Wahlen mit, bleiben die bisherigen stehen.
+
+Einzelne Ferientage (seit 12.11.2026, Feld `ferientage`: Datum und Name, zum Beispiel „Tag nach Himmelfahrt“) stehen
+bewusst nicht unter `ferien`: Ältere Pakete legen jeden Ferien-Eintrag als Halt auf das Linienband, und einzelne Tage
+lagen dort übereinander. Der Kalender im Wagen (ab v49) liest beide Listen. Auch hier gilt: Schickt eine ältere
+Eingabeseite das Feld nicht mit, bleiben die bisherigen Ferientage stehen.
 
 „Mehr dazu im Netzplan“ (`werkzeug/halte.json`): Steht ein Wort aus der Liste in der Schlagzeile, hängt der Automat
 den passenden Halt an (Feld `halt`, zum Beispiel `AW-08/streik`). Das Paket zeigt ihn im Lesefenster als Sprung in

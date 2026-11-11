@@ -55,7 +55,7 @@ details>summary{cursor:pointer;color:var(--mut)}
 </head>
 <body>
 <main>
-<div class="kopf"><h1>Stellwerk</h1><span class="mut">Termine, Prüfungen, Ferien, Wahlen und Nachrichten für den Wagen im WiSo-Netzplan</span></div>
+<div class="kopf"><h1>Stellwerk</h1><span class="mut">Termine, Prüfungen, Ferien, Ferientage, Wahlen und Nachrichten für den Wagen im WiSo-Netzplan</span></div>
 <p class="hinweis">Alles hier ist öffentlich lesbar. Schreib nur Klassen und Themen hinein, nie Namen von Schülern.</p>
 
 <section class="panel" aria-labelledby="h-verb">
@@ -97,6 +97,11 @@ details>summary{cursor:pointer;color:var(--mut)}
  <div class="tabelle"><table><thead><tr><th>Name</th><th style="width:150px">von</th><th style="width:150px">bis</th><th></th></tr></thead><tbody id="t-ferien"></tbody></table></div>
 </section>
 
+<section class="panel" aria-labelledby="h-ferientage">
+ <header><h2 id="h-ferientage">Einzelne Ferientage</h2><span class="klein mut">Schulfreie einzelne Tage, zum Beispiel der Tag nach Himmelfahrt. Sie stehen nur im Kalender im Wagen, nicht auf dem Linienband.</span><span class="grow"></span><button class="klein" type="button" data-neu="ferientage">+ Ferientag</button></header>
+ <div class="tabelle"><table><thead><tr><th style="width:150px">Datum</th><th>Name</th><th></th></tr></thead><tbody id="t-ferientage"></tbody></table></div>
+</section>
+
 <section class="panel" aria-labelledby="h-wahlen">
  <header><h2 id="h-wahlen">Wahlen</h2><span class="klein mut">Eine Liste für zwei Stellen: der Kalender im Wagen zeigt Name und Hinweis, die Laufschrift zählt ab „Tage vorher“ herunter („Noch 5 Tage: Am 30. Mai …“ und dein Satz). Nur amtlich festgelegte Tage eintragen.</span><span class="grow"></span><button class="klein" type="button" data-neu="wahlen">+ Wahl</button></header>
  <div class="tabelle"><table><thead><tr><th style="width:150px">Datum</th><th style="width:230px">Name im Kalender, Hinweis</th><th>Satz in der Laufschrift</th><th style="width:90px">Tage vorher</th><th style="width:200px">Lernstoff</th><th></th></tr></thead><tbody id="t-wahlen"></tbody></table></div>
@@ -132,9 +137,9 @@ const zwei=n=>String(n).padStart(2,'0'),iso=d=>d.getFullYear()+'-'+zwei(d.getMon
 const datum=s=>new Date(s+'T00:00:00'),tage=s=>Math.round((datum(s)-HEUTE)/864e5);
 const WT=['So','Mo','Di','Mi','Do','Fr','Sa'],kurz=s=>{const d=datum(s);return WT[d.getDay()]+' '+zwei(d.getDate())+'.'+zwei(d.getMonth()+1)+'.'};
 const HK=Object.fromEntries(HALTE.map(h=>[h[0],h]));
-const leer=()=>({werk:'wiso-netzplan-stellwerk',version:1,stand:null,termine:[],nachrichten:[],ferien:[],pruefungen:[],neu:[],wahlen:[]});
+const leer=()=>({werk:'wiso-netzplan-stellwerk',version:1,stand:null,termine:[],nachrichten:[],ferien:[],pruefungen:[],neu:[],wahlen:[],ferientage:[]});
 let D=leer(),geladen=null,sha=null;
-const FELDER={termine:{datum:'',klasse:'',art:'Klausur',titel:'',halte:[]},pruefungen:{datum:'',klasse:'',art:'Abschlussprüfung'},nachrichten:{text:'',quelle:'',datum:''},ferien:{name:'',von:'',bis:''},neu:{datum:'',text:''},wahlen:{datum:'',name:'',wer:'',vorlauf:7,halt:'',hinweis:''}};
+const FELDER={termine:{datum:'',klasse:'',art:'Klausur',titel:'',halte:[]},pruefungen:{datum:'',klasse:'',art:'Abschlussprüfung'},nachrichten:{text:'',quelle:'',datum:''},ferien:{name:'',von:'',bis:''},neu:{datum:'',text:''},wahlen:{datum:'',name:'',wer:'',vorlauf:7,halt:'',hinweis:''},ferientage:{datum:'',name:''}};
 
 // ---- Entwurf: nichts geht verloren, auch ohne Verbindung ----
 function entwurfSichern(){LS.set('entwurf',JSON.stringify(D));const g=geladen&&JSON.stringify(sauber(geladen))===JSON.stringify(sauber(D));
@@ -166,6 +171,7 @@ function zeichne(){
  $('#t-nachrichten').innerHTML=handN().map(([n,i])=>`<tr data-art="nachrichten" data-i="${i}"><td><input type="text" data-f="text" value="${esc(n.text)}" maxlength="160" aria-label="Text"></td><td><input type="text" data-f="quelle" value="${esc(n.quelle)}" maxlength="40" aria-label="Quelle" placeholder="z. B. tagesschau.de"></td><td><input type="date" data-f="datum" value="${esc(n.datum)}" aria-label="Datum"></td>${loesch('nachrichten',i)}</tr>`).join('')||'<tr><td colspan="4" class="mut">Keine eigenen Nachrichten.</td></tr>';
  zeichneAuto();
  $('#t-ferien').innerHTML=D.ferien.map((f,i)=>`<tr data-art="ferien" data-i="${i}"><td><input type="text" data-f="name" value="${esc(f.name)}" maxlength="30" aria-label="Name"></td><td><input type="date" data-f="von" value="${esc(f.von)}" aria-label="von"></td><td><input type="date" data-f="bis" value="${esc(f.bis)}" aria-label="bis"></td>${loesch('ferien',i)}</tr>`).join('')||'<tr><td colspan="4" class="mut">Noch keine Ferien.</td></tr>';
+ $('#t-ferientage').innerHTML=D.ferientage.map((f,i)=>`<tr class="${f.datum&&tage(f.datum)<0?'vorbei':''}" data-art="ferientage" data-i="${i}"><td><input type="date" data-f="datum" value="${esc(f.datum)}" aria-label="Datum"></td><td><input type="text" data-f="name" value="${esc(f.name)}" maxlength="30" aria-label="Name" placeholder="Tag nach Himmelfahrt"></td>${loesch('ferientage',i)}</tr>`).join('')||'<tr><td colspan="3" class="mut">Keine einzelnen Ferientage.</td></tr>';
  $('#t-wahlen').innerHTML=D.wahlen.map((w,i)=>`<tr class="${w.datum&&tage(w.datum)<0?'vorbei':''}" data-art="wahlen" data-i="${i}"><td><input type="date" data-f="datum" value="${esc(w.datum)}" aria-label="Datum"></td>
   <td><div class="stapel"><input type="text" data-f="name" value="${esc(w.name)}" maxlength="60" aria-label="Name im Kalender" placeholder="Bürgerschaftswahl Bremen"><input type="text" data-f="hinweis" value="${esc(w.hinweis)}" maxlength="80" aria-label="Hinweis im Kalender" placeholder="Hinweis (frei lassen oder z. B. ab 16)"></div></td>
   <td><input type="text" data-f="wer" value="${esc(w.wer)}" maxlength="140" aria-label="Satz in der Laufschrift" placeholder="wählt Bremen die Bürgerschaft"></td>
@@ -234,6 +240,8 @@ function pruefen(){const f=[];
  D.ferien.forEach((x,i)=>{if(!x.name.trim()||!x.von)f.push('Ferien '+(i+1)+': Name und Beginn ausfüllen.');else if(x.bis&&x.bis<x.von)f.push('Ferien '+(i+1)+': Ende liegt vor dem Beginn.')});
  D.wahlen.forEach((w,i)=>{if(!w.datum||!String(w.name||'').trim()||!String(w.wer||'').trim())f.push('Wahl '+(i+1)+': Datum, Name und Satz ausfüllen.');else if(!(String(w.vorlauf??'').trim()!==''&&+w.vorlauf>=0&&+w.vorlauf<=60))f.push('Wahl '+(i+1)+': Tage vorher zwischen 0 und 60 eintragen.')});
  if(D.wahlen.length>40)f.push('Höchstens 40 Wahlen.');
+ D.ferientage.forEach((x,i)=>{if(!x.datum||!String(x.name||'').trim())f.push('Ferientag '+(i+1)+': Datum und Name ausfüllen.')});
+ if(D.ferientage.length>20)f.push('Höchstens 20 einzelne Ferientage.');
  if(handN().filter(([n])=>n.text.trim()).length>8)f.push('Höchstens acht eigene Nachrichten.');return f}
 $('#senden').onclick=async()=>{const f=pruefen();if(f.length){status(f.join(' '),'err');return}
  if(!$('#schluessel').value.trim()){status('Zum Schreiben braucht dieses Gerät einmal den Schlüssel (oben unter Verbindung).','err');$('#schluessel').focus();return}
@@ -243,6 +251,7 @@ $('#senden').onclick=async()=>{const f=pruefen();if(f.length){status(f.join(' ')
  d.ferien=d.ferien.map(x=>({name:x.name.trim(),von:x.von,bis:x.bis||x.von})).sort((a,b)=>a.von.localeCompare(b.von));
  d.pruefungen=d.pruefungen.map(p=>({klasse:p.klasse,datum:p.datum,art:(p.art||'Abschlussprüfung').trim()}));
  d.neu=d.neu.filter(n=>n.text.trim()).map(n=>({datum:n.datum||null,text:n.text.trim()}));
+ d.ferientage=d.ferientage.map(x=>({datum:x.datum,name:String(x.name).trim()})).sort((a,b)=>a.datum.localeCompare(b.datum));
  d.wahlen=d.wahlen.map(w=>Object.assign({datum:w.datum,name:String(w.name).trim(),wer:String(w.wer).trim().replace(/\.+$/,''),vorlauf:Math.round(+w.vorlauf)},HK[w.halt]?{halt:w.halt}:{},String(w.hinweis||'').trim()?{hinweis:String(w.hinweis).trim()}:{})).sort((a,b)=>a.datum.localeCompare(b.datum));
  status('Schreibe …');$('#senden').disabled=true;
  try{const r=await fetch(`https://api.github.com/repos/${ablage()}/dispatches`,{method:'POST',headers:Object.assign(kopf(),{'Content-Type':'application/json'}),body:JSON.stringify({event_type:'stellwerk',client_payload:{aktuell:d}})});

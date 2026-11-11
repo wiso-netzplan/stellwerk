@@ -55,6 +55,7 @@ HALTE = 'werkzeug/halte.json'
 HALT_FORM = re.compile(r'[A-Z]{2}-\d\d/[a-z0-9-]+')
 DATUM_FORM = re.compile(r'\d{4}-\d\d-\d\d')
 WAHLEN = 40         # mehr Wahlen fasst die Liste nicht
+FERIENTAGE = 20     # einzelne schulfreie Tage (Brückentage), nur für den Kalender im Wagen
 KALENDER_QUELLE = 'Kalender · WiSo-Netzplan'
 MONATE = ('Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober',
           'November', 'Dezember')
@@ -170,6 +171,23 @@ def wahlen_ordnen(liste):
             e['hinweis'] = text(w.get('hinweis'), 80)
         aus.append(e)
     return sorted(aus, key=lambda w: w['datum'])[:WAHLEN]
+
+
+def ferientage_ordnen(liste):
+    """Einzelne Ferientage (z. B. Tag nach Himmelfahrt): nur Datum und Name. Sie stehen bewusst nicht in den Ferien,
+    weil ältere Pakete jeden Ferien-Eintrag als Halt auf das Linienband legen. Gelesen werden sie nur vom Kalender."""
+    aus = []
+    for t in liste if isinstance(liste, list) else []:
+        if not isinstance(t, dict) or not DATUM_FORM.fullmatch(str(t.get('datum') or '')):
+            continue
+        try:
+            dt.date.fromisoformat(t['datum'])
+        except ValueError:
+            continue
+        name = text(t.get('name'), 30)
+        if name:
+            aus.append({'datum': t['datum'], 'name': name})
+    return sorted(aus, key=lambda t: t['datum'])[:FERIENTAGE]
 
 
 def kalender(heute=None, wahlen=()):
@@ -297,9 +315,10 @@ def stellwerk(pfad):
     if not isinstance(neu, dict) or neu.get('werk') != 'wiso-netzplan-stellwerk':
         raise SystemExit('Auftrag hat das falsche Format.')
     alt = lies()
-    neu = {k: neu[k] for k in ('werk', 'version', 'stand', 'termine', 'nachrichten', 'ferien', 'pruefungen', 'neu', 'wahlen') if k in neu}
+    neu = {k: neu[k] for k in ('werk', 'version', 'stand', 'termine', 'nachrichten', 'ferien', 'pruefungen', 'neu', 'wahlen', 'ferientage') if k in neu}
     # Eine ältere, noch zwischengespeicherte Eingabeseite kennt die Wahlen nicht. Dann bleiben die bisherigen stehen.
     neu['wahlen'] = wahlen_ordnen(neu['wahlen'] if 'wahlen' in neu else alt.get('wahlen', []))
+    neu['ferientage'] = ferientage_ordnen(neu['ferientage'] if 'ferientage' in neu else alt.get('ferientage', []))
     neu['automatik'] = automatik(alt)  # Einstellungen ändert nur die Notbremse, nie ein Speichern
     # Eine ältere, noch zwischengespeicherte Eingabeseite kennt das Feld auto nicht und schickt die automatischen
     # Meldungen als eigene zurück. Was wörtlich einer automatischen Meldung gleicht, gilt deshalb nicht als eigene.
@@ -345,6 +364,9 @@ def pruef(d):
     assert isinstance(d.get('wahlen', []), list) and len(d.get('wahlen', [])) <= WAHLEN
     for w in d.get('wahlen', []):
         assert wahlen_ordnen([w]) == [w], w
+    assert isinstance(d.get('ferientage', []), list) and len(d.get('ferientage', [])) <= FERIENTAGE
+    for t in d.get('ferientage', []):
+        assert ferientage_ordnen([t]) == [t], t
     assert len(d['nachrichten']) <= HOECHSTENS
     for n in d['nachrichten']:
         assert isinstance(n.get('text'), str) and 0 < len(n['text']) <= 160
