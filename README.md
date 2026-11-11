@@ -9,6 +9,9 @@ Eingabeseite und Datenablage für den Wagen im WiSo-Netzplan. Alles hier ist öf
 - `werkzeug/nachrichten.py` – Logik beider Automaten (nur Python-Standardbibliothek)
 - `werkzeug/kalender.json` – Sätze des „Heute“-Kalenders und Wahltermine
 - `werkzeug/halte.json` – Wörter, über die eine Meldung zu einem Halt im Netzplan führt
+- `vermittler/` – Vermittler für Live-Stunden bei Cloudflare (EU-Bereich), eingespielt von `.github/workflows/vermittler.yml`
+- `live.json` – Live an/aus und Adresse des Vermittlers; das Paket liest sie nur, wenn jemand Live antippt
+- `live-probe.html` – Testseite: Kommt von diesem Gerät aus eine Live-Verbindung zustande? (auch als SCORM-Testpaket)
 
 ## Nachrichten-Automat (seit 10.11.2026)
 

@@ -1,0 +1,11 @@
+{
+  "name": "wiso-netzplan-vermittler",
+  "private": true,
+  "type": "module",
+  "description": "Vermittler für Live-Stunden im WiSo-Netzplan",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "dev": "npx --yes wrangler@4.152.0 dev",
+    "probe": "node werkzeug/ende-zu-ende.mjs"
+  }
+}
