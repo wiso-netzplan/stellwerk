@@ -14,6 +14,8 @@ Die Auswahl trifft die Redaktion: übernommen wird die Spitze des Startseiten-Fe
 in ihrer Reihenfolge, nur Titel, Quelle und Link, nie Anreißer oder Bilder.
 Dazu kommt der eigene „Heute“-Kalender (werkzeug/kalender.json): höchstens ein Satz zum Tag und der
 Countdown zur nächsten Wahl, beide mit der Quelle „Kalender · WiSo-Netzplan“.
+Die Wahlen stehen seit dem 12.11.2026 als eine Liste im Stellwerk (Feld `wahlen` in aktuell.json). Dieselbe Liste
+liest der Kalender im Wagen; Eike trägt jede Wahl nur einmal ein.
 """
 import datetime as dt
 import html
@@ -51,6 +53,8 @@ GESPERRT = 300
 KALENDER = 'werkzeug/kalender.json'
 HALTE = 'werkzeug/halte.json'
 HALT_FORM = re.compile(r'[A-Z]{2}-\d\d/[a-z0-9-]+')
+DATUM_FORM = re.compile(r'\d{4}-\d\d-\d\d')
+WAHLEN = 40         # mehr Wahlen fasst die Liste nicht
 KALENDER_QUELLE = 'Kalender · WiSo-Netzplan'
 MONATE = ('Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober',
           'November', 'Dezember')
@@ -144,8 +148,32 @@ def halt_fuer(titel):
     return next((h for h, rx in _REGELN if rx.search(titel or '')), None)
 
 
-def kalender(heute=None):
-    """Die Kalendereinträge für heute: der Satz zum Tag und der Countdown zur nächsten Wahl."""
+def wahlen_ordnen(liste):
+    """Wahlen aus dem Stellwerk in feste Form bringen: Datum, Name (Kalender im Wagen), Satz (Countdown in der
+    Laufschrift), Vorlauf in Tagen, Halt und Hinweis nur, wenn gesetzt. Unvollständige Zeilen fallen weg."""
+    aus = []
+    for w in liste if isinstance(liste, list) else []:
+        if not isinstance(w, dict) or not DATUM_FORM.fullmatch(str(w.get('datum') or '')):
+            continue
+        try:
+            dt.date.fromisoformat(w['datum'])
+            vorlauf = int(w.get('vorlauf', 7))
+        except (ValueError, TypeError):
+            continue
+        name, wer = text(w.get('name'), 60), text(w.get('wer'), 140)
+        if not name or not wer:
+            continue
+        e = {'datum': w['datum'], 'name': name, 'wer': wer.rstrip('.'), 'vorlauf': max(0, min(vorlauf, 60))}
+        if isinstance(w.get('halt'), str) and HALT_FORM.fullmatch(w['halt']):
+            e['halt'] = w['halt']
+        if text(w.get('hinweis'), 80):
+            e['hinweis'] = text(w.get('hinweis'), 80)
+        aus.append(e)
+    return sorted(aus, key=lambda w: w['datum'])[:WAHLEN]
+
+
+def kalender(heute=None, wahlen=()):
+    """Die Kalendereinträge für heute: der Satz zum Tag und der Countdown zur nächsten Wahl (Wahlen aus dem Stellwerk)."""
     heute = heute or jetzt().date()
     with open(KALENDER, encoding='utf-8') as f:
         k = json.load(f)
@@ -155,7 +183,7 @@ def kalender(heute=None):
             s = t['text'].replace('{n}', str(heute.year - t['jahr'])) if t.get('jahr') else t['text']
             aus.append({'text': text(s), 'link': f'kalender:{heute.isoformat()}', 'halt': t.get('halt')})
             break
-    for w in sorted(k.get('wahlen', []), key=lambda w: w['datum']):
+    for w in wahlen_ordnen(list(wahlen)):
         tag = dt.date.fromisoformat(w['datum'])
         n = (tag - heute).days
         if 0 <= n <= w.get('vorlauf', 7):
@@ -234,7 +262,7 @@ def holen(immer=False):
     for m in bp:
         m['art'] = 'bpb'
     try:
-        kal = kalender()
+        kal = kalender(wahlen=d.get('wahlen') or [])
     except Exception as e:  # noqa: BLE001 – ein Fehler im Kalender darf die Nachrichten nicht aufhalten
         kal = []
         print('Kalender:', type(e).__name__, e)
@@ -269,7 +297,9 @@ def stellwerk(pfad):
     if not isinstance(neu, dict) or neu.get('werk') != 'wiso-netzplan-stellwerk':
         raise SystemExit('Auftrag hat das falsche Format.')
     alt = lies()
-    neu = {k: neu[k] for k in ('werk', 'version', 'stand', 'termine', 'nachrichten', 'ferien', 'pruefungen', 'neu') if k in neu}
+    neu = {k: neu[k] for k in ('werk', 'version', 'stand', 'termine', 'nachrichten', 'ferien', 'pruefungen', 'neu', 'wahlen') if k in neu}
+    # Eine ältere, noch zwischengespeicherte Eingabeseite kennt die Wahlen nicht. Dann bleiben die bisherigen stehen.
+    neu['wahlen'] = wahlen_ordnen(neu['wahlen'] if 'wahlen' in neu else alt.get('wahlen', []))
     neu['automatik'] = automatik(alt)  # Einstellungen ändert nur die Notbremse, nie ein Speichern
     # Eine ältere, noch zwischengespeicherte Eingabeseite kennt das Feld auto nicht und schickt die automatischen
     # Meldungen als eigene zurück. Was wörtlich einer automatischen Meldung gleicht, gilt deshalb nicht als eigene.
@@ -312,6 +342,9 @@ def pruef(d):
     assert d.get('werk') == 'wiso-netzplan-stellwerk'
     for k in ('termine', 'nachrichten', 'ferien', 'pruefungen'):
         assert isinstance(d.get(k), list), k
+    assert isinstance(d.get('wahlen', []), list) and len(d.get('wahlen', [])) <= WAHLEN
+    for w in d.get('wahlen', []):
+        assert wahlen_ordnen([w]) == [w], w
     assert len(d['nachrichten']) <= HOECHSTENS
     for n in d['nachrichten']:
         assert isinstance(n.get('text'), str) and 0 < len(n['text']) <= 160

@@ -1,5 +1,5 @@
 {
- "_hinweis": "„Heute“-Kalender des Nachrichten-Automaten (Sätze von Eike abgenommen 10.11.2026). {n} = Jahre seit dem Ereignis, rechnet der Automat am Tag aus. Wahlen: der Automat zählt ab 'vorlauf' Tagen vorher herunter; neue Termine eintragen, sobald sie amtlich sind (Quelle: Bundesrat, Termine der Landtagswahlen).",
+ "_hinweis": "„Heute“-Kalender des Nachrichten-Automaten (Sätze von Eike abgenommen 10.11.2026). {n} = Jahre seit dem Ereignis, rechnet der Automat am Tag aus. Die Wahlen stehen seit 12.11.2026 im Stellwerk (Feld wahlen in aktuell.json, Eingabeseite Abschnitt „Wahlen“); der Automat zählt ab 'vorlauf' Tagen vorher herunter.",
  "tage": [
   {"tag": "01-19", "jahr": 1919, "text": "Heute vor {n} Jahren durften Frauen in Deutschland zum ersten Mal wählen und gewählt werden, bei der Wahl zur Nationalversammlung.", "halt": "DS-03/wahlrecht"},
   {"tag": "01-27", "jahr": 1945, "text": "Heute vor {n} Jahren wurde Auschwitz befreit. Deutschland erinnert an diesem Tag an alle Opfer des Nationalsozialismus."},
@@ -34,11 +34,5 @@
   {"tag": "11-09", "jahr": null, "text": "Heute ist der 9. November, der Schicksalstag der Deutschen: 1918 Ausrufung der Republik, 1938 Pogrome gegen Juden, 1989 Fall der Mauer."},
   {"tag": "11-15", "jahr": 1923, "text": "Heute vor {n} Jahren endete die große Inflation mit der neuen Rentenmark. Zuvor kostete ein Brot Milliarden Mark.", "halt": "WI-05/entwicklung"},
   {"tag": "12-10", "jahr": 1948, "text": "Heute ist Tag der Menschenrechte. Vor {n} Jahren verkündeten die Vereinten Nationen die Allgemeine Erklärung der Menschenrechte.", "halt": "DS-01/grundrechte"}
- ],
- "wahlen": [
-  {"datum": "2027-04-18", "wer": "wählen das Saarland und Schleswig-Holstein neue Landtage", "vorlauf": 7, "halt": "DS-03/entscheiden"},
-  {"datum": "2027-04-25", "wer": "wählt Nordrhein-Westfalen einen neuen Landtag", "vorlauf": 7, "halt": "DS-03/entscheiden"},
-  {"datum": "2027-05-30", "wer": "wählt Bremen die Bürgerschaft und Bremerhaven seine Stadtverordneten. Wählen darf man hier ab 16", "vorlauf": 21, "halt": "DS-03/wahlen"},
-  {"datum": "2027-09-26", "wer": "wählt Niedersachsen einen neuen Landtag", "vorlauf": 7, "halt": "DS-03/entscheiden"}
  ]
 }
