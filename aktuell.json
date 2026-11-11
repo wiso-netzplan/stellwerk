@@ -156,16 +156,6 @@
       "von": "2027-03-22"
     },
     {
-      "bis": "2027-05-07",
-      "name": "Tag nach Himmelfahrt",
-      "von": "2027-05-07"
-    },
-    {
-      "bis": "2027-05-18",
-      "name": "Tag nach Pfingsten",
-      "von": "2027-05-18"
-    },
-    {
       "bis": "2027-08-18",
       "name": "Sommerferien",
       "von": "2027-07-08"
@@ -189,16 +179,6 @@
       "bis": "2028-04-22",
       "name": "Osterferien",
       "von": "2028-04-10"
-    },
-    {
-      "bis": "2028-05-26",
-      "name": "Tag nach Himmelfahrt",
-      "von": "2028-05-26"
-    },
-    {
-      "bis": "2028-06-06",
-      "name": "Tag nach Pfingsten",
-      "von": "2028-06-06"
     },
     {
       "bis": "2028-08-30",
@@ -285,7 +265,7 @@
     }
   ],
   "pruefungen": [],
-  "stand": "2026-11-11T23:23:53.181Z",
+  "stand": "2026-11-11T23:41:25.651Z",
   "termine": [
     {
       "art": "Projekt",
