@@ -1,10 +1,13 @@
-# Nachrichten-Automat: holt jede Stunde von 6 bis 22 Uhr (deutsche Zeit) die Spitze der tagesschau-Startseite,
+# Nachrichten-Automat: holt alle 15 Minuten von 6 bis 22 Uhr (deutsche Zeit) die Spitze der tagesschau-Startseite,
 # ersatzweise die Deutschlandfunk-Nachrichten, dazu den neuesten Beitrag „Hintergrund aktuell“ der bpb.
 # Ohne Freigabe, ohne KI, ohne Filter nach Themen (Eike, 10.11.2026). Notbremse im Stellwerk.
 name: Nachrichten
 on:
   schedule:
-    - cron: '7 4-21 * * *'   # UTC; das Skript prüft selbst auf 6 bis 22 Uhr in Berlin (Sommer- und Winterzeit)
+    # Viertelstündlich statt stündlich: GitHub startet geplante Läufe bei Last stark verspätet oder gar nicht
+    # (10./11.11.2026: von acht Terminen kam einer, vier Stunden zu spät). Mehr Termine = kürzere Lücken.
+    # Ändert sich an der Spitze nichts, schreibt das Skript nichts (kein Commit).
+    - cron: '7,22,37,52 4-21 * * *'   # UTC; das Skript prüft selbst auf 6 bis 22 Uhr in Berlin (Sommer- und Winterzeit)
   workflow_dispatch:
 permissions:
   contents: write
