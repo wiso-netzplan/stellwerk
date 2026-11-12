@@ -6,115 +6,118 @@
       {
         "art": "spitze",
         "auto": true,
+        "datum": "2026-11-12",
+        "link": "https://www.tagesschau.de/inland/innenpolitik/koalition-haushalt-kompromiss-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Schwarz-Rot verschiebt Zuckersteuer - keine Senkung der Stromsteuer",
+        "zeit": "00:12"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-12",
+        "link": "https://www.tagesschau.de/ausland/amerika/demokrat-mississippi-sieg-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Historischer Sieg: Demokrat Colom holt Senatssitz in Mississippi",
+        "zeit": "02:19"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-11",
+        "link": "https://www.tagesschau.de/ausland/europa/europa-sicherheitsarchitektur-russland-usa-100.html",
+        "quelle": "tagesschau.de",
+        "text": "\"Sicherheitsordnung\": Warum übernehmen die USA Russlands Forderung?",
+        "zeit": "19:56"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-11",
+        "link": "https://www.tagesschau.de/ausland/asien/ukraine-russland-verhandlungen-abu-dhabi-104.html",
+        "quelle": "tagesschau.de",
+        "text": "Russland und Ukraine vereinbaren Gefangenenaustausch",
+        "zeit": "18:30"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-11",
+        "link": "https://www.tagesschau.de/kommentar/ukraine-verhandlungen-abu-dhabi-106.html",
+        "quelle": "tagesschau.de",
+        "text": "Kommentar: Russland sägt an der europäischen Sicherheitsarchitektur",
+        "zeit": "16:14"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-11",
+        "halt": "AW-06/kuendigung",
+        "link": "https://www.tagesschau.de/inland/innenpolitik/arbeitsrecht-kuendigungsschutz-befristungen-reform-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Weniger Kündigungsschutz, mehr Befristungen - das plant die Koalition",
+        "zeit": "16:44"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-11",
+        "link": "https://www.tagesschau.de/inland/steuerklassen-klingbeil-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Vorstoß des Finanzministeriums: Was sich bei Steuerklassen für Paare ändern könnte",
+        "zeit": "16:24"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-11",
+        "link": "https://www.tagesschau.de/inland/gasreserve-126.html",
+        "quelle": "tagesschau.de",
+        "text": "Bundeskabinett beschließt Aufbau einer Gasreserve",
+        "zeit": "17:38"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-11",
+        "link": "https://www.tagesschau.de/inland/innenpolitik/prien-unterhaltsvorschuss-gesetzentwurf-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Familienministerin Prien plant Einkommensgrenze beim Unterhaltsvorschuss",
+        "zeit": "19:01"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-11",
+        "link": "https://www.tagesschau.de/wirtschaft/verbraucher/bgh-urteil-rechtsschutzversicherung-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Urteil: BGH nimmt Rechtsschutzversicherungen in die Pflicht",
+        "zeit": "19:46"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-11",
+        "link": "https://www.tagesschau.de/kommentar/bundeswehr-sexuelle-uebergriffe-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Sexualisiertes Fehlverhalten: Die Bundeswehr hat ein strukturelles Problem",
+        "zeit": "17:54"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
         "datum": "2026-11-11",
         "link": "https://www.tagesschau.de/investigativ/ndr-wdr/bundeswehr-sexuelle-belaestigung-100.html",
         "quelle": "tagesschau.de",
         "text": "Dunkelfeldstudie bei der Bundeswehr - Viele Fälle von sexualisiertem Fehlverhalten",
         "zeit": "11:13"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/inland/innenpolitik/bundeswehr-dunkelfeldstudie-102.html",
-        "quelle": "tagesschau.de",
-        "text": "Pistorius pocht auf \"null Toleranz\" gegenüber sexualisiertem Fehlverhalten in Bundeswehr",
-        "zeit": "12:30"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/ausland/asien/ukraine-russland-abu-dhabi-eu-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Ukraine-Verhandlungen: Russland plant kein Treffen mit Europäern",
-        "zeit": "12:27"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-10",
-        "link": "https://www.tagesschau.de/faktenfinder/ukraine-angebliches-foltergefaengnis-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Proteste vor Haus bei Kiew: Keine Belege für ein ukrainisches Foltergefängnis",
-        "zeit": "15:22"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/ausland/amerika/hegseth-amtsenthebungsverfahren-gestoppt-100.html",
-        "quelle": "tagesschau.de",
-        "text": "US-Repräsentantenhaus lehnt Amtsenthebungsverfahren gegen Hegseth ab",
-        "zeit": "01:19"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/ausland/amerika/papst-argentinien-milei-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Papst Leo in Argentinien: Klartext gegen Mileis Kettensägen-Politik",
-        "zeit": "06:54"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/ausland/amerika/usa-anklage-unterstuetzung-terroranschlaege-100.html",
-        "quelle": "tagesschau.de",
-        "text": "US-Justizministerium: Drei Männer wegen Terrorunterstützung angeklagt",
-        "zeit": "09:09"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "halt": "AW-08/streik",
-        "link": "https://www.tagesschau.de/ausland/europa/spanien-generalstreik-mieterbewegung-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Wie Spaniens Mieterbewegung für den Generalstreik mobilisiert",
-        "zeit": "06:16"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/inland/innenpolitik/linke-uebergewinne-ruestungskonzerne-steuer-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Profite von Rüstungskonzernen - Linke will Übergewinne besteuern",
-        "zeit": "09:24"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/inland/kriegsdienstverweigerer-steigend-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Zahl der Kriegsdienstverweigerer steigt weiter deutlich",
-        "zeit": "06:56"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "halt": "EF-07/versicherung",
-        "link": "https://www.tagesschau.de/wirtschaft/arbeitslosigkeit-akademiker-rekord-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Zahl der arbeitslosen Akademiker auf Höchststand",
-        "zeit": "11:07"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/wirtschaft/arbeitsmarkt/krankenstand-aeltere-beschaeftigte-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Medienbericht: Ältere Beschäftigte doppelt so häufig krankgeschrieben",
-        "zeit": "07:51"
       }
     ],
     "protokoll": [
+      {
+        "text": "6 neu: Schwarz-Rot verschiebt Zuckersteuer - keine Senkung der Stromsteuer · Historischer Sieg: Demokrat Colom holt Senatssitz in Mississippi · \"Sicherheitsordnung\": Warum übernehmen die USA Russlands Forderung? · Russland und Ukraine vereinbaren Gefangenenaustausch · Kommentar: Russland sägt an…",
+        "zeit": "2026-11-12 02:32"
+      },
       {
         "text": "3 neu: Dunkelfeldstudie bei der Bundeswehr - Viele Fälle von sexualisiertem Fehlverhalten · Pistorius pocht auf \"null Toleranz\" gegenüber sexualisiertem Fehlverhalten in Bundeswehr · Ukraine-Verhandlungen: Russland plant kein Treffen mit Europäern",
         "zeit": "2026-11-11 12:48"
@@ -132,7 +135,7 @@
         "zeit": "2026-11-10 21:53"
       }
     ],
-    "stand": "2026-11-11T12:48:04+01:00"
+    "stand": "2026-11-12T02:32:28+01:00"
   },
   "ferien": [
     {
@@ -207,51 +210,52 @@
   "nachrichten": [
     {
       "auto": true,
-      "datum": "2026-11-11",
-      "link": "https://www.tagesschau.de/investigativ/ndr-wdr/bundeswehr-sexuelle-belaestigung-100.html",
+      "datum": "2026-11-12",
+      "link": "https://www.tagesschau.de/inland/innenpolitik/koalition-haushalt-kompromiss-100.html",
       "quelle": "tagesschau.de",
-      "text": "Dunkelfeldstudie bei der Bundeswehr - Viele Fälle von sexualisiertem Fehlverhalten",
-      "zeit": "11:13"
+      "text": "Schwarz-Rot verschiebt Zuckersteuer - keine Senkung der Stromsteuer",
+      "zeit": "00:12"
+    },
+    {
+      "auto": true,
+      "datum": "2026-11-12",
+      "link": "https://www.tagesschau.de/ausland/amerika/demokrat-mississippi-sieg-100.html",
+      "quelle": "tagesschau.de",
+      "text": "Historischer Sieg: Demokrat Colom holt Senatssitz in Mississippi",
+      "zeit": "02:19"
     },
     {
       "auto": true,
       "datum": "2026-11-11",
-      "link": "https://www.tagesschau.de/inland/innenpolitik/bundeswehr-dunkelfeldstudie-102.html",
+      "link": "https://www.tagesschau.de/ausland/europa/europa-sicherheitsarchitektur-russland-usa-100.html",
       "quelle": "tagesschau.de",
-      "text": "Pistorius pocht auf \"null Toleranz\" gegenüber sexualisiertem Fehlverhalten in Bundeswehr",
-      "zeit": "12:30"
+      "text": "\"Sicherheitsordnung\": Warum übernehmen die USA Russlands Forderung?",
+      "zeit": "19:56"
     },
     {
       "auto": true,
       "datum": "2026-11-11",
-      "link": "https://www.tagesschau.de/ausland/asien/ukraine-russland-abu-dhabi-eu-100.html",
+      "link": "https://www.tagesschau.de/ausland/asien/ukraine-russland-verhandlungen-abu-dhabi-104.html",
       "quelle": "tagesschau.de",
-      "text": "Ukraine-Verhandlungen: Russland plant kein Treffen mit Europäern",
-      "zeit": "12:27"
-    },
-    {
-      "auto": true,
-      "datum": "2026-11-10",
-      "link": "https://www.tagesschau.de/faktenfinder/ukraine-angebliches-foltergefaengnis-100.html",
-      "quelle": "tagesschau.de",
-      "text": "Proteste vor Haus bei Kiew: Keine Belege für ein ukrainisches Foltergefängnis",
-      "zeit": "15:22"
+      "text": "Russland und Ukraine vereinbaren Gefangenenaustausch",
+      "zeit": "18:30"
     },
     {
       "auto": true,
       "datum": "2026-11-11",
-      "link": "https://www.tagesschau.de/ausland/amerika/hegseth-amtsenthebungsverfahren-gestoppt-100.html",
+      "link": "https://www.tagesschau.de/kommentar/ukraine-verhandlungen-abu-dhabi-106.html",
       "quelle": "tagesschau.de",
-      "text": "US-Repräsentantenhaus lehnt Amtsenthebungsverfahren gegen Hegseth ab",
-      "zeit": "01:19"
+      "text": "Kommentar: Russland sägt an der europäischen Sicherheitsarchitektur",
+      "zeit": "16:14"
     },
     {
       "auto": true,
       "datum": "2026-11-11",
-      "link": "https://www.tagesschau.de/ausland/amerika/papst-argentinien-milei-100.html",
+      "halt": "AW-06/kuendigung",
+      "link": "https://www.tagesschau.de/inland/innenpolitik/arbeitsrecht-kuendigungsschutz-befristungen-reform-100.html",
       "quelle": "tagesschau.de",
-      "text": "Papst Leo in Argentinien: Klartext gegen Mileis Kettensägen-Politik",
-      "zeit": "06:54"
+      "text": "Weniger Kündigungsschutz, mehr Befristungen - das plant die Koalition",
+      "zeit": "16:44"
     }
   ],
   "neu": [
