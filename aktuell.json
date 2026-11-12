@@ -162,52 +162,25 @@
       "bis": "2027-08-18",
       "name": "Sommerferien",
       "von": "2027-07-08"
-    },
-    {
-      "bis": "2027-10-30",
-      "name": "Herbstferien",
-      "von": "2027-10-18"
-    },
-    {
-      "bis": "2028-01-08",
-      "name": "Weihnachtsferien",
-      "von": "2027-12-23"
-    },
-    {
-      "bis": "2028-02-01",
-      "name": "Halbjahresferien",
-      "von": "2028-01-31"
-    },
-    {
-      "bis": "2028-04-22",
-      "name": "Osterferien",
-      "von": "2028-04-10"
-    },
-    {
-      "bis": "2028-08-30",
-      "name": "Sommerferien",
-      "von": "2028-07-20"
     }
   ],
-  "ferientage": [
-    {
-      "datum": "2027-05-07",
-      "name": "Tag nach Himmelfahrt"
-    },
-    {
-      "datum": "2027-05-18",
-      "name": "Tag nach Pfingsten"
-    },
-    {
-      "datum": "2028-05-26",
-      "name": "Tag nach Himmelfahrt"
-    },
-    {
-      "datum": "2028-06-06",
-      "name": "Tag nach Pfingsten"
-    }
-  ],
+  "ferientage": [],
   "nachrichten": [
+    {
+      "datum": "2026-11-09",
+      "quelle": "https://www.tagesschau.de/ausland/europa",
+      "text": "Todesschütze von Krakau ist tot."
+    },
+    {
+      "datum": "2026-11-09",
+      "quelle": "https://www.tagesschau.de/ausland/amerik",
+      "text": "Untersuchung gegen Nvidia-Chef Huang wegen Affäre mit mutmaßlicher chinesischer Spionin"
+    },
+    {
+      "datum": "2026-11-08",
+      "quelle": "https://www.tagesschau.de/inland/innenpo",
+      "text": "Merz will Aigner als Bundespräsidentin vorschlagen"
+    },
     {
       "auto": true,
       "datum": "2026-11-12",
@@ -247,15 +220,6 @@
       "quelle": "tagesschau.de",
       "text": "Kommentar: Russland sägt an der europäischen Sicherheitsarchitektur",
       "zeit": "16:14"
-    },
-    {
-      "auto": true,
-      "datum": "2026-11-11",
-      "halt": "AW-06/kuendigung",
-      "link": "https://www.tagesschau.de/inland/innenpolitik/arbeitsrecht-kuendigungsschutz-befristungen-reform-100.html",
-      "quelle": "tagesschau.de",
-      "text": "Weniger Kündigungsschutz, mehr Befristungen - das plant die Koalition",
-      "zeit": "16:44"
     }
   ],
   "neu": [
@@ -269,15 +233,8 @@
     }
   ],
   "pruefungen": [],
-  "stand": "2026-11-11T23:41:25.651Z",
+  "stand": "2026-11-12T11:18:54.333Z",
   "termine": [
-    {
-      "art": "Projekt",
-      "datum": "2026-11-12",
-      "halte": [],
-      "klasse": "BFSHK25",
-      "titel": "Kurator-Dossier"
-    },
     {
       "art": "Abgabe",
       "datum": "2026-11-13",
@@ -287,8 +244,15 @@
     },
     {
       "art": "Klausur",
-      "datum": "2026-12-03",
-      "halte": [],
+      "datum": "2026-12-10",
+      "halte": [
+        "EU-02/organe",
+        "EU-02/gesetz",
+        "EU-02/mehrheit",
+        "EU-02/ankommen",
+        "EU-02/gericht",
+        "EU-02/pruefstand"
+      ],
       "klasse": "MFA25.1",
       "titel": "Europäische Union"
     },
@@ -301,36 +265,6 @@
     }
   ],
   "version": 1,
-  "wahlen": [
-    {
-      "datum": "2027-04-18",
-      "halt": "DS-03/entscheiden",
-      "name": "Landtagswahlen Saarland und Schleswig-Holstein",
-      "vorlauf": 7,
-      "wer": "wählen das Saarland und Schleswig-Holstein neue Landtage"
-    },
-    {
-      "datum": "2027-04-25",
-      "halt": "DS-03/entscheiden",
-      "name": "Landtagswahl Nordrhein-Westfalen",
-      "vorlauf": 7,
-      "wer": "wählt Nordrhein-Westfalen einen neuen Landtag"
-    },
-    {
-      "datum": "2027-05-30",
-      "halt": "DS-03/wahlen",
-      "hinweis": "Wählen darfst du hier schon ab 16.",
-      "name": "Bürgerschaftswahl Bremen",
-      "vorlauf": 21,
-      "wer": "wählt Bremen die Bürgerschaft und Bremerhaven seine Stadtverordneten. Wählen darf man hier ab 16"
-    },
-    {
-      "datum": "2027-09-26",
-      "halt": "DS-03/entscheiden",
-      "name": "Landtagswahl Niedersachsen",
-      "vorlauf": 7,
-      "wer": "wählt Niedersachsen einen neuen Landtag"
-    }
-  ],
+  "wahlen": [],
   "werk": "wiso-netzplan-stellwerk"
 }
