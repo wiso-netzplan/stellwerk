@@ -1,4 +1,4 @@
-# Nachrichten-Automat: holt alle 15 Minuten von 6 bis 22 Uhr (deutsche Zeit) die Spitze der tagesschau-Startseite,
+# Nachrichten-Automat: holt von 6 bis 22 Uhr (deutsche Zeit) die Spitze der tagesschau-Startseite,
 # ersatzweise die Deutschlandfunk-Nachrichten, dazu den neuesten Beitrag „Hintergrund aktuell“ der bpb.
 # Ohne Freigabe, ohne KI, ohne Filter nach Themen (Eike, 10.11.2026). Notbremse im Stellwerk.
 name: Nachrichten
@@ -8,7 +8,16 @@ on:
     # (10./11.11.2026: von acht Terminen kam einer, vier Stunden zu spät). Mehr Termine = kürzere Lücken.
     # Ändert sich an der Spitze nichts, schreibt das Skript nichts (kein Commit).
     - cron: '7,22,37,52 4-21 * * *'   # UTC; das Skript prüft selbst auf 6 bis 22 Uhr in Berlin (Sommer- und Winterzeit)
+    # Auch viertelstündlich kam am 11.11.2026 ab 12:47 Uhr kein einziger geplanter Lauf mehr.
+    # Darum weckt ein externer Wecker den Automaten (README, Abschnitt „Wecker“); der Plan hier bleibt als Reserve.
   workflow_dispatch:
+    inputs:
+      wecker:
+        description: 'Aufruf durch den Wecker: hält sich an 6 bis 22 Uhr (von Hand: aus lassen, dann läuft er immer)'
+        type: boolean
+        default: false
+  repository_dispatch:
+    types: [nachrichten]   # Knopf „Jetzt holen“ im Stellwerk
 permissions:
   contents: write
 concurrency:
@@ -21,4 +30,4 @@ jobs:
       - uses: actions/checkout@v4
       - name: Nachrichten holen und schreiben
         run: |
-          werkzeug/schreiben.sh "Nachrichten: $(TZ=Europe/Berlin date '+%d.%m. %H:%M')" holen ${{ github.event_name == 'workflow_dispatch' && '--immer' || '' }}
+          werkzeug/schreiben.sh "Nachrichten: $(TZ=Europe/Berlin date '+%d.%m. %H:%M')" holen ${{ (github.event_name == 'repository_dispatch' || (github.event_name == 'workflow_dispatch' && !inputs.wecker)) && '--immer' || '' }}
