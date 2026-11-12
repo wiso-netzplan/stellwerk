@@ -7,19 +7,95 @@
         "art": "spitze",
         "auto": true,
         "datum": "2026-11-12",
-        "link": "https://www.tagesschau.de/inland/innenpolitik/koalition-haushalt-kompromiss-100.html",
+        "link": "https://www.tagesschau.de/inland/innenpolitik/haushalt-kompromisse-stromsteuer-reaktionen-100.html",
         "quelle": "tagesschau.de",
-        "text": "Schwarz-Rot verschiebt Zuckersteuer - keine Senkung der Stromsteuer",
-        "zeit": "00:12"
+        "text": "Keine Senkung der Stromsteuer: Bei der Union \"hat es ordentlich geknallt\"",
+        "zeit": "12:59"
       },
       {
         "art": "spitze",
         "auto": true,
         "datum": "2026-11-12",
-        "link": "https://www.tagesschau.de/ausland/amerika/demokrat-mississippi-sieg-100.html",
+        "link": "https://www.tagesschau.de/inland/innenpolitik/haushalt-union-spd-102.html",
         "quelle": "tagesschau.de",
-        "text": "Historischer Sieg: Demokrat Colom holt Senatssitz in Mississippi",
-        "zeit": "02:19"
+        "text": "Kompromisse beim Haushalt: Zufriedene SPD, Grummeln in der Union",
+        "zeit": "10:43"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-12",
+        "halt": "DS-05/kabinett",
+        "link": "https://www.tagesschau.de/inland/innenpolitik/bundesregierung-haushalt-kompromisse-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Worauf sich die Bundesregierung beim Haushalt geeinigt hat",
+        "zeit": "09:12"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-12",
+        "halt": "DS-05/kabinett",
+        "link": "https://www.tagesschau.de/inland/innenpolitik/haushalt-bereinigungssitzung-finanzen-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Warum Minister beim Haushalt lieber pünktlich sind",
+        "zeit": "12:08"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-12",
+        "link": "https://www.tagesschau.de/wirtschaft/unternehmen/nvidia-beratung-chefwechsel-kursrueckgang-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Nvidia-Chef Huang verliert wegen Affären wohl seinen Job",
+        "zeit": "10:38"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-12",
+        "link": "https://www.tagesschau.de/wirtschaft/verbraucher/mehr-menschen-ueberschuldet-schuldneratlas-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Warum immer mehr Menschen in die Schuldenfalle rutschen",
+        "zeit": "12:31"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-12",
+        "link": "https://www.tagesschau.de/wirtschaft/finanzen/marktberichte/marktbericht-dax-dow-nvidia-106.html",
+        "quelle": "tagesschau.de",
+        "text": "Marktbericht: DAX knackt 27.000 Punkte-Marke",
+        "zeit": "10:55"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-12",
+        "halt": "AW-08/streik",
+        "link": "https://www.tagesschau.de/wirtschaft/unternehmen/ig-metall-streiks-100.html",
+        "quelle": "tagesschau.de",
+        "text": "IG Metall beschließt erstmals seit acht Jahren ganztägige Streiks",
+        "zeit": "10:48"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-12",
+        "halt": "FA-04/betreuung",
+        "link": "https://www.tagesschau.de/inland/innenpolitik/kita-startchancengesetz-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Kita-Startchancengesetz: Mehr Förderung mit weniger Geld?",
+        "zeit": "11:45"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-12",
+        "link": "https://www.tagesschau.de/ausland/europa/witkoff-kushner-putin-ukraine-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Trumps Unterhändler fordern von Putin Beteiligung Europas",
+        "zeit": "08:00"
       },
       {
         "art": "spitze",
@@ -34,86 +110,17 @@
         "art": "spitze",
         "auto": true,
         "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/ausland/asien/ukraine-russland-verhandlungen-abu-dhabi-104.html",
-        "quelle": "tagesschau.de",
-        "text": "Russland und Ukraine vereinbaren Gefangenenaustausch",
-        "zeit": "18:30"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
         "link": "https://www.tagesschau.de/kommentar/ukraine-verhandlungen-abu-dhabi-106.html",
         "quelle": "tagesschau.de",
         "text": "Kommentar: Russland sägt an der europäischen Sicherheitsarchitektur",
         "zeit": "16:14"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "halt": "AW-06/kuendigung",
-        "link": "https://www.tagesschau.de/inland/innenpolitik/arbeitsrecht-kuendigungsschutz-befristungen-reform-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Weniger Kündigungsschutz, mehr Befristungen - das plant die Koalition",
-        "zeit": "16:44"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/inland/steuerklassen-klingbeil-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Vorstoß des Finanzministeriums: Was sich bei Steuerklassen für Paare ändern könnte",
-        "zeit": "16:24"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/inland/gasreserve-126.html",
-        "quelle": "tagesschau.de",
-        "text": "Bundeskabinett beschließt Aufbau einer Gasreserve",
-        "zeit": "17:38"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/inland/innenpolitik/prien-unterhaltsvorschuss-gesetzentwurf-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Familienministerin Prien plant Einkommensgrenze beim Unterhaltsvorschuss",
-        "zeit": "19:01"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/wirtschaft/verbraucher/bgh-urteil-rechtsschutzversicherung-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Urteil: BGH nimmt Rechtsschutzversicherungen in die Pflicht",
-        "zeit": "19:46"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/kommentar/bundeswehr-sexuelle-uebergriffe-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Sexualisiertes Fehlverhalten: Die Bundeswehr hat ein strukturelles Problem",
-        "zeit": "17:54"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-11",
-        "link": "https://www.tagesschau.de/investigativ/ndr-wdr/bundeswehr-sexuelle-belaestigung-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Dunkelfeldstudie bei der Bundeswehr - Viele Fälle von sexualisiertem Fehlverhalten",
-        "zeit": "11:13"
       }
     ],
     "protokoll": [
+      {
+        "text": "6 neu: Keine Senkung der Stromsteuer: Bei der Union \"hat es ordentlich geknallt\" · Kompromisse beim Haushalt: Zufriedene SPD, Grummeln in der Union · Worauf sich die Bundesregierung beim Haushalt geeinigt hat · Warum Minister beim Haushalt lieber pünktlich sind · Nvidia-Chef Huang verliert wegen…",
+        "zeit": "2026-11-12 13:33"
+      },
       {
         "text": "Automatik eingeschaltet",
         "zeit": "2026-11-12 12:24"
@@ -143,7 +150,7 @@
         "zeit": "2026-11-10 21:53"
       }
     ],
-    "stand": "2026-11-12T02:32:28+01:00"
+    "stand": "2026-11-12T13:33:38+01:00"
   },
   "ferien": [
     {
@@ -177,51 +184,52 @@
     {
       "auto": true,
       "datum": "2026-11-12",
-      "link": "https://www.tagesschau.de/inland/innenpolitik/koalition-haushalt-kompromiss-100.html",
+      "link": "https://www.tagesschau.de/inland/innenpolitik/haushalt-kompromisse-stromsteuer-reaktionen-100.html",
       "quelle": "tagesschau.de",
-      "text": "Schwarz-Rot verschiebt Zuckersteuer - keine Senkung der Stromsteuer",
-      "zeit": "00:12"
+      "text": "Keine Senkung der Stromsteuer: Bei der Union \"hat es ordentlich geknallt\"",
+      "zeit": "12:59"
     },
     {
       "auto": true,
       "datum": "2026-11-12",
-      "link": "https://www.tagesschau.de/ausland/amerika/demokrat-mississippi-sieg-100.html",
+      "link": "https://www.tagesschau.de/inland/innenpolitik/haushalt-union-spd-102.html",
       "quelle": "tagesschau.de",
-      "text": "Historischer Sieg: Demokrat Colom holt Senatssitz in Mississippi",
-      "zeit": "02:19"
+      "text": "Kompromisse beim Haushalt: Zufriedene SPD, Grummeln in der Union",
+      "zeit": "10:43"
     },
     {
       "auto": true,
-      "datum": "2026-11-11",
-      "link": "https://www.tagesschau.de/ausland/europa/europa-sicherheitsarchitektur-russland-usa-100.html",
+      "datum": "2026-11-12",
+      "halt": "DS-05/kabinett",
+      "link": "https://www.tagesschau.de/inland/innenpolitik/bundesregierung-haushalt-kompromisse-100.html",
       "quelle": "tagesschau.de",
-      "text": "\"Sicherheitsordnung\": Warum übernehmen die USA Russlands Forderung?",
-      "zeit": "19:56"
+      "text": "Worauf sich die Bundesregierung beim Haushalt geeinigt hat",
+      "zeit": "09:12"
     },
     {
       "auto": true,
-      "datum": "2026-11-11",
-      "link": "https://www.tagesschau.de/ausland/asien/ukraine-russland-verhandlungen-abu-dhabi-104.html",
+      "datum": "2026-11-12",
+      "halt": "DS-05/kabinett",
+      "link": "https://www.tagesschau.de/inland/innenpolitik/haushalt-bereinigungssitzung-finanzen-100.html",
       "quelle": "tagesschau.de",
-      "text": "Russland und Ukraine vereinbaren Gefangenenaustausch",
-      "zeit": "18:30"
+      "text": "Warum Minister beim Haushalt lieber pünktlich sind",
+      "zeit": "12:08"
     },
     {
       "auto": true,
-      "datum": "2026-11-11",
-      "link": "https://www.tagesschau.de/kommentar/ukraine-verhandlungen-abu-dhabi-106.html",
+      "datum": "2026-11-12",
+      "link": "https://www.tagesschau.de/wirtschaft/unternehmen/nvidia-beratung-chefwechsel-kursrueckgang-100.html",
       "quelle": "tagesschau.de",
-      "text": "Kommentar: Russland sägt an der europäischen Sicherheitsarchitektur",
-      "zeit": "16:14"
+      "text": "Nvidia-Chef Huang verliert wegen Affären wohl seinen Job",
+      "zeit": "10:38"
     },
     {
       "auto": true,
-      "datum": "2026-11-11",
-      "halt": "AW-06/kuendigung",
-      "link": "https://www.tagesschau.de/inland/innenpolitik/arbeitsrecht-kuendigungsschutz-befristungen-reform-100.html",
+      "datum": "2026-11-12",
+      "link": "https://www.tagesschau.de/wirtschaft/verbraucher/mehr-menschen-ueberschuldet-schuldneratlas-100.html",
       "quelle": "tagesschau.de",
-      "text": "Weniger Kündigungsschutz, mehr Befristungen - das plant die Koalition",
-      "zeit": "16:44"
+      "text": "Warum immer mehr Menschen in die Schuldenfalle rutschen",
+      "zeit": "12:31"
     }
   ],
   "neu": [
