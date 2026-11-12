@@ -137,6 +137,9 @@ const zwei=n=>String(n).padStart(2,'0'),iso=d=>d.getFullYear()+'-'+zwei(d.getMon
 const datum=s=>new Date(s+'T00:00:00'),tage=s=>Math.round((datum(s)-HEUTE)/864e5);
 const WT=['So','Mo','Di','Mi','Do','Fr','Sa'],kurz=s=>{const d=datum(s);return WT[d.getDay()]+' '+zwei(d.getDate())+'.'+zwei(d.getMonth()+1)+'.'};
 const HK=Object.fromEntries(HALTE.map(h=>[h[0],h]));
+// Stationen: Kürzel (z. B. AW-08) → alle Halte, damit ein Termin eine ganze Station mit einem Klick bekommt
+const ST={};HALTE.forEach(h=>{const c=h[0].split('/')[0];(ST[c]=ST[c]||{c,linie:h[1],name:h[2],halte:[]}).halte.push(h[0])});
+const MAXHALTE=40;
 const leer=()=>({werk:'wiso-netzplan-stellwerk',version:1,stand:null,termine:[],nachrichten:[],ferien:[],pruefungen:[],neu:[],wahlen:[],ferientage:[]});
 let D=leer(),geladen=null,sha=null;
 const FELDER={termine:{datum:'',klasse:'',art:'Klausur',titel:'',halte:[]},pruefungen:{datum:'',klasse:'',art:'Abschlussprüfung'},nachrichten:{text:'',quelle:'',datum:''},ferien:{name:'',von:'',bis:''},neu:{datum:'',text:''},wahlen:{datum:'',name:'',wer:'',vorlauf:7,halt:'',hinweis:''},ferientage:{datum:'',name:''}};
@@ -166,7 +169,7 @@ function zeichne(){
   <td><select data-f="art" aria-label="Art">${opt(ARTEN,t.art)}</select></td>
   <td><input type="text" data-f="titel" value="${esc(t.titel)}" maxlength="90" aria-label="Titel" placeholder="Thema"></td>
   <td class="lernstoff"><div class="chips">${(t.halte||[]).map((k,j)=>`<span class="chip"><b>${esc(k.slice(0,2))}</b>${esc(HK[k]?HK[k][3]:k)}<button type="button" data-halt-weg="${i}:${j}" aria-label="Halt entfernen">×</button></span>`).join('')}
-   <input type="search" list="halteliste" data-halt-neu="${i}" placeholder="Halt suchen …" aria-label="Halt hinzufügen"></div></td>${loesch('termine',i)}</tr>`).join('')||'<tr><td colspan="6" class="mut">Noch keine Termine.</td></tr>';
+   <input type="search" list="stoffliste" data-halt-neu="${i}" placeholder="Halt oder Station suchen …" aria-label="Halt oder ganze Station hinzufügen"></div></td>${loesch('termine',i)}</tr>`).join('')||'<tr><td colspan="6" class="mut">Noch keine Termine.</td></tr>';
  $('#t-pruefungen').innerHTML=D.pruefungen.map((p,i)=>`<tr data-art="pruefungen" data-i="${i}"><td><input type="date" data-f="datum" value="${esc(p.datum)}" aria-label="Datum"></td><td><select data-f="klasse" aria-label="Klasse">${opt(KLASSEN,p.klasse,'Klasse …')}</select></td><td><input type="text" data-f="art" value="${esc(p.art)}" maxlength="60" aria-label="Bezeichnung"></td>${loesch('pruefungen',i)}</tr>`).join('')||'<tr><td colspan="4" class="mut">Noch keine Prüfungen.</td></tr>';
  $('#t-nachrichten').innerHTML=handN().map(([n,i])=>`<tr data-art="nachrichten" data-i="${i}"><td><input type="text" data-f="text" value="${esc(n.text)}" maxlength="160" aria-label="Text"></td><td><input type="text" data-f="quelle" value="${esc(n.quelle)}" maxlength="40" aria-label="Quelle" placeholder="z. B. tagesschau.de"></td><td><input type="date" data-f="datum" value="${esc(n.datum)}" aria-label="Datum"></td>${loesch('nachrichten',i)}</tr>`).join('')||'<tr><td colspan="4" class="mut">Keine eigenen Nachrichten.</td></tr>';
  zeichneAuto();
@@ -180,8 +183,9 @@ function zeichne(){
  $('#t-neu').innerHTML=D.neu.map((n,i)=>`<tr data-art="neu" data-i="${i}"><td><input type="date" data-f="datum" value="${esc(n.datum)}" aria-label="Datum"></td><td><input type="text" data-f="text" value="${esc(n.text)}" maxlength="120" aria-label="Text"></td>${loesch('neu',i)}</tr>`).join('')||'<tr><td colspan="3" class="mut">Noch nichts.</td></tr>';
  entwurfSichern()}
 document.body.insertAdjacentHTML('beforeend','<datalist id="halteliste">'+HALTE.map(h=>`<option value="${esc(h[0]+' · '+h[3])}">${esc(h[1]+' · '+h[2])}</option>`).join('')+'</datalist>');
+document.body.insertAdjacentHTML('beforeend','<datalist id="stoffliste">'+Object.values(ST).map(st=>`<option value="${esc(st.c+' · Ganze Station: '+st.name)}">${esc(st.linie+' · '+st.halte.length+' Halte')}</option>`).join('')+HALTE.map(h=>`<option value="${esc(h[0]+' · '+h[3])}">${esc(h[1]+' · '+h[2])}</option>`).join('')+'</datalist>');
 document.addEventListener('input',e=>{const t=e.target,tr=t.closest('tr[data-art]');
- if(t.dataset.haltNeu!==undefined){const k=t.value.split(' · ')[0].trim();if(HK[k]){const x=D.termine[+t.dataset.haltNeu];x.halte=x.halte||[];if(!x.halte.includes(k)&&x.halte.length<8)x.halte.push(k);zeichne();document.querySelector(`[data-halt-neu="${t.dataset.haltNeu}"]`)?.focus()}return}
+ if(t.dataset.haltNeu!==undefined){const k=t.value.split(' · ')[0].trim(),neu=HK[k]?[k]:ST[k]?ST[k].halte:null;if(neu){const x=D.termine[+t.dataset.haltNeu];x.halte=x.halte||[];neu.forEach(n=>{if(!x.halte.includes(n)&&x.halte.length<MAXHALTE)x.halte.push(n)});zeichne();document.querySelector(`[data-halt-neu="${t.dataset.haltNeu}"]`)?.focus()}return}
  if(tr&&t.dataset.f){D[tr.dataset.art][+tr.dataset.i][t.dataset.f]=t.dataset.f==='halt'?t.value.split(' · ')[0].trim():t.value;entwurfSichern()}});
 document.addEventListener('change',e=>{if(e.target.id==='vergangen')zeichne();const tr=e.target.closest('tr[data-art]');if(tr&&e.target.tagName==='SELECT'){D[tr.dataset.art][+tr.dataset.i][e.target.dataset.f]=e.target.value;entwurfSichern()}});
 document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
