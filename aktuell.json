@@ -175,21 +175,6 @@
   "ferientage": [],
   "nachrichten": [
     {
-      "datum": "2026-11-09",
-      "quelle": "https://www.tagesschau.de/ausland/europa",
-      "text": "Todesschütze von Krakau ist tot."
-    },
-    {
-      "datum": "2026-11-09",
-      "quelle": "https://www.tagesschau.de/ausland/amerik",
-      "text": "Untersuchung gegen Nvidia-Chef Huang wegen Affäre mit mutmaßlicher chinesischer Spionin"
-    },
-    {
-      "datum": "2026-11-08",
-      "quelle": "https://www.tagesschau.de/inland/innenpo",
-      "text": "Merz will Aigner als Bundespräsidentin vorschlagen"
-    },
-    {
       "auto": true,
       "datum": "2026-11-12",
       "link": "https://www.tagesschau.de/inland/innenpolitik/koalition-haushalt-kompromiss-100.html",
@@ -228,6 +213,15 @@
       "quelle": "tagesschau.de",
       "text": "Kommentar: Russland sägt an der europäischen Sicherheitsarchitektur",
       "zeit": "16:14"
+    },
+    {
+      "auto": true,
+      "datum": "2026-11-11",
+      "halt": "AW-06/kuendigung",
+      "link": "https://www.tagesschau.de/inland/innenpolitik/arbeitsrecht-kuendigungsschutz-befristungen-reform-100.html",
+      "quelle": "tagesschau.de",
+      "text": "Weniger Kündigungsschutz, mehr Befristungen - das plant die Koalition",
+      "zeit": "16:44"
     }
   ],
   "neu": [
@@ -241,7 +235,7 @@
     }
   ],
   "pruefungen": [],
-  "stand": "2026-11-12T11:18:54.333Z",
+  "stand": "2026-11-12T11:24:48.296Z",
   "termine": [
     {
       "art": "Abgabe",
