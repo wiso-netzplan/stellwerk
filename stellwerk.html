@@ -84,7 +84,7 @@ details>summary{cursor:pointer;color:var(--mut)}
  <div class="tabelle"><table><thead><tr><th>Eigene Nachricht</th><th style="width:160px">Quelle</th><th style="width:150px">Datum</th><th></th></tr></thead><tbody id="t-nachrichten"></tbody></table></div>
  <div class="auto" aria-labelledby="h-auto">
   <div class="zeile"><h3 id="h-auto">Automatisch</h3><span class="klein" id="a-zustand"></span><span class="grow"></span><button class="klein" type="button" id="a-holen" hidden>Jetzt holen</button><button class="klein" type="button" id="a-schalter" hidden></button></div>
-  <p class="klein mut" style="margin:0">Alle 15 Minuten von 6 bis 22 Uhr: die obersten Meldungen der tagesschau-Startseite in ihrer Reihenfolge, nur Titel und Link, dazu der neueste Beitrag „Hintergrund aktuell“ der bpb. Fällt die tagesschau aus, springt der Deutschlandfunk ein. „Entfernen“ und „Automatik aus“ wirken sofort, ohne „Ins Stellwerk schreiben“. „Jetzt holen“ startet den Automaten sofort, auch nachts.</p>
+  <p class="klein mut" style="margin:0">Um 6, 9, 12, 15 und 18 Uhr: die obersten Meldungen der tagesschau-Startseite in ihrer Reihenfolge, nur Titel und Link, dazu der neueste Beitrag „Hintergrund aktuell“ der bpb. Fällt die tagesschau aus, springt der Deutschlandfunk ein. „Entfernen“ und „Automatik aus“ wirken sofort, ohne „Ins Stellwerk schreiben“. „Jetzt holen“ startet den Automaten sofort, auch nachts.</p>
   <ol id="a-liste"></ol>
   <div class="status" id="a-status" role="status" aria-live="polite"></div>
   <details id="a-gesperrt-box"><summary id="a-gesperrt-titel">Entfernte Meldungen</summary><ul id="a-gesperrt"></ul></details>
@@ -273,17 +273,20 @@ const aStatus=(t,art)=>{const s=$('#a-status');s.textContent=t;s.className='stat
 function zeichneAuto(){const a=D.automatik,auto=D.nachrichten.filter(n=>n.auto);
  const sch=$('#a-schalter');$('#a-holen').hidden=!a||!a.an;
  if(!a){$('#a-zustand').textContent=geladen?'Noch nicht gelaufen.':'Nach „Verbinden und laden“ siehst du hier den Stand.';$('#a-zustand').className='klein mut';sch.hidden=true;$('#a-liste').innerHTML='';$('#a-gesperrt-box').hidden=true;$('#a-protokoll').innerHTML='';return}
- $('#a-zustand').innerHTML=a.an?'<span class="an">läuft</span>'+(a.stand?' · zuletzt neue Meldungen '+esc(new Date(a.stand).toLocaleString('de-DE',{dateStyle:'short',timeStyle:'short'})):'')+(veraltet(a.stand)?' · <span class="aus">seit über drei Stunden nichts Neues, der Wecker läuft womöglich nicht</span>':''):'<span class="aus">aus</span> · in der Laufschrift stehen nur deine eigenen Nachrichten';
+ $('#a-zustand').innerHTML=a.an?'<span class="an">läuft</span>'+(a.stand?' · zuletzt neue Meldungen '+esc(new Date(a.stand).toLocaleString('de-DE',{dateStyle:'short',timeStyle:'short'})):'')+(a.geholt?' · abgerufen '+esc(new Date(a.geholt).toLocaleString('de-DE',{dateStyle:'short',timeStyle:'short'})):'')+(verpasst(a.geholt)?' · <span class="aus">Abruf um '+verpasst(a.geholt)+' Uhr fehlt, „Jetzt holen“ hilft</span>':''):'<span class="aus">aus</span> · in der Laufschrift stehen nur deine eigenen Nachrichten';
  $('#a-zustand').className='klein';sch.hidden=false;sch.textContent=a.an?'Automatik aus':'Automatik wieder an';sch.dataset.aktion=a.an?'aus':'an';
  $('#a-liste').innerHTML=a.an?(auto.map(n=>`<li>${esc(n.text)}<span class="klein mut">${esc(n.quelle)}${n.zeit?' · '+esc(n.zeit):''}${n.halt?' · Halt '+esc(n.halt):''}</span>${/^https:\/\//.test(n.link||'')?` <a class="klein" href="${esc(n.link)}" target="_blank" rel="noopener noreferrer">öffnen</a>`:''}<button class="klein" type="button" data-auto-weg="${esc(n.link)}">Entfernen</button></li>`).join('')||'<li class="mut">Gerade keine.</li>'):'';
  const g=a.gesperrt||[];$('#a-gesperrt-box').hidden=!g.length;$('#a-gesperrt-titel').textContent='Entfernte Meldungen ('+g.length+')';
  $('#a-gesperrt').innerHTML=g.map(l=>`<li>${/^https:\/\//.test(l)?`<a href="${esc(l)}" target="_blank" rel="noopener noreferrer">${esc(l.replace(/^https:\/\/www\./,''))}</a>`:esc(l.replace(/^kalender:/,'Kalender ').replace(/^wahl:/,'Wahl-Countdown '))} <button class="klein" type="button" data-auto-zulassen="${esc(l)}">wieder zulassen</button></li>`).join('');
  $('#a-protokoll').innerHTML=(a.protokoll||[]).slice(0,30).map(p=>`<li>${esc(p.zeit)} · ${esc(p.text)}</li>`).join('')||'<li>Noch leer.</li>'}
-// Tagsüber ändert sich die Spitze der tagesschau meist binnen einer Stunde. Steht drei Stunden lang nichts Neues,
-// ist eher der Wecker ausgefallen als die Nachrichtenlage still.
-function veraltet(stand){if(!stand)return false;const t=Date.parse(stand);if(isNaN(t))return false;
- const h=Number(new Intl.DateTimeFormat('de-DE',{timeZone:'Europe/Berlin',hour:'numeric',hourCycle:'h23'}).formatToParts(new Date()).find(t=>t.type==='hour').value);
- return h>=9&&h<=22&&Date.now()-t>3*3600e3}
+// Abrufe um 6, 9, 12, 15 und 18 Uhr (wie ABRUFE in werkzeug/nachrichten.py). Liegt der letzte Termin über eine
+// Stunde zurück und ist seitdem nichts abgerufen worden, ist der Wecker ausgefallen. Ergebnis: die Stunde des Termins.
+const ABRUFE=[6,9,12,15,18];
+function verpasst(geholt){const t=new Intl.DateTimeFormat('de-DE',{timeZone:'Europe/Berlin',hour:'numeric',minute:'numeric',hourCycle:'h23'}).formatToParts(new Date());
+ const h=Number(t.find(x=>x.type==='hour').value),m=Number(t.find(x=>x.type==='minute').value);
+ const fr=ABRUFE.filter(x=>x<=h),termin=fr.length?fr[fr.length-1]:ABRUFE[ABRUFE.length-1];
+ const seit=fr.length?(h-termin)*60+m:(h+24-termin)*60+m;if(seit<60)return null;
+ const g=Date.parse(geholt||'');return isNaN(g)||g<Date.now()-seit*60e3?termin:null}
 async function jetztHolen(){
  if(!$('#schluessel').value.trim()){aStatus('Dafür braucht dieses Gerät einmal den Schlüssel (oben unter Verbindung).','err');$('#schluessel').focus();return}
  const vorher=JSON.stringify(D.automatik);aStatus('Auftrag wird geschickt …');
@@ -292,8 +295,9 @@ async function jetztHolen(){
   if(r.status===401||r.status===403)throw new Error('Der Schlüssel darf hier nicht schreiben.');
   if(!r.ok&&r.status!==204)throw new Error('GitHub antwortet mit '+r.status+'.');
   aStatus('Angenommen. Der Automat holt die Nachrichten, das dauert meist unter einer Minute …');
+  const alteMeldungen=JSON.stringify((D.automatik||{}).meldungen||[]);
   for(let n=0;n<18;n++){await new Promise(z=>setTimeout(z,5000));try{const x=await holen();if(JSON.stringify(x.automatik)!==vorher){geladen=Object.assign(leer(),x);autoUebernehmen(geladen);zeichne();
-   aStatus('Neue Meldungen sind da. Im Wagen nach spätestens etwa fünf Minuten.','ok');return}}catch(e){}}
+   aStatus(JSON.stringify((x.automatik||{}).meldungen||[])!==alteMeldungen?'Neue Meldungen sind da. Im Wagen nach spätestens etwa fünf Minuten.':'Abgerufen. An der Spitze der tagesschau hat sich nichts geändert.','ok');return}}catch(e){}}
   aStatus('Nach anderthalb Minuten keine Änderung: Entweder hat sich an der Spitze der tagesschau nichts getan, oder der Automat hängt. Unter „Actions“ in der Ablage steht, ob er gelaufen ist.')}
  catch(e){aStatus(e.message||String(e),'err')}finally{document.querySelectorAll('.auto button').forEach(b=>b.disabled=false)}}
 $('#a-holen').onclick=jetztHolen;

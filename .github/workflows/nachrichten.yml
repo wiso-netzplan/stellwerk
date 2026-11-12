@@ -1,19 +1,18 @@
-# Nachrichten-Automat: holt von 6 bis 22 Uhr (deutsche Zeit) die Spitze der tagesschau-Startseite,
-# ersatzweise die Deutschlandfunk-Nachrichten, dazu den neuesten Beitrag „Hintergrund aktuell“ der bpb.
-# Ohne Freigabe, ohne KI, ohne Filter nach Themen (Eike, 10.11.2026). Notbremse im Stellwerk.
+# Nachrichten-Automat: holt um 6, 9, 12, 15 und 18 Uhr (deutsche Zeit, Eike 12.11.2026) die Spitze der
+# tagesschau-Startseite, ersatzweise die Deutschlandfunk-Nachrichten, dazu den neuesten Beitrag „Hintergrund aktuell“
+# der bpb. Ohne Freigabe, ohne KI, ohne Filter nach Themen (Eike, 10.11.2026). Notbremse im Stellwerk.
 name: Nachrichten
 on:
   schedule:
-    # Viertelstündlich statt stündlich: GitHub startet geplante Läufe bei Last stark verspätet oder gar nicht
-    # (10./11.11.2026: von acht Terminen kam einer, vier Stunden zu spät). Mehr Termine = kürzere Lücken.
-    # Ändert sich an der Spitze nichts, schreibt das Skript nichts (kein Commit).
-    - cron: '7,22,37,52 4-21 * * *'   # UTC; das Skript prüft selbst auf 6 bis 22 Uhr in Berlin (Sommer- und Winterzeit)
-    # Auch viertelstündlich kam am 11.11.2026 ab 12:47 Uhr kein einziger geplanter Lauf mehr.
-    # Darum weckt ein externer Wecker den Automaten (README, Abschnitt „Wecker“); der Plan hier bleibt als Reserve.
+    # GitHub startet geplante Läufe nur nach Kräften (11.11.2026: ab 12:47 Uhr gar keiner mehr). Darum mehrere
+    # Versuche in den zwei Stunden ab jedem Termin (UTC; Sommer- und Winterzeit). Das Skript entscheidet selbst:
+    # Der erste Lauf nach einem Termin holt, die übrigen tun nichts. Verlassen kann man sich darauf nicht;
+    # dafür ist der Wecker gedacht (README, Abschnitt „Wecker“).
+    - cron: '7,22,37,52 4,5,7,8,10,11,13,14,16,17 * * *'
   workflow_dispatch:
     inputs:
       wecker:
-        description: 'Aufruf durch den Wecker: hält sich an 6 bis 22 Uhr (von Hand: aus lassen, dann läuft er immer)'
+        description: 'Aufruf durch den Wecker: holt nur, wenn ein Termin (6, 9, 12, 15, 18 Uhr) fällig ist. Von Hand aus lassen, dann holt er sofort.'
         type: boolean
         default: false
   repository_dispatch:
