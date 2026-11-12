@@ -1,6 +1,6 @@
 {
   "automatik": {
-    "an": true,
+    "an": false,
     "gesperrt": [],
     "meldungen": [
       {
@@ -115,6 +115,10 @@
     ],
     "protokoll": [
       {
+        "text": "Automatik ausgeschaltet",
+        "zeit": "2026-11-12 12:24"
+      },
+      {
         "text": "6 neu: Schwarz-Rot verschiebt Zuckersteuer - keine Senkung der Stromsteuer · Historischer Sieg: Demokrat Colom holt Senatssitz in Mississippi · \"Sicherheitsordnung\": Warum übernehmen die USA Russlands Forderung? · Russland und Ukraine vereinbaren Gefangenenaustausch · Kommentar: Russland sägt an…",
         "zeit": "2026-11-12 02:32"
       },
@@ -180,46 +184,6 @@
       "datum": "2026-11-08",
       "quelle": "https://www.tagesschau.de/inland/innenpo",
       "text": "Merz will Aigner als Bundespräsidentin vorschlagen"
-    },
-    {
-      "auto": true,
-      "datum": "2026-11-12",
-      "link": "https://www.tagesschau.de/inland/innenpolitik/koalition-haushalt-kompromiss-100.html",
-      "quelle": "tagesschau.de",
-      "text": "Schwarz-Rot verschiebt Zuckersteuer - keine Senkung der Stromsteuer",
-      "zeit": "00:12"
-    },
-    {
-      "auto": true,
-      "datum": "2026-11-12",
-      "link": "https://www.tagesschau.de/ausland/amerika/demokrat-mississippi-sieg-100.html",
-      "quelle": "tagesschau.de",
-      "text": "Historischer Sieg: Demokrat Colom holt Senatssitz in Mississippi",
-      "zeit": "02:19"
-    },
-    {
-      "auto": true,
-      "datum": "2026-11-11",
-      "link": "https://www.tagesschau.de/ausland/europa/europa-sicherheitsarchitektur-russland-usa-100.html",
-      "quelle": "tagesschau.de",
-      "text": "\"Sicherheitsordnung\": Warum übernehmen die USA Russlands Forderung?",
-      "zeit": "19:56"
-    },
-    {
-      "auto": true,
-      "datum": "2026-11-11",
-      "link": "https://www.tagesschau.de/ausland/asien/ukraine-russland-verhandlungen-abu-dhabi-104.html",
-      "quelle": "tagesschau.de",
-      "text": "Russland und Ukraine vereinbaren Gefangenenaustausch",
-      "zeit": "18:30"
-    },
-    {
-      "auto": true,
-      "datum": "2026-11-11",
-      "link": "https://www.tagesschau.de/kommentar/ukraine-verhandlungen-abu-dhabi-106.html",
-      "quelle": "tagesschau.de",
-      "text": "Kommentar: Russland sägt an der europäischen Sicherheitsarchitektur",
-      "zeit": "16:14"
     }
   ],
   "neu": [
