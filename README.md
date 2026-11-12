@@ -5,14 +5,14 @@ Eingabeseite und Datenablage für den Wagen im WiSo-Netzplan. Alles hier ist öf
 - `stellwerk.html` – Eingabeseite (https://wiso-netzplan.github.io/stellwerk/stellwerk.html)
 - `aktuell.json` – die Datei, die das Paket liest (Termine, Prüfungen, Ferien, Ferientage, Wahlen, Nachrichten, Neu im Paket)
 - `.github/workflows/stellwerk.yml` – schreibt Aufträge der Eingabeseite (Speichern, Notbremse)
-- `.github/workflows/nachrichten.yml` – Nachrichten-Automat, stündlich von 6 bis 22 Uhr
+- `.github/workflows/nachrichten.yml` – Nachrichten-Automat, Abrufe um 6, 9, 12, 15 und 18 Uhr (GitHub startet die Läufe unzuverlässig, siehe „Wecker“)
 - `werkzeug/nachrichten.py` – Logik beider Automaten (nur Python-Standardbibliothek)
 - `werkzeug/kalender.json` – Sätze des „Heute“-Kalenders
 - `werkzeug/halte.json` – Wörter, über die eine Meldung zu einem Halt im Netzplan führt
 
 ## Nachrichten-Automat (seit 10.11.2026)
 
-Übernimmt jede Stunde die obersten sechs Meldungen der tagesschau-Startseite (RSS, Reihenfolge der Redaktion),
+Übernimmt um 6, 9, 12, 15 und 18 Uhr (Eike, 12.11.2026) die obersten sechs Meldungen der tagesschau-Startseite (RSS, Reihenfolge der Redaktion),
 nur Titel, Quelle und Link. Sendungen, Videoausschnitte, Bildergalerien, Podcasts und Wetter aus dem Feed
 überspringt er; nach Themen filtert er nicht. Ersatz bei Ausfall: Deutschlandfunk-Nachrichten.
 Dazu der neueste Beitrag der bpb-Reihe „Hintergrund aktuell“ (höchstens sieben Tage alt, CC BY-NC-ND 4.0).
@@ -41,3 +41,39 @@ Beides wirkt ohne „Ins Stellwerk schreiben“ und steht im Protokoll (`automat
 
 Laufen zwei Automaten gleichzeitig, wendet `werkzeug/schreiben.sh` die Änderung auf den neuesten Stand an und
 versucht es erneut, statt zu überschreiben.
+
+## Wecker (seit 12.11.2026)
+
+GitHub startet geplante Läufe (`schedule`) nur nach Kräften: Vom 10.11. abends bis 12.11. 2 Uhr kamen von 27
+Terminen zwei (beide verspätet), ab dem 11.11. 12:47 Uhr gar keiner mehr. Die Workflows standen auf „active“, die Läufe fehlten
+einfach. Der Plan in `nachrichten.yml` bleibt als Reserve, verlassen kann man sich darauf nicht.
+
+Der Automat merkt sich, wann er zuletzt abgerufen hat (`automatik.geholt`). Jeder Aufruf holt nur, wenn seitdem einer
+der Termine 6, 9, 12, 15 oder 18 Uhr vergangen ist; ein verpasster Termin wird beim nächsten Aufruf nachgeholt, weitere
+Aufrufe bis zum nächsten Termin tun nichts. Ein Abruf ohne neue Meldungen schreibt nur die Zeit (ein Commit).
+Darum darf der Wecker ruhig öfter klingeln, zum Beispiel viertelstündlich, ohne dass mehr geschrieben wird.
+
+Aufrufen soll ihn ein externer Wecker über die GitHub-Schnittstelle.
+Eike hat am 12.11.2026 entschieden: Das übernimmt später ein Cloudflare-Worker mit Zeitplan (Cron Trigger), sobald
+der Vermittler für den Mehrspieler-Modus auf Cloudflare läuft. Bis dahin gibt es keinen Wecker.
+
+Was der Wecker tun muss (gleich, wer ihn stellt):
+
+- Zeitplan: kurz nach jedem Termin und noch ein paar Mal danach, etwa Minuten 5, 20, 35, 50 in den Stunden 6, 7, 9, 10, 12, 13, 15, 16, 18, 19 deutscher Zeit
+- Aufruf: `POST https://api.github.com/repos/wiso-netzplan/stellwerk/actions/workflows/nachrichten.yml/dispatches`
+  mit den Kopfzeilen `Accept: application/vnd.github+json`, `Authorization: Bearer <Schlüssel>`,
+  `X-GitHub-Api-Version: 2022-11-28`, `Content-Type: application/json`, `User-Agent: wiso-netzplan-wecker`
+  und dem Inhalt `{"ref":"main","inputs":{"wecker":"true"}}`. Erfolg heißt Antwort **204**.
+- Mit `wecker: true` holt der Automat nur, wenn ein Termin fällig ist; ohne (von Hand, Knopf „Jetzt holen“) holt er sofort.
+- Schlüssel: ein eigener fine-grained Token „Nachrichten-Wecker“ (GitHub: Einstellungen → Developer settings →
+  Personal access tokens → Fine-grained tokens), Resource owner `wiso-netzplan`, Laufzeit ein Jahr, nur
+  `stellwerk`, unter „Repository permissions“ nur **Actions: Read and write**. Damit kann man Läufe starten, aber
+  keine Dateien ändern. Im Worker als Secret ablegen, nie im Code.
+
+Ersatzweise ginge dasselbe ohne Programmieren über cron-job.org (kostenlos, Betreiber in Deutschland): Cronjob mit
+obiger Adresse, Methode POST, denselben Kopfzeilen und demselben Inhalt.
+
+Läuft der Schlüssel ab, antwortet GitHub dem Wecker mit 401. Dann einen neuen Schlüssel wie oben anlegen und im
+Wecker ersetzen. Bis der Wecker steht und bei Ausfällen hilft im Stellwerk der Knopf **„Jetzt holen“** (startet den
+Automaten sofort, auch nachts, mit dem Schlüssel der Eingabeseite). Das Stellwerk warnt, wenn ein Termin seit über
+einer Stunde verstrichen ist, ohne dass abgerufen wurde.

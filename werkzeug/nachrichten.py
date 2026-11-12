@@ -3,7 +3,7 @@
 
 Aufrufe (nur Standardbibliothek, schreibt nur aktuell.json):
   nachrichten.py holen [--immer]      Feeds abrufen und die automatischen Meldungen erneuern
-                                       (ohne --immer nur zwischen 6 und 22 Uhr deutscher Zeit)
+                                       (ohne --immer nur, wenn seit dem letzten Abruf ein Termin aus ABRUFE vergangen ist)
   nachrichten.py stellwerk DATEI      Auftrag der Eingabeseite übernehmen (Hand-Einträge, Termine …);
                                        die automatischen Meldungen und die Automatik-Einstellungen bleiben erhalten
   nachrichten.py aktion DATEI         Notbremse aus dem Stellwerk: {"aktion": "aus"|"an"|"entfernen"|"zulassen", "link": …}
@@ -47,6 +47,9 @@ FORMATE = ('/tagesschau_20_uhr/', '/tagesthemen/', '/tagesschau_in_100_sekunden/
 SPITZE = 6          # oberste Meldungen der Startseite
 RESERVE = 6         # rücken nach, wenn Eike eine Meldung entfernt
 HOECHSTENS = 8      # mehr fasst die Laufschrift im Wagen nicht (das Paket schneidet nach acht ab)
+# Abrufzeiten deutscher Zeit (Eike, 12.11.2026). Jeder Aufruf danach holt einen verpassten Termin nach;
+# weitere Aufrufe bis zum nächsten Termin tun nichts. So schadet es nicht, wenn der Wecker öfter klingelt oder ausfällt.
+ABRUFE = (6, 9, 12, 15, 18)
 BPB_TAGE = 7        # ein bpb-Beitrag bleibt höchstens so lange stehen
 PROTOKOLL = 60
 GESPERRT = 300
@@ -246,12 +249,30 @@ def zusammensetzen(d):
     d['nachrichten'] = [{k: v for k, v in m.items() if k != 'art'} for m in hand + auto][:HOECHSTENS]
 
 
+def letzter_termin(t):
+    """Der letzte Abruftermin vor oder genau zu t (Berliner Zeit); vor 6 Uhr ist es 18 Uhr am Vortag."""
+    frueher = [h for h in ABRUFE if h <= t.hour]
+    if frueher:
+        return t.replace(hour=frueher[-1], minute=0, second=0, microsecond=0)
+    gestern = t - dt.timedelta(days=1)
+    return gestern.replace(hour=ABRUFE[-1], minute=0, second=0, microsecond=0)
+
+
+def faellig(a, t):
+    try:
+        geholt = dt.datetime.fromisoformat(a.get('geholt') or '')
+    except (TypeError, ValueError):
+        return True
+    return geholt < letzter_termin(t)
+
+
 def holen(immer=False):
-    if not immer and not 6 <= jetzt().hour <= 22:
-        print('Außerhalb von 6 bis 22 Uhr, nichts zu tun.')
-        return
     d = lies()
     a = automatik(d)
+    t = jetzt()
+    if not immer and not faellig(a, t):
+        print(f'Kein Termin fällig (letzter {letzter_termin(t):%d.%m. %H:%M}, abgerufen {a.get("geholt")}).')
+        return
     if not a['an']:
         print('Automatik ist aus.')
         return
@@ -297,8 +318,10 @@ def holen(immer=False):
             m['halt'] = h
     sichtbar = {m['link'] for m in neu[:SPITZE]} | {m['link'] for m in bp + kal}
     hinzu = [m for m in meldungen if m['link'] not in vorher and m['link'] in sichtbar]
+    a['geholt'] = t.isoformat(timespec='seconds')  # auch ohne Änderung: der Termin ist erledigt
     if [(m['link'], m['text'], m.get('halt')) for m in meldungen] == [(m['link'], m['text'], m.get('halt')) for m in a['meldungen']]:
-        print('Unverändert.')
+        schreib(d)
+        print('Unverändert, Abruf vermerkt.')
         return
     a['meldungen'] = meldungen
     a['stand'] = jetzt().isoformat(timespec='seconds')
