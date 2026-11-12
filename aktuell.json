@@ -186,6 +186,24 @@
       "von": "2028-07-20"
     }
   ],
+  "ferientage": [
+    {
+      "datum": "2027-05-07",
+      "name": "Tag nach Himmelfahrt"
+    },
+    {
+      "datum": "2027-05-18",
+      "name": "Tag nach Pfingsten"
+    },
+    {
+      "datum": "2028-05-26",
+      "name": "Tag nach Himmelfahrt"
+    },
+    {
+      "datum": "2028-06-06",
+      "name": "Tag nach Pfingsten"
+    }
+  ],
   "nachrichten": [
     {
       "auto": true,
@@ -279,5 +297,36 @@
     }
   ],
   "version": 1,
+  "wahlen": [
+    {
+      "datum": "2027-04-18",
+      "halt": "DS-03/entscheiden",
+      "name": "Landtagswahlen Saarland und Schleswig-Holstein",
+      "vorlauf": 7,
+      "wer": "wählen das Saarland und Schleswig-Holstein neue Landtage"
+    },
+    {
+      "datum": "2027-04-25",
+      "halt": "DS-03/entscheiden",
+      "name": "Landtagswahl Nordrhein-Westfalen",
+      "vorlauf": 7,
+      "wer": "wählt Nordrhein-Westfalen einen neuen Landtag"
+    },
+    {
+      "datum": "2027-05-30",
+      "halt": "DS-03/wahlen",
+      "hinweis": "Wählen darfst du hier schon ab 16.",
+      "name": "Bürgerschaftswahl Bremen",
+      "vorlauf": 21,
+      "wer": "wählt Bremen die Bürgerschaft und Bremerhaven seine Stadtverordneten. Wählen darf man hier ab 16"
+    },
+    {
+      "datum": "2027-09-26",
+      "halt": "DS-03/entscheiden",
+      "name": "Landtagswahl Niedersachsen",
+      "vorlauf": 7,
+      "wer": "wählt Niedersachsen einen neuen Landtag"
+    }
+  ],
   "werk": "wiso-netzplan-stellwerk"
 }

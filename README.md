@@ -3,11 +3,11 @@
 Eingabeseite und Datenablage für den Wagen im WiSo-Netzplan. Alles hier ist öffentlich: nur Klassen und Themen, nie Namen.
 
 - `stellwerk.html` – Eingabeseite (https://wiso-netzplan.github.io/stellwerk/stellwerk.html)
-- `aktuell.json` – die Datei, die das Paket liest (Termine, Prüfungen, Ferien, Nachrichten, Neu im Paket)
+- `aktuell.json` – die Datei, die das Paket liest (Termine, Prüfungen, Ferien, Ferientage, Wahlen, Nachrichten, Neu im Paket)
 - `.github/workflows/stellwerk.yml` – schreibt Aufträge der Eingabeseite (Speichern, Notbremse)
 - `.github/workflows/nachrichten.yml` – Nachrichten-Automat, stündlich von 6 bis 22 Uhr
 - `werkzeug/nachrichten.py` – Logik beider Automaten (nur Python-Standardbibliothek)
-- `werkzeug/kalender.json` – Sätze des „Heute“-Kalenders und Wahltermine
+- `werkzeug/kalender.json` – Sätze des „Heute“-Kalenders
 - `werkzeug/halte.json` – Wörter, über die eine Meldung zu einem Halt im Netzplan führt
 
 ## Nachrichten-Automat (seit 10.11.2026)
@@ -20,7 +20,16 @@ Dazu der neueste Beitrag der bpb-Reihe „Hintergrund aktuell“ (höchstens sie
 „Heute“-Kalender (`werkzeug/kalender.json`): an 33 Tagen im Jahr ein Satz zu einem Ereignis („Heute vor 108 Jahren …“,
 die Jahre rechnet der Automat aus) und vor Wahlen ein Countdown („Noch 5 Tage: Am 25. April wählt …“, Landtag ab
 sieben, Bremen ab 21 Tagen vorher). Er steht vor den tagesschau-Meldungen, Quelle „Kalender · WiSo-Netzplan“.
-Neue Wahltermine trägt man in `wahlen` ein, sobald sie amtlich sind.
+
+Wahlen (seit 12.11.2026 eine Liste im Stellwerk, Feld `wahlen` in `aktuell.json`): Datum, Name und Hinweis für den
+Kalender im Wagen, Satz und „Tage vorher“ für den Countdown in der Laufschrift, dazu wahlweise ein Halt. Neue Wahlen
+trägt man auf der Eingabeseite im Abschnitt „Wahlen“ ein, sobald ihr Tag amtlich ist. Schickt eine ältere,
+zwischengespeicherte Eingabeseite keine Wahlen mit, bleiben die bisherigen stehen.
+
+Einzelne Ferientage (seit 12.11.2026, Feld `ferientage`: Datum und Name, zum Beispiel „Tag nach Himmelfahrt“) stehen
+bewusst nicht unter `ferien`: Ältere Pakete legen jeden Ferien-Eintrag als Halt auf das Linienband, und einzelne Tage
+lagen dort übereinander. Der Kalender im Wagen (ab v49) liest beide Listen. Auch hier gilt: Schickt eine ältere
+Eingabeseite das Feld nicht mit, bleiben die bisherigen Ferientage stehen.
 
 „Mehr dazu im Netzplan“ (`werkzeug/halte.json`): Steht ein Wort aus der Liste in der Schlagzeile, hängt der Automat
 den passenden Halt an (Feld `halt`, zum Beispiel `AW-08/streik`). Das Paket zeigt ihn im Lesefenster als Sprung in
