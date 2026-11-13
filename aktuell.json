@@ -7,10 +7,83 @@
         "art": "spitze",
         "auto": true,
         "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/ausland/eu-vertreter-ukraine-gespraeche-100.html",
+        "quelle": "tagesschau.de",
+        "text": "EU einigt sich auf europäisches Team für Ukraine-Verhandlungen",
+        "zeit": "19:44"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/ausland/europa/ukraine-russland-krieg-angriffe-autobomben-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Ukraine und Russland greifen sich trotz Verhandlungen weiter an",
+        "zeit": "18:15"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/wirtschaft/unternehmen/microsoft-outlook-stoerung-100.html",
+        "quelle": "tagesschau.de",
+        "text": "IT-Störungen: Microsoft sieht \"deutliche Verbesserung\" der Lage",
+        "zeit": "16:40"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/wirtschaft/unternehmen/sicherheitsexperte-abhaengigkeit-microsoft-outlook-teams-risiken-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Microsoft-Ausfälle: \"Für viele Unternehmen digitaler Hirntod\"",
+        "zeit": "13:28"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-13",
         "link": "https://www.tagesschau.de/wirtschaft/unternehmen/faq-ausfall-microsoft-dienste-weltweit-100.html",
         "quelle": "tagesschau.de",
         "text": "Was über den Ausfall von Microsoft-Diensten bekannt ist",
-        "zeit": "12:09"
+        "zeit": "15:43"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/ausland/usa-nvidia-finanzminister-handelminister-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Nvidia-Skandal: US-Handelsminister Lutnick wegen Chip-Exporten unter Druck",
+        "zeit": "20:06"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/wirtschaft/nvidia-ruecktritt-folgen-ki-branche-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Welche Folgen Nvidias Absturz für die KI-Branche hat",
+        "zeit": "09:26"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/ausland/amerika/nvidia-trump-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Nvidia: Huang-Affäre könnte zu Trump-Skandal werden",
+        "zeit": "03:36"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-13",
+        "halt": "DS-05/koalition",
+        "link": "https://www.tagesschau.de/inland/innenpolitik/haushalt-koalition-geht-auf-zahnfleisch-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Kommentar zum Haushalt: Die Koalition geht auf dem Zahnfleisch",
+        "zeit": "16:40"
       },
       {
         "art": "spitze",
@@ -19,7 +92,7 @@
         "link": "https://www.tagesschau.de/inland/innenpolitik/stromsteuer-haushalt-kritik-merz-100.html",
         "quelle": "tagesschau.de",
         "text": "Kritik auch aus der Union an ausbleibender Stromsteuer-Senkung",
-        "zeit": "12:09"
+        "zeit": "14:20"
       },
       {
         "art": "spitze",
@@ -38,81 +111,13 @@
         "quelle": "tagesschau.de",
         "text": "Nachtsitzung im Haushaltsausschuss: Etat für 2027 steht",
         "zeit": "07:26"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-13",
-        "link": "https://www.tagesschau.de/wirtschaft/nvidia-ruecktritt-folgen-ki-branche-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Welche Folgen Nvidias Absturz für die KI-Branche hat",
-        "zeit": "09:26"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-13",
-        "link": "https://www.tagesschau.de/ausland/amerika/nvidia-huang-us-handelsausschuss-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Fall Nvidia: US-Senatsausschuss lädt Handelsminister Lutnick und Huang vor",
-        "zeit": "08:27"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-13",
-        "link": "https://www.tagesschau.de/ausland/amerika/nvidia-trump-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Nvidia: Huang-Affäre könnte zu Trump-Skandal werden",
-        "zeit": "03:36"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-12",
-        "link": "https://www.tagesschau.de/wirtschaft/unternehmen/nvidia-huang-rolle-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Rücktritt von Nvidia-Chef Huang: Vom Sympathieträger zum Sicherheitsrisiko",
-        "zeit": "17:17"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-13",
-        "link": "https://www.tagesschau.de/inland/gesellschaft/handy-blitzer-kontrolle-ueberwachung-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Handys im Straßenverkehr: Wie weit darf Überwachung gehen?",
-        "zeit": "10:21"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-13",
-        "link": "https://www.tagesschau.de/inland/innenpolitik/bundesregierung-reform-nachrichtendienste-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Reform der Nachrichtendienste: \"Jahrhundertwerk\" oder \"Monster\"?",
-        "zeit": "05:23"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-13",
-        "link": "https://www.tagesschau.de/inland/regional/niedersachsen/sechsfach-mord-in-stade-lebensgefaehrtin-soll-tat-aktiv-unterstuetzt-haben,stade-406.html",
-        "quelle": "tagesschau.de",
-        "text": "Anklage gegen drei Menschen erhoben",
-        "zeit": "13:01"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-13",
-        "link": "https://www.tagesschau.de/inland/regional/berlin/steffen-krach-immunitaet-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Steffen Krach: Staatsanwaltschaft beantragt Aufhebung der Immunität",
-        "zeit": "12:38"
       }
     ],
     "protokoll": [
+      {
+        "text": "5 neu: EU einigt sich auf europäisches Team für Ukraine-Verhandlungen · Ukraine und Russland greifen sich trotz Verhandlungen weiter an · IT-Störungen: Microsoft sieht \"deutliche Verbesserung\" der Lage · Microsoft-Ausfälle: \"Für viele Unternehmen digitaler Hirntod\" · Nvidia-Skandal…",
+        "zeit": "2026-11-13 20:36"
+      },
       {
         "text": "6 neu: Was über den Ausfall von Microsoft-Diensten bekannt ist · Kritik auch aus der Union an ausbleibender Stromsteuer-Senkung · Werden die Milliarden für die Stromsteuer noch gefunden? · Nachtsitzung im Haushaltsausschuss: Etat für 2027 steht · Welche Folgen Nvidias Absturz für die KI-Branche…",
         "zeit": "2026-11-13 13:05"
@@ -154,7 +159,7 @@
         "zeit": "2026-11-10 21:53"
       }
     ],
-    "stand": "2026-11-13T13:05:16+01:00"
+    "stand": "2026-11-13T20:36:16+01:00"
   },
   "ferien": [
     {
@@ -188,50 +193,50 @@
     {
       "auto": true,
       "datum": "2026-11-13",
+      "link": "https://www.tagesschau.de/ausland/eu-vertreter-ukraine-gespraeche-100.html",
+      "quelle": "tagesschau.de",
+      "text": "EU einigt sich auf europäisches Team für Ukraine-Verhandlungen",
+      "zeit": "19:44"
+    },
+    {
+      "auto": true,
+      "datum": "2026-11-13",
+      "link": "https://www.tagesschau.de/ausland/europa/ukraine-russland-krieg-angriffe-autobomben-100.html",
+      "quelle": "tagesschau.de",
+      "text": "Ukraine und Russland greifen sich trotz Verhandlungen weiter an",
+      "zeit": "18:15"
+    },
+    {
+      "auto": true,
+      "datum": "2026-11-13",
+      "link": "https://www.tagesschau.de/wirtschaft/unternehmen/microsoft-outlook-stoerung-100.html",
+      "quelle": "tagesschau.de",
+      "text": "IT-Störungen: Microsoft sieht \"deutliche Verbesserung\" der Lage",
+      "zeit": "16:40"
+    },
+    {
+      "auto": true,
+      "datum": "2026-11-13",
+      "link": "https://www.tagesschau.de/wirtschaft/unternehmen/sicherheitsexperte-abhaengigkeit-microsoft-outlook-teams-risiken-100.html",
+      "quelle": "tagesschau.de",
+      "text": "Microsoft-Ausfälle: \"Für viele Unternehmen digitaler Hirntod\"",
+      "zeit": "13:28"
+    },
+    {
+      "auto": true,
+      "datum": "2026-11-13",
       "link": "https://www.tagesschau.de/wirtschaft/unternehmen/faq-ausfall-microsoft-dienste-weltweit-100.html",
       "quelle": "tagesschau.de",
       "text": "Was über den Ausfall von Microsoft-Diensten bekannt ist",
-      "zeit": "12:09"
+      "zeit": "15:43"
     },
     {
       "auto": true,
       "datum": "2026-11-13",
-      "link": "https://www.tagesschau.de/inland/innenpolitik/stromsteuer-haushalt-kritik-merz-100.html",
+      "link": "https://www.tagesschau.de/ausland/usa-nvidia-finanzminister-handelminister-100.html",
       "quelle": "tagesschau.de",
-      "text": "Kritik auch aus der Union an ausbleibender Stromsteuer-Senkung",
-      "zeit": "12:09"
-    },
-    {
-      "auto": true,
-      "datum": "2026-11-13",
-      "link": "https://www.tagesschau.de/inland/innenpolitik/bundestag-haushalt-milliarden-100.html",
-      "quelle": "tagesschau.de",
-      "text": "Werden die Milliarden für die Stromsteuer noch gefunden?",
-      "zeit": "09:36"
-    },
-    {
-      "auto": true,
-      "datum": "2026-11-13",
-      "link": "https://www.tagesschau.de/inland/bundeshaushalt-2027-100.html",
-      "quelle": "tagesschau.de",
-      "text": "Nachtsitzung im Haushaltsausschuss: Etat für 2027 steht",
-      "zeit": "07:26"
-    },
-    {
-      "auto": true,
-      "datum": "2026-11-13",
-      "link": "https://www.tagesschau.de/wirtschaft/nvidia-ruecktritt-folgen-ki-branche-100.html",
-      "quelle": "tagesschau.de",
-      "text": "Welche Folgen Nvidias Absturz für die KI-Branche hat",
-      "zeit": "09:26"
-    },
-    {
-      "auto": true,
-      "datum": "2026-11-13",
-      "link": "https://www.tagesschau.de/ausland/amerika/nvidia-huang-us-handelsausschuss-100.html",
-      "quelle": "tagesschau.de",
-      "text": "Fall Nvidia: US-Senatsausschuss lädt Handelsminister Lutnick und Huang vor",
-      "zeit": "08:27"
+      "text": "Nvidia-Skandal: US-Handelsminister Lutnick wegen Chip-Exporten unter Druck",
+      "zeit": "20:06"
     }
   ],
   "neu": [
