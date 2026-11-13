@@ -6,20 +6,65 @@
       {
         "art": "spitze",
         "auto": true,
-        "datum": "2026-11-12",
-        "link": "https://www.tagesschau.de/ausland/asien/weltklimakonferenz-cop31-thunberg-100.html",
+        "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/wirtschaft/unternehmen/faq-ausfall-microsoft-dienste-weltweit-100.html",
         "quelle": "tagesschau.de",
-        "text": "Thunberg auf COP31: \"Der Planet stirbt nicht, er wird getötet\"",
-        "zeit": "19:44"
+        "text": "Was über den Ausfall von Microsoft-Diensten bekannt ist",
+        "zeit": "12:09"
       },
       {
         "art": "spitze",
         "auto": true,
-        "datum": "2026-11-12",
-        "link": "https://www.tagesschau.de/wirtschaft/unternehmen/mercedes-stopp-investitionen-100.html",
+        "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/inland/innenpolitik/stromsteuer-haushalt-kritik-merz-100.html",
         "quelle": "tagesschau.de",
-        "text": "Mercedes stoppt Investitionen in Deutschland - und prüft Schließungen",
-        "zeit": "19:44"
+        "text": "Kritik auch aus der Union an ausbleibender Stromsteuer-Senkung",
+        "zeit": "12:09"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/inland/innenpolitik/bundestag-haushalt-milliarden-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Werden die Milliarden für die Stromsteuer noch gefunden?",
+        "zeit": "09:36"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/inland/bundeshaushalt-2027-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Nachtsitzung im Haushaltsausschuss: Etat für 2027 steht",
+        "zeit": "07:26"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/wirtschaft/nvidia-ruecktritt-folgen-ki-branche-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Welche Folgen Nvidias Absturz für die KI-Branche hat",
+        "zeit": "09:26"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/ausland/amerika/nvidia-huang-us-handelsausschuss-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Fall Nvidia: US-Senatsausschuss lädt Handelsminister Lutnick und Huang vor",
+        "zeit": "08:27"
+      },
+      {
+        "art": "spitze",
+        "auto": true,
+        "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/ausland/amerika/nvidia-trump-100.html",
+        "quelle": "tagesschau.de",
+        "text": "Nvidia: Huang-Affäre könnte zu Trump-Skandal werden",
+        "zeit": "03:36"
       },
       {
         "art": "spitze",
@@ -33,87 +78,45 @@
       {
         "art": "spitze",
         "auto": true,
-        "datum": "2026-11-12",
-        "link": "https://www.tagesschau.de/wirtschaft/finanzen/marktberichte/marktbericht-dax-dow-nvidia-106.html",
+        "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/inland/gesellschaft/handy-blitzer-kontrolle-ueberwachung-100.html",
         "quelle": "tagesschau.de",
-        "text": "Marktbericht: Nvidia-Aktie bricht ein - und auch der DAX sackt ab",
-        "zeit": "18:41"
+        "text": "Handys im Straßenverkehr: Wie weit darf Überwachung gehen?",
+        "zeit": "10:21"
       },
       {
         "art": "spitze",
         "auto": true,
-        "datum": "2026-11-12",
-        "link": "https://www.tagesschau.de/wirtschaft/unternehmen/nvidia-huang-ruecktritt-100.html",
+        "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/inland/innenpolitik/bundesregierung-reform-nachrichtendienste-100.html",
         "quelle": "tagesschau.de",
-        "text": "Nvidia-Chef Huang tritt nach Spionageaffäre zurück",
-        "zeit": "18:20"
+        "text": "Reform der Nachrichtendienste: \"Jahrhundertwerk\" oder \"Monster\"?",
+        "zeit": "05:23"
       },
       {
         "art": "spitze",
         "auto": true,
-        "datum": "2026-11-12",
-        "link": "https://www.tagesschau.de/ausland/europa/ukraine-russland-putin-witkoff-kushner-100.html",
+        "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/inland/regional/niedersachsen/sechsfach-mord-in-stade-lebensgefaehrtin-soll-tat-aktiv-unterstuetzt-haben,stade-406.html",
         "quelle": "tagesschau.de",
-        "text": "Krieg gegen die Ukraine: Putin beharrt auf Gebietsansprüchen",
-        "zeit": "17:29"
+        "text": "Anklage gegen drei Menschen erhoben",
+        "zeit": "13:01"
       },
       {
         "art": "spitze",
         "auto": true,
-        "datum": "2026-11-12",
-        "link": "https://www.tagesschau.de/ausland/europa/irland-europaeische-gemeinschaft-100.html",
+        "datum": "2026-11-13",
+        "link": "https://www.tagesschau.de/inland/regional/berlin/steffen-krach-immunitaet-100.html",
         "quelle": "tagesschau.de",
-        "text": "EPG-Treffen in Irland: Europa will mit an den Tisch",
-        "zeit": "14:28"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-12",
-        "link": "https://www.tagesschau.de/ausland/asien/eisenkot-netanjahu-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Iran-Krieg: Eisenkot ruft Netanjahu zu Zurückhaltung auf",
-        "zeit": "15:28"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-12",
-        "link": "https://www.tagesschau.de/ausland/europa/spanien-parlament-wohnungsdekret-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Spanisches Parlament beschließt Maßnahmen für mehr Mieterschutz",
-        "zeit": "17:21"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-12",
-        "link": "https://www.tagesschau.de/wirtschaft/finanzen/risiken-finanzsystem-bundesbank-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Bundesbank warnt vor erhöhten Risiken für das deutsche Finanzsystem",
-        "zeit": "18:31"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-12",
-        "link": "https://www.tagesschau.de/inland/innenpolitik/haushalt-kompromisse-stromsteuer-reaktionen-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Keine Senkung der Stromsteuer: Bei der Union \"hat es ordentlich geknallt\"",
-        "zeit": "14:40"
-      },
-      {
-        "art": "spitze",
-        "auto": true,
-        "datum": "2026-11-12",
-        "halt": "DS-05/kabinett",
-        "link": "https://www.tagesschau.de/inland/innenpolitik/bundesregierung-haushalt-kompromisse-100.html",
-        "quelle": "tagesschau.de",
-        "text": "Worauf sich die Bundesregierung beim Haushalt geeinigt hat",
-        "zeit": "09:12"
+        "text": "Steffen Krach: Staatsanwaltschaft beantragt Aufhebung der Immunität",
+        "zeit": "12:38"
       }
     ],
     "protokoll": [
+      {
+        "text": "6 neu: Was über den Ausfall von Microsoft-Diensten bekannt ist · Kritik auch aus der Union an ausbleibender Stromsteuer-Senkung · Werden die Milliarden für die Stromsteuer noch gefunden? · Nachtsitzung im Haushaltsausschuss: Etat für 2027 steht · Welche Folgen Nvidias Absturz für die KI-Branche…",
+        "zeit": "2026-11-13 13:05"
+      },
       {
         "text": "5 neu: Thunberg auf COP31: \"Der Planet stirbt nicht, er wird getötet\" · Mercedes stoppt Investitionen in Deutschland - und prüft Schließungen · Rücktritt von Nvidia-Chef Huang: Vom Sympathieträger zum Sicherheitsrisiko · Nvidia-Chef Huang tritt nach Spionageaffäre zurück · Krieg gegen die Ukraine…",
         "zeit": "2026-11-12 21:24"
@@ -151,7 +154,7 @@
         "zeit": "2026-11-10 21:53"
       }
     ],
-    "stand": "2026-11-12T21:24:50+01:00"
+    "stand": "2026-11-13T13:05:16+01:00"
   },
   "ferien": [
     {
@@ -184,51 +187,51 @@
   "nachrichten": [
     {
       "auto": true,
-      "datum": "2026-11-12",
-      "link": "https://www.tagesschau.de/ausland/asien/weltklimakonferenz-cop31-thunberg-100.html",
+      "datum": "2026-11-13",
+      "link": "https://www.tagesschau.de/wirtschaft/unternehmen/faq-ausfall-microsoft-dienste-weltweit-100.html",
       "quelle": "tagesschau.de",
-      "text": "Thunberg auf COP31: \"Der Planet stirbt nicht, er wird getötet\"",
-      "zeit": "19:44"
+      "text": "Was über den Ausfall von Microsoft-Diensten bekannt ist",
+      "zeit": "12:09"
     },
     {
       "auto": true,
-      "datum": "2026-11-12",
-      "link": "https://www.tagesschau.de/wirtschaft/unternehmen/mercedes-stopp-investitionen-100.html",
+      "datum": "2026-11-13",
+      "link": "https://www.tagesschau.de/inland/innenpolitik/stromsteuer-haushalt-kritik-merz-100.html",
       "quelle": "tagesschau.de",
-      "text": "Mercedes stoppt Investitionen in Deutschland - und prüft Schließungen",
-      "zeit": "19:44"
+      "text": "Kritik auch aus der Union an ausbleibender Stromsteuer-Senkung",
+      "zeit": "12:09"
     },
     {
       "auto": true,
-      "datum": "2026-11-12",
-      "link": "https://www.tagesschau.de/wirtschaft/unternehmen/nvidia-huang-rolle-100.html",
+      "datum": "2026-11-13",
+      "link": "https://www.tagesschau.de/inland/innenpolitik/bundestag-haushalt-milliarden-100.html",
       "quelle": "tagesschau.de",
-      "text": "Rücktritt von Nvidia-Chef Huang: Vom Sympathieträger zum Sicherheitsrisiko",
-      "zeit": "17:17"
+      "text": "Werden die Milliarden für die Stromsteuer noch gefunden?",
+      "zeit": "09:36"
     },
     {
       "auto": true,
-      "datum": "2026-11-12",
-      "link": "https://www.tagesschau.de/wirtschaft/finanzen/marktberichte/marktbericht-dax-dow-nvidia-106.html",
+      "datum": "2026-11-13",
+      "link": "https://www.tagesschau.de/inland/bundeshaushalt-2027-100.html",
       "quelle": "tagesschau.de",
-      "text": "Marktbericht: Nvidia-Aktie bricht ein - und auch der DAX sackt ab",
-      "zeit": "18:41"
+      "text": "Nachtsitzung im Haushaltsausschuss: Etat für 2027 steht",
+      "zeit": "07:26"
     },
     {
       "auto": true,
-      "datum": "2026-11-12",
-      "link": "https://www.tagesschau.de/wirtschaft/unternehmen/nvidia-huang-ruecktritt-100.html",
+      "datum": "2026-11-13",
+      "link": "https://www.tagesschau.de/wirtschaft/nvidia-ruecktritt-folgen-ki-branche-100.html",
       "quelle": "tagesschau.de",
-      "text": "Nvidia-Chef Huang tritt nach Spionageaffäre zurück",
-      "zeit": "18:20"
+      "text": "Welche Folgen Nvidias Absturz für die KI-Branche hat",
+      "zeit": "09:26"
     },
     {
       "auto": true,
-      "datum": "2026-11-12",
-      "link": "https://www.tagesschau.de/ausland/europa/ukraine-russland-putin-witkoff-kushner-100.html",
+      "datum": "2026-11-13",
+      "link": "https://www.tagesschau.de/ausland/amerika/nvidia-huang-us-handelsausschuss-100.html",
       "quelle": "tagesschau.de",
-      "text": "Krieg gegen die Ukraine: Putin beharrt auf Gebietsansprüchen",
-      "zeit": "17:29"
+      "text": "Fall Nvidia: US-Senatsausschuss lädt Handelsminister Lutnick und Huang vor",
+      "zeit": "08:27"
     }
   ],
   "neu": [
